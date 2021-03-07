@@ -3,6 +3,7 @@ import <- function (isfile, data, filepath, filetype) {
 }
 import_CSV <- function (csv_path) {
   # donner les colonnes et les tag à récuperer
+  # import measure/period/event
 
 
   result <- readr::read_csv(file=csv_path)

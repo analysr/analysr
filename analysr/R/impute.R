@@ -104,7 +104,7 @@ impute <- function(data, tag, period_start, period_end, temporal_granularity, st
   # import(temporaire)
   data
 }
-impute(import_CSV("./set.csv"), "Kaliemie", "2006-01-01 12:00:00", "2006-12-31 12:00:00", "day")
+#impute(import_CSV("./set.csv"), "Kaliemie", "2006-01-01 12:00:00", "2006-12-31 12:00:00", "day")
 
 
 
