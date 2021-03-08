@@ -2,8 +2,7 @@
 # on devra implémenter des variables globales
 
 # version basique
-import_period_CSV <- function (csv_path) {
-
+import_period_csv <- function (csv_path) {
 
   result <- readr::read_csv(file=csv_path)
   result <- as.data.frame(result)
@@ -12,8 +11,7 @@ import_period_CSV <- function (csv_path) {
 }
 
 # avec choix des tags
-import_period_CSV_2 <- function (csv_path, stat_unit_label = "STAT_UNIT", begin_label = "BEGIN", end_label = "END") {
-
+import_period_csv_2 <- function (csv_path, stat_unit_label = "STAT_UNIT", begin_label = "BEGIN", end_label = "END") {
 
   result <- readr::read_csv(file=csv_path)
   result <- as.data.frame(result)
