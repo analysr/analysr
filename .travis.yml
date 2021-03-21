@@ -3,3 +3,20 @@ r:
   - oldrel
   - release
   - devel
+script: |
+  R CMD build .
+  R CMD INSTALL analysr*.tar.gz
+  R CMD check --as-cran --no-install analysr*.tar.gz
+  cat analysr.Rcheck/00check.log         
+  Rscript -e "\
+  testr <- devtools::test(); \
+  testr <- as.data.frame(testr); \
+  if(any(testr\$error) || any(testr\$warning > 0)) \
+    stop('Found failing tests') \
+  "
+  pass=$?
+  if [[ $pass -ne 0 || $(grep -i "WARNING\|ERROR" analysr.Rcheck/00check.log) != "" ]]; then
+    (exit 1)
+  else
+    (exit 0)
+  fi
