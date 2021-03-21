@@ -3,6 +3,11 @@ r:
   - oldrel
   - release
   - devel
+r_binary_packages:
+  - devtools
+  - roxygen2
+  - tidyverse
+  - lubridate
 script: |
   R CMD build .
   R CMD INSTALL analysr*.tar.gz
