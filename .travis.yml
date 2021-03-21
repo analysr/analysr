@@ -8,11 +8,13 @@ r_binary_packages:
   - roxygen2
   - tidyverse
   - lubridate
+notifications:
+  email: false
 script: |
   R CMD build .
   R CMD INSTALL analysr*.tar.gz
   R CMD check --as-cran --no-install analysr*.tar.gz
-  cat analysr.Rcheck/00check.log         
+  cat analysr.Rcheck/00check.log
   Rscript -e "\
   testr <- devtools::test(); \
   testr <- as.data.frame(testr); \
