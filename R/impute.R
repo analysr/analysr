@@ -1,5 +1,4 @@
-
-
+library(lubridate)
 
 import_CSV <- function (csv_path) {
   # donner les colonnes et les tag à récuperer
@@ -23,7 +22,6 @@ seq_date <- function (begin, end, freq) {
 }
 
 impute <- function(data, tag, period_start, period_end, temporal_granularity, stat_unit = NULL, method = 'mean', information_lost_after = 5*temporal_granularity) {
-  #subset pour faire des sous ensemble avec un filtre
   print("Début de impute")
   print(period_start)
   print(period_end)
@@ -34,85 +32,78 @@ impute <- function(data, tag, period_start, period_end, temporal_granularity, st
   data <- subset(data, DATE > period_start)
 
   #Il s'agit de créer une liste avec les dates souhaitées. Pour chaque date,soit une valeur correspond. Sinon on prend la moyenne de la plus proche après et la plus proche avant
-
-  print("test de la boucle")
   for (j in data){
     print(data[j])
   }
 
-  #Methode moyenne
-  if (method == "mean") {
-    #pour chaque date
-    #Création de la liste des dates
-    dateList <- lubridate::interval (period_start,period_end)
-    valueList <- list()
-    idList <- list()
-    print("Début de la boucle")
-    print(dateList)
 
-    for (i in dateList){
-      #Pour chaque date
-      funded <-0
-      closestAfterIndex <- 0
-      closestBeforeIndex <- 0
+  #Création de la liste des dates
+  dateList <- lubridate::interval (period_start,period_end)
+  valueList <- list()
+  idList <- list()
+  print("Début de la boucle")
+  print(dateList)
 
-      # data[j][0] -> date
-      # data[j][1] -> valeur
-      # data[j][2] -> id
+  for (i in dateList){
+    #Pour chaque date
+    print(i)
+    funded <-0
+    closestAfterIndex <- 0
+    closestBeforeIndex <- 0
 
-      # tag et stat_unit aussi
-      print(dateList[i])
-      # On chercher si une date correspond et l'index de la plus proche
-      for (j in data){
-        #verifier qu'il s'agit bien de la colonne des dates
-        if (data[j][0]  %within% dateList[i] == TRUE){
-          funded <-1
-          push(valueList,data[j][1])
-          push(valueList,data[j][2])
+    # data[j][0] -> date
+    # data[j][1] -> valeur
+    # data[j][2] -> id
 
-        }
-        #Juste avant la borne inf mais après la meilleure valeur trouvée
-        if(data[j][0] < dateList[i][0] && data[j][0] > data[closestBeforeIndex][0] ){
-          closestBeforeIndex <- j
-        }
-        if(data[j][0] > dateList[i][1] && data[j][0] < data[closestAfterIndex][0] ){
-          closestAfterIndex <- j
-        }
-
+   # tag et stat_unit aussi
+    print(dateList[i])
+    # On chercher si une date correspond et l'index de la plus proche
+    for (j in data){
+      #verifier qu'il s'agit bien de la colonne des dates
+      if (data[j][0]  %within% dateList[i] == TRUE){
+        funded <-1
+        push(valueList,data[j][1])
+        push(valueList,data[j][2])
       }
+      #Juste avant la borne inf mais après la meilleure valeur trouvée
+      if(data[j][0] < dateList[i][0] && data[j][0] > data[closestBeforeIndex][0] ){
+        closestBeforeIndex <- j
+      }
+      if(data[j][0] > dateList[i][1] && data[j][0] < data[closestAfterIndex][0] ){
+        closestAfterIndex <- j
+      }
+    }
 
-      #Si aucun date ne correspond
-      if (funded == 0){
+    #Si aucun date ne correspond on complète..
+    if (funded == 0){
+      if(method == "Mean"){
+        #MOYENNE ENTRE LA DATE PLUS PROCHE AVANT ET LA DATE LA PLUS PROCHE APRES
         #On prend 1 pour avoir la valeur et non la date
         valueMoy <- (data[closestAfterIndex][1] +  data[closestBeforeIndex][1])/2
         push(valueList,valueMoy)
       }
-
+      if(method == "Max"){
+        #MAX ENTRE LA VALEUR DE LA DATE PLUS PROCHE AVANT ET DE LA VALEUR DE LA DATE LA PLUS PROCHE APRES
+        valueMoy <- max(c(data[closestAfterIndex][1] ,  data[closestBeforeIndex][1]) )
+        push(valueList,valueMoy)
+      }
+      if(method == "Min"){
+        valueMoy <- min(c(data[closestAfterIndex][1] ,  data[closestBeforeIndex][1]) )
+        push(valueList,valueMoy)
+      }
+      if(method == "Mediane"){
+        #valueMoy <-
+        #push(valueList,valueMoy)
+        print("La methode mediane n'a pas été codée")
+      }
     }
-
-
-  }
-
   #dates
   if (temporal_granularity == "day") {
     print(analysrr::seq_date(period_start,period_end,1))
   }
 
   print(data)
-
-
   # import(temporaire)
-  data
 }
-#impute(import_CSV("./set.csv"), "Kaliemie", "2006-01-01 12:00:00", "2006-12-31 12:00:00", "day")
 
-
-
-#data <- as.data.table(data)
-#data <- data[TAG==tag &DATE < period_end & DATE > period_start]
-#print(data[c("TAG")])
-
-#print(data[(data['TAG']==tag)])
-# & (data['DATE'] < period_end)
-# data <- data[TAG==tag & DATE < period_end & DATE > period_start]
-#print(data[TAG==tag])
+impute(import_CSV("./set.csv"), "Kaliemie", "2006-01-01 12:00:00", "2006-12-31 12:00:00", "day")
