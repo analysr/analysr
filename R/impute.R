@@ -95,7 +95,7 @@ impute <- function(data, tag, period_start, period_end, temporal_granularity, st
 
     if (funded == 0){
       notGood<- notGood+1
-      print(data[closestAfterIndex,2]- int_end(dateList[[i]]))kk
+      print(data[closestAfterIndex,2]- int_end(dateList[[i]]))
 
       #verification après date de fin
       if (data[closestAfterIndex,2]- int_end(dateList[[i]]) > 3){
@@ -153,6 +153,6 @@ impute <- function(data, tag, period_start, period_end, temporal_granularity, st
     print(pourcentage)
   }
 }
-impute(import_CSV("./set.csv"), "Kaliemie", "2006-11-23 12:00", "2006-12-18 12:00", "day")
+impute(import_CSV("../tests/testthat/set.csv"), "Kaliemie", "2006-11-23 12:00", "2006-12-18 12:00", "day")
 
 
