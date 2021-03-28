@@ -22,88 +22,137 @@ seq_date <- function (begin, end, freq) {
 }
 
 impute <- function(data, tag, period_start, period_end, temporal_granularity, stat_unit = NULL, method = 'mean', information_lost_after = 5*temporal_granularity) {
-  print("Début de impute")
-  print(period_start)
-  print(period_end)
+  # Modification à apporter:
+  # Alerte quand les données ne sont pas assez fournies
 
-  #On filtre les element avec le bon tag, compris entre la date de début et la date de fin
+  # Méthode
+  # Il s'agit de créer une liste avec les dates souhaitées. Pour chaque date,soit une valeur correspond. Sinon on prend la moyenne de la plus proche après et la plus proche avant
+
+  print("Début de impute")
+
+  #On filtre les element selon 3 critères
   data <- subset(data, TAG==tag)
   data <- subset(data, DATE < period_end)
   data <- subset(data, DATE > period_start)
 
-  #Il s'agit de créer une liste avec les dates souhaitées. Pour chaque date,soit une valeur correspond. Sinon on prend la moyenne de la plus proche après et la plus proche avant
-  for (j in data){
-    print(data[j])
+  # création  des différents intervals
+  d <- as.POSIXlt(period_start)
+  d$hour <- d$hour + 24
+  dateInterval <- lubridate::interval (period_start,d)
+  dateList <- list(dateInterval)
+
+  #verifier ca
+  while (int_end(dateInterval) < period_end){
+
+    #Mauvaise méthode ... je n'arrive pas à trouver de solution
+    l <- list(dateInterval)
+    dateList <- append(dateList,l)
+    dateInterval <- int_shift(dateInterval, duration(days = 1))
+    #print(dateInterval)
   }
 
-
-  #Création de la liste des dates
-  dateList <- lubridate::interval (period_start,period_end)
-  valueList <- list()
+  valueList <-  list()
   idList <- list()
-  print("Début de la boucle")
-  print(dateList)
 
-  for (i in dateList){
+  good <- 0
+  notGood <- 0
+  notEnough <- 0
+
+  for (i in 1:length(dateList)){
     #Pour chaque date
-    print(i)
     funded <-0
-    closestAfterIndex <- 0
-    closestBeforeIndex <- 0
+    closestAfterIndex <- 1
+    closestBeforeIndex <- 1
 
-    # data[j][0] -> date
-    # data[j][1] -> valeur
-    # data[j][2] -> id
+    # data[j][2] -> date
+    # data[j][4] -> valeur
+    # data[j][1] -> id
 
-   # tag et stat_unit aussi
-    print(dateList[i])
+    # tag et stat_unit aussi
     # On chercher si une date correspond et l'index de la plus proche
-    for (j in data){
+    for (j in 1:length(data)){
       #verifier qu'il s'agit bien de la colonne des dates
-      if (data[j][0]  %within% dateList[i] == TRUE){
+      if (data[j,2]  %within% dateList[[i]] == TRUE){
+        if (funded == 0){
+          good <- good+1
+          valueList <- append(valueList,data[j,4])
+          idList <- append(idList,data[j,1])
+        }
         funded <-1
-        push(valueList,data[j][1])
-        push(valueList,data[j][2])
+
       }
       #Juste avant la borne inf mais après la meilleure valeur trouvée
-      if(data[j][0] < dateList[i][0] && data[j][0] > data[closestBeforeIndex][0] ){
+      if( (data[j,2] < int_start(dateList[[i]]) )&& (data[j,2] > data[closestBeforeIndex,2]) ){
         closestBeforeIndex <- j
       }
-      if(data[j][0] > dateList[i][1] && data[j][0] < data[closestAfterIndex][0] ){
+      if(data[j,2] > int_end(dateList[[i]] )&& data[j,2] < data[closestAfterIndex,2] ){
         closestAfterIndex <- j
       }
     }
 
     #Si aucun date ne correspond on complète..
+    # On verifie que les dates choisies ne sont pas trop loin de la date d'origine
+
     if (funded == 0){
-      if(method == "Mean"){
+      notGood<- notGood+1
+      print(data[closestAfterIndex,2]- int_end(dateList[[i]]))kk
+
+      #verification après date de fin
+      if (data[closestAfterIndex,2]- int_end(dateList[[i]]) > 3){
+        notEnough <-notEnough+ 1
+      }
+      if (data[closestAfterIndex,2]- int_end(dateList[[i]]) < 0){
+        notEnough <-notEnough+ 1
+      }
+
+      #verification avant date de début
+      if (int_start(dateList[[i]]) -data[closestBeforeIndex,2] > 3){
+        notEnough <-notEnough+ 1
+      }
+      if (int_start(dateList[[i]]) -data[closestBeforeIndex,2] < 0){
+        notEnough <-notEnough+ 1
+      }
+      if(method == "mean"){
         #MOYENNE ENTRE LA DATE PLUS PROCHE AVANT ET LA DATE LA PLUS PROCHE APRES
         #On prend 1 pour avoir la valeur et non la date
-        valueMoy <- (data[closestAfterIndex][1] +  data[closestBeforeIndex][1])/2
-        push(valueList,valueMoy)
+        value <- (data[closestAfterIndex,4] +  data[closestBeforeIndex,4])/2
+        valueList <- append(valueList,value)
       }
-      if(method == "Max"){
+      else if(method == "max"){
         #MAX ENTRE LA VALEUR DE LA DATE PLUS PROCHE AVANT ET DE LA VALEUR DE LA DATE LA PLUS PROCHE APRES
-        valueMoy <- max(c(data[closestAfterIndex][1] ,  data[closestBeforeIndex][1]) )
-        push(valueList,valueMoy)
+        value <- max(c(data[closestAfterIndex,4] ,  data[closestBeforeIndex,4]) )
+        valueList <- append(valueList,value)
       }
-      if(method == "Min"){
-        valueMoy <- min(c(data[closestAfterIndex][1] ,  data[closestBeforeIndex][1]) )
-        push(valueList,valueMoy)
+      else if(method == "min"){
+        value <- min(c(data[closestAfterIndex][4] ,  data[closestBeforeIndex][4]) )
+        valueList <- append(valueList,value)
       }
-      if(method == "Mediane"){
+      else if(method == "mediane"){
         #valueMoy <-
         #push(valueList,valueMoy)
         print("La methode mediane n'a pas été codée")
       }
+      else {
+        print("La méthode n'existe pas")
+        break
+      }
     }
-  #dates
-  if (temporal_granularity == "day") {
-    print(analysrr::seq_date(period_start,period_end,1))
   }
 
-  print(data)
-  # import(temporaire)
+  print("Programme terminé, nombre d'intervales générés: ")
+  print(length (dateList))
+  print("Nombre de valeurs trouvées")
+  print(length(valueList))
+  print("Nombre de valeurs originales (non modifiées):")
+  print(good)
+  print("Nombre de valeurs déduite..:")
+  print(notGood)
+  if (notEnough > 1){
+    pourcentage = 100*notEnough/(2*(notGood))
+    print("Le pourcentage de données non coherente vaut: ")
+    print(pourcentage)
+  }
 }
+impute(import_CSV("./set.csv"), "Kaliemie", "2006-11-23 12:00", "2006-12-18 12:00", "day")
 
-impute(import_CSV("./set.csv"), "Kaliemie", "2006-01-01 12:00:00", "2006-12-31 12:00:00", "day")
+
