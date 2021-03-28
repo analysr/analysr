@@ -22,7 +22,7 @@ script: |
     stop('Found failing tests') \
   "
   pass=$?
-  if [[ $pass -ne 0 || $(grep -i "WARNING\|ERROR" analysr.Rcheck/00check.log) != "" ]]; then
+  if [[ $pass -ne 0 || $(grep -i "ERROR" analysr.Rcheck/00check.log) != "" ]]; then
     (exit 1)
   else
     (exit 0)
