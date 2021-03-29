@@ -1,7 +1,4 @@
-elocal <- new.env()
-
-
-import_measures_csv <- function (csv_path, id = "patient", date = "date_prlvt", tag = "type_examen", value = "valeur"){
+import_envmeasures_csv <- function (csv_path, id = "patient", date = "date_prlvt", tag = "type_examen", value = "valeur"){
   
   
   result <- readr::read_csv(file=csv_path)
@@ -12,5 +9,5 @@ import_measures_csv <- function (csv_path, id = "patient", date = "date_prlvt", 
   # on pourrait utiliser dplyr pour extraire des colonnes
   colnames(result) <- c("id", "date", "tag", "value")
   
-  elocal$measures <- result
+  elocal$measures <- rbind(elocal$measures, result)
 }
