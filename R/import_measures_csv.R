@@ -2,8 +2,9 @@
 
 import_measures_csv <- function (csv_path, stat_unit = "stat_unit", date = "date", tag = "tag", value = "value"){
 
+  quiet_read_csv <- purrr::quietly(readr::read_csv)
 
-  result <- readr::read_csv(file=csv_path)
+  result <- quiet_read_csv(file=csv_path)
   result <- as.data.frame(result)
 
   result <- result[c(stat_unit,date,tag,value)]
