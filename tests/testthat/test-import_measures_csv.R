@@ -1,9 +1,9 @@
 # pour réaliser le test nécessaire: https://community.rstudio.com/t/all-equal-on-tibbles-ignores-attributes/4299/2
 
 test_that("import measures CSV  works", {
-  analysr_env$measures <- analysr_env$measures[0, ]
+  analysr_env$measures <- analysr_env$measures[0,]
   import_measures_csv(
-   "./csv/import_measures_csv/before.csv",
+    "./csv/import_measures_csv/before.csv",
     "patient",
     "date_prlvt",
     "type_examen",
@@ -25,7 +25,7 @@ test_that("import measures CSV  works", {
 
 test_that("import measures CSV works when import twice", {
   # reset dataframe
-  analysr_env$measures <- analysr_env$measures[0, ]
+  analysr_env$measures <- analysr_env$measures[0,]
 
   # import twice
   import_measures_csv(
@@ -48,8 +48,7 @@ test_that("import measures CSV works when import twice", {
   quiet_read_csv <- purrr::quietly(readr::read_csv)
 
   excepted <-
-    as.data.frame(quiet_read_csv(
-      file = "./csv/import_measures_csv/after2.csv")$result)
+    as.data.frame(quiet_read_csv(file = "./csv/import_measures_csv/after2.csv")$result)
 
   expect_equal(dplyr::all_equal(analysr_env$measures, excepted), TRUE)
 })
