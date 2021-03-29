@@ -2,7 +2,7 @@ import_periods_csv <- function (csv_path, stat_unit = "stat_unit", begin = "begi
 
   quiet_read_csv <- purrr::quietly(readr::read_csv)
 
-  result <- quiet_read_csv(file=csv_path)
+  result <- quiet_read_csv(file=csv_path)$result
   result <- as.data.frame(result)
 
   result <- result[c(stat_unit,begin,end,desc)]

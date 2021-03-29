@@ -1,14 +1,14 @@
 # pour réaliser le test nécessaire: https://community.rstudio.com/t/all-equal-on-tibbles-ignores-attributes/4299/2
 
 test_that("import measures CSV  works", {
-  result <-
-    import_measures_csv(
-      "./csv/import_measures_csv/before.csv",
-      "patient",
-      "date_prlvt",
-      "type_examen",
-      "valeur"
-    )
+  analysr_env$measures <- analysr_env$measures[0, ]
+  import_measures_csv(
+   "./csv/import_measures_csv/before.csv",
+    "patient",
+    "date_prlvt",
+    "type_examen",
+    "valeur"
+  )
 
   stat_unit <- c(101929077, 101929076)
   date <-
@@ -20,10 +20,10 @@ test_that("import measures CSV  works", {
   colnames(excepted) <- c("stat_unit", "date", "tag", "value")
 
 
-  expect_equal(dplyr::all_equal(excepted, result), TRUE)
+  expect_equal(dplyr::all_equal(excepted, analysr_env$measures), TRUE)
 })
 
-test_that("import measures CSV works in global variable", {
+test_that("import measures CSV works when import twice", {
   # reset dataframe
   analysr_env$measures <- analysr_env$measures[0, ]
 
@@ -49,7 +49,7 @@ test_that("import measures CSV works in global variable", {
 
   excepted <-
     as.data.frame(quiet_read_csv(
-      file = "./csv/import_measures_csv/after2.csv"))
+      file = "./csv/import_measures_csv/after2.csv")$result)
 
-  expect_equal(all_equal(analysr_env$measures, excepted), TRUE)
+  expect_equal(dplyr::all_equal(analysr_env$measures, excepted), TRUE)
 })
