@@ -18,3 +18,15 @@ setup_new_env <- function() {
 
 }
 setup_new_env()
+
+# get an hash (number or verctor depending on `n` value)
+get_hash <- function(n) {
+    if (n == 1) {
+        result <- analysr_env$current_hash
+        analysr_env$current_hash <- 1 + analysr_env$current_hash
+    } else {
+        result <- analysr_env$current_hash:(n - 1 + analysr_env$current_hash)
+        analysr_env$current_hash <- n + analysr_env$current_hash
+    }
+    result
+}

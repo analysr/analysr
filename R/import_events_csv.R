@@ -13,12 +13,10 @@ import_events_csv <-
     # on pourrait utiliser dplyr pour extraire des colonnes
     colnames(result) <- c("stat_unit", "date", "tag")
 
-    n <- nrow(result)
     result <- cbind(
-      hash = analysr_env$current_hash:(n - 1 + analysr_env$current_hash),
+      hash = get_hash(nrow(result)),
       result
     )
-    analysr_env$current_hash <- n + analysr_env$current_hash
 
     analysr_env$events <- rbind(analysr_env$events, result)
     result

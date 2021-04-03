@@ -54,7 +54,7 @@ test_that("import events CSV works when import twice", {
   expect_equal(
     dplyr::all_equal(analysr_env$events[c("stat_unit", "date", "tag")],
                      excepted), TRUE)
-  
+
   # check if hash column exist in dataframe colnames
   expect_equal("hash" %in% colnames(analysr_env$events), TRUE)
   # check if hash is first column
