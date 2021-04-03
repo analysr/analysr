@@ -1,8 +1,6 @@
 language: r
 r:
-  - oldrel
   - release
-  - devel
 r_binary_packages:
   - devtools
   - roxygen2
@@ -21,9 +19,3 @@ script: |
   if(any(testr\$error) || any(testr\$warning > 0)) \
     stop('Found failing tests') \
   "
-  pass=$?
-  if [[ $pass -ne 0 || $(grep -i "ERROR" analysr.Rcheck/00check.log) != "" ]]; then
-    (exit 1)
-  else
-    (exit 0)
-  fi
