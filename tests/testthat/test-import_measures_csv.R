@@ -5,7 +5,7 @@ test_that("import measures CSV  works", {
   # reset env
   setup_new_env()
   import_measures_csv(
-    "./csv/import_measures_csv/before.csv",
+    "./csv/import_measures_csv/before-advanced.csv",
     "patient",
     "date_prlvt",
     "type_examen",

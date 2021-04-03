@@ -5,7 +5,7 @@ test_that("import periods CSV  works", {
   # reset env
   setup_new_env()
 
-  import_periods_csv("./csv/import_periods_csv/before.csv",
+  import_periods_csv("./csv/import_periods_csv/before-advanced.csv",
                      "PERSON",
                      "BEGIN",
                      "END",

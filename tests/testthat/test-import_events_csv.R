@@ -5,7 +5,7 @@ test_that("import events CSV  works", {
   # reset env
   setup_new_env()
 
-  import_events_csv("./csv/import_events_csv/before.csv",
+  import_events_csv("./csv/import_events_csv/before-advanced.csv",
                      "PERSON",
                      "TIMESTAMP",
                      "TITLE")
