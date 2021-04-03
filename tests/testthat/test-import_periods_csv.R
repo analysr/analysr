@@ -1,4 +1,5 @@
-# pour réaliser le test nécessaire: https://community.rstudio.com/t/all-equal-on-tibbles-ignores-attributes/4299/2
+# pour réaliser le test nécessaire: 
+# https://community.rstudio.com/t/all-equal-on-tibbles-ignores-attributes/4299/2
 
 test_that("import periods CSV  works", {
   # reset dataframe
