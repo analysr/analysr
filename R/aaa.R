@@ -12,5 +12,9 @@ setup_new_env <- function() {
     # create data frame for events
     analysr_env$events <- data.frame(matrix(ncol = 3, nrow = 0))
     colnames(analysr_env$events) <- c("stat_unit", "date", "tag")
-} 
+
+    # define current hash not used
+    analysr_env$current_hash <- 0
+
+}
 setup_new_env()

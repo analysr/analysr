@@ -12,6 +12,14 @@ import_events_csv <-
     # https://stackoverflow.com/questions/10085806/extracting-specific-columns-from-a-data-frame
     # on pourrait utiliser dplyr pour extraire des colonnes
     colnames(result) <- c("stat_unit", "date", "tag")
+
+    n <- nrow(result)
+    result <- cbind(
+      hash = analysr_env$current_hash:(n - 1 + analysr_env$current_hash),
+      result
+    )
+    analysr_env$current_hash <- n + analysr_env$current_hash
+
     analysr_env$events <- rbind(analysr_env$events, result)
     result
   }
