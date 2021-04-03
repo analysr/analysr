@@ -2,8 +2,8 @@
 # https://community.rstudio.com/t/all-equal-on-tibbles-ignores-attributes/4299/2
 
 test_that("import periods CSV  works", {
-  # reset dataframe
-  analysr_env$periods <- analysr_env$periods[0, ]
+  # reset env
+  setup_new_env()
 
   import_periods_csv("./csv/import_periods_csv/before.csv",
                      "PERSON",
@@ -21,8 +21,8 @@ test_that("import periods CSV  works", {
 })
 
 test_that("import periods CSV works when import twice", {
-  # reset dataframe
-  analysr_env$periods <- analysr_env$periods[0, ]
+  # reset env
+  setup_new_env()
 
   # import twice
   import_periods_csv("./csv/import_periods_csv/before.csv",

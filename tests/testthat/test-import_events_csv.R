@@ -2,8 +2,8 @@
 # https://community.rstudio.com/t/all-equal-on-tibbles-ignores-attributes/4299/2
 
 test_that("import events CSV  works", {
-  # reset dataframe
-  analysr_env$events <- analysr_env$events[0, ]
+  # reset env
+  setup_new_env()
 
   import_events_csv("./csv/import_events_csv/before.csv",
                      "PERSON",
@@ -19,8 +19,8 @@ test_that("import events CSV  works", {
 })
 
 test_that("import events CSV works when import twice", {
-  # reset dataframe
-  analysr_env$events <- analysr_env$events[0, ]
+  # reset env
+  setup_new_env()
 
   # import twice
   import_events_csv("./csv/import_events_csv/before.csv",
