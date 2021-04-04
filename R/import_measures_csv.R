@@ -1,6 +1,3 @@
-
-
-
 import_measures_csv <-
   function (csv_path,
             stat_unit = "stat_unit",
