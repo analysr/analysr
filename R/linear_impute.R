@@ -1,10 +1,14 @@
 linear_impute <-
 
-  function(value_start,
-           value_end,
-           data){
+  function(data, first_line, last_line){
+    data <- data[first_line:last_line,]
+# here the first and last values of data are correct and we want to impute the
+    # in-between values
 
     n <- length(data$stat_unit)
+
+    value_start <- data$value[1]
+    value_end <- data$value[n]
 
     data$value[1] <- value_start
 

@@ -6,7 +6,7 @@ aggregate <-
 
     data <- subset(data, date < interval_end)
     data <- subset(data, date > interval_start)
-    print (data)
+
     method(data$value)
 
 
