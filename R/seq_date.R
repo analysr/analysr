@@ -10,7 +10,7 @@ seq_date <- function (begin, end, freq) {
   i <- lubridate::interval(begin, end)
 
   result <- begin
-  while (begin + freq<end) {
+  while (begin + freq < end) {
     begin <- begin + freq
     result <- c(result, begin)
   }
