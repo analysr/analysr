@@ -1,12 +1,13 @@
 test_that("seq_date works", {
-  begin <- "1900 01 01"
-  end <- "1900 03 24"
+  begin <- lubridate::ymd_hm("00 03 01 00 00")
+  end <- lubridate::ymd_hm("00 05 15 00 00")
   frequency <- 12*lubridate::days()
 
-  excepted_days <- lubridate::as_date(c("1900 01 01", "1900 01 13", "1900 01 25",
-                                        "1900 02 06", "1900 02 18", "1900 03 02",
-                                        "1900 03 14"))
-  result_days <- seq_date2(begin, end, frequency)
+  excepted_days <- lubridate::ymd_hm(c("00 03 01 00 00", "00 03 13 00 00",
+                                        "00 03 25 00 00", "00 04 06 00 00",
+                                        "00 04 18 00 00", "00 04 30 00 00",
+                                        "00 05 12 00 00"))
+  result_days <- seq_date(begin, end, frequency)
   expect_equal(result_days, excepted_days)
 })
 # CTRL + SHIFT + T
