@@ -4,8 +4,9 @@
 # seq_date("2020/12/17", "2020/12/24", lubridate::days())
 
 seq_date <- function (begin, end, freq) {
-  begin <- lubridate::as_date(begin)
-  end <- lubridate::as_date(end)
+  #print(begin)
+  #begin <- lubridate::ymd_hm(begin)
+  #end <- lubridate::ymd_hm(end)
 
   i <- lubridate::interval(begin, end)
 
@@ -19,8 +20,8 @@ seq_date <- function (begin, end, freq) {
 
 
 seq_date2 <- function (begin, end, freq2) {
-  begin <- lubridate::as_date(begin)
-  end <- lubridate::as_date(end)
+  begin <- begin
+  end <- end
 
   i <- lubridate::interval(begin, end)
 
