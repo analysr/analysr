@@ -12,7 +12,7 @@ impute <-
 #let's only take the data we need
     data <- subset (data, tag = tag_wanted)
     data <- subset (data, date > period_start)
-    data <- subset (data, date < period_end)
+    data <- subset (data, date <= period_end)
     data <- subset (data, stat_unit == stat_unit_wanted)#ok
 
 
@@ -36,12 +36,17 @@ impute <-
       #in sample are all the values taken in the interval of time that we're
       #working on (for example a day)(between the i date and the (i+1))
 
-      sample <- subset(data, lubridate::ymd_hm(date) >= result$final_date[i])
-      print(result$final_date[i])
-      sample <- subset(
-        data, date < (result$final_date[i] + temporal_granularity))
       print(i)
+      print(result$final_date[i])
+      sample <- subset(data, date >= result$final_date[i])
       print(sample)
+      sample <- subset(
+        sample, date < (result$final_date[i] + temporal_granularity))
+
+
+
+
+
 
       if (length(sample$date) > 0){
         #result$final_value[i] <- aggregate(sample,
@@ -53,6 +58,7 @@ impute <-
         result$status[i] <- "AGGREGATED"
       }
     }
+    print(result)
 
     #let's complete by imputing the missing values
     for (i in 1:n){
