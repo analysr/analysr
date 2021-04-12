@@ -21,10 +21,11 @@ test_that("multiplication works", {
   stat_unit <- rep(101929076, 8)
   date <- lubridate::ymd_hm("06-11-10 10:00") + lubridate::days() * c(0:7)
   tag <- rep("Kaliemie", 8)
-  value <- ????
-  status <- ????
+  value <- c(4.7, 7.1, 6.2, 5.3, 6.275, 7.250, 8.225, 6.6)
+  status <- c("AGGREGATED", "AGGREGATED", "IMPUTED", "AGGREGATED", "IMPUTED",
+              "IMPUTED", "AGGREGATED", "AGGREGATED" )
 
-  expected_result <-
+  expected_result <- data.frame(stat_unit, date, tag, value, status)
 
 
   expect_equal(result, expected_result)

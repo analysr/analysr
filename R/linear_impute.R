@@ -7,6 +7,7 @@ linear_impute <-
 
     n <- length(data$stat_unit)
 
+
     value_start <- data$value[1]
     value_end <- data$value[n]
 
@@ -20,7 +21,7 @@ linear_impute <-
 
     imputed_values <- value_start + d_value * c(0:(n-1))
 
-    data$value <- imputed_values
+    data$value <- imputed_values #problème !
 
     data$value[n] <- value_end
 
