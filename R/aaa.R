@@ -19,7 +19,15 @@ setup_new_env <- function() {
 }
 setup_new_env()
 
-# get an hash (number or verctor depending on `n` value)
+#' Get a hash
+#'
+#' Return a number or verctor depending on `n` value
+#'
+#' @return A number or verctor depending on `n` value
+#'
+#' @param n A number.
+#' @examples
+#' get_hash(10)
 get_hash <- function(n) {
     if (n == 1) {
         result <- analysr_env$current_hash

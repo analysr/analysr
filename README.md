@@ -23,3 +23,10 @@ or CTRL+SHIFT+L in RStudio
 ```
 devtools::build()
 ```
+
+### Documentation
+
+```
+ devtools::document()
+```
+or CTRL+SHIFT+D in RStudio
