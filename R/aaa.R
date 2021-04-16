@@ -1,5 +1,7 @@
 analysr_env <- new.env(parent = emptyenv())
 
+#' Setup new envirenment
+#'
 setup_new_env <- function() {
     # create data frame for measures
     analysr_env$measures <- data.frame(matrix(ncol = 4, nrow = 0))
