@@ -2,7 +2,8 @@ import_events_csv <-
   function (csv_path,
             stat_unit = "stat_unit",
             date = "date",
-            tag = "tag") {
+            tag = "tag",
+            ...) {
     quiet_read_csv <- purrr::quietly(readr::read_csv)
 
     result <- quiet_read_csv(file = csv_path)$result
