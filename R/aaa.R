@@ -3,15 +3,21 @@ analysr_env <- new.env(parent = emptyenv())
 setup_new_env <- function() {
     # create data frame for measures
     analysr_env$measures <- data.frame(matrix(ncol = 5, nrow = 0))
-    colnames(analysr_env$measures) <- c("hash","stat_unit", "date", "tag", "value")
+    colnames(analysr_env$measures) <-
+        c("hash", "stat_unit", "date", "tag", "value")
 
     # create data frame for periods
     analysr_env$periods <- data.frame(matrix(ncol = 5, nrow = 0))
-    colnames(analysr_env$periods) <- c("hash","stat_unit", "begin", "end", "desc")
+    colnames(analysr_env$periods) <-
+        c("hash", "stat_unit", "begin", "end", "desc")
 
     # create data frame for events
     analysr_env$events <- data.frame(matrix(ncol = 4, nrow = 0))
-    colnames(analysr_env$events) <- c("hash","stat_unit", "date", "tag")
+    colnames(analysr_env$events) <- c("hash", "stat_unit", "date", "tag")
+
+    # create data frame for stat_units
+    analysr_env$stat_units <- data.frame(matrix(ncol = 2, nrow = 0))
+    colnames(analysr_env$stat_units) <- c("hash", "stat_unit")
 
     # define current hash not used
     analysr_env$current_hash <- 0
