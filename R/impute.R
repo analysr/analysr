@@ -8,6 +8,7 @@ impute <-
            aggregation_method = mean_aggregate,
            impute_method = linear_impute,
            information_lost_after = 5 * temporal_granularity) {
+    print(data)
 
 #let's only take the data we need
     data <- subset (data, tag = tag_wanted)
@@ -70,7 +71,7 @@ impute <-
 
 
     }
-
+    print(result)
     result
 
     }
