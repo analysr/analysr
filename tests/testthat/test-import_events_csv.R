@@ -20,6 +20,9 @@ test_that("import events CSV  works", {
     dplyr::all_equal(analysr_env$events[c("stat_unit", "date", "tag")],
                      excepted), TRUE)
 
+  # check that stat units have been added
+  expect_equal(nrow(analysr_env$stat_units), 2)
+
   # check if hash column exist in dataframe
   expect_equal("hash" %in% colnames(analysr_env$events), TRUE)
 
@@ -27,7 +30,7 @@ test_that("import events CSV  works", {
   expect_equal("hash", colnames(analysr_env$events)[1])
 
   # check if current hash has changed in env
-  expect_equal(analysr_env$current_hash, 2)
+  expect_equal(analysr_env$current_hash, 4)
 })
 
 test_that("import events CSV works when import twice", {
@@ -54,6 +57,12 @@ test_that("import events CSV works when import twice", {
   expect_equal(
     dplyr::all_equal(analysr_env$events[c("stat_unit", "date", "tag")],
                      excepted), TRUE)
+
+  # check that stat units have been added
+  expect_equal(nrow(analysr_env$stat_units), 2)
+
+  # check if current hash has changed in env
+  expect_equal(analysr_env$current_hash, 6)
 
   # check if hash column exist in dataframe colnames
   expect_equal("hash" %in% colnames(analysr_env$events), TRUE)
