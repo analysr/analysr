@@ -12,17 +12,29 @@ test_that("import measures CSV  works", {
     "valeur"
   )
 
-  stat_unit <- c(101929077, 101929076)
-  date <-
-    c(lubridate::ymd_hm("2006-10-23 12:00"),
-      lubridate::ymd_hm("2006-11-10 11:00"))
-  tag <- c("Cholesterol", "Kaliemie")
-  value <- c(0.4, 4.7)
-  excepted <- data.frame(stat_unit, date, tag, value)
-  colnames(excepted) <- c("stat_unit", "date", "tag", "value")
+  quiet_read_csv <- purrr::quietly(readr::read_csv)
+  excepted <-
+    as.data.frame(quiet_read_csv(
+      file = "./csv/import_measures_csv/after.csv")$result
+    )
 
+  # to check dataframes without hash
+  expect_equal(
+    dplyr::all_equal(
+      analysr_env$measures[c("stat_unit","date" ,"tag" ,"value")],
+      excepted), TRUE)
 
-  expect_equal(dplyr::all_equal(excepted, analysr_env$measures), TRUE)
+  # check that stat units have been added
+  expect_equal(nrow(analysr_env$stat_units), 2)
+
+  # check if hash column exist in dataframe
+  expect_equal("hash" %in% colnames(analysr_env$measures), TRUE)
+
+  # check if hash is first column
+  expect_equal("hash", colnames(analysr_env$events)[1])
+
+  # check if current hash has changed in env
+  expect_equal(analysr_env$current_hash, 4)
 })
 
 test_that("import measures CSV works when import twice", {
@@ -53,5 +65,20 @@ test_that("import measures CSV works when import twice", {
     as.data.frame(quiet_read_csv(
       file = "./csv/import_measures_csv/after2.csv")$result)
 
-  expect_equal(dplyr::all_equal(analysr_env$measures, excepted), TRUE)
+  # to check dataframes without hash
+  expect_equal(
+    dplyr::all_equal(excepted,
+                     analysr_env$measures[c("stat_unit", "date", "tag", "value")]), TRUE)
+  # check that stat units have been added
+  expect_equal(nrow(analysr_env$stat_units), 2)
+
+  # check if current hash has changed in env
+  expect_equal(analysr_env$current_hash, 6)
+
+  # check if hash column exist in dataframe colnames
+  expect_equal("hash" %in% colnames(analysr_env$measures), TRUE)
+
+  # check if hash is first column
+  expect_equal("hash", colnames(analysr_env$measures)[1])
+
 })

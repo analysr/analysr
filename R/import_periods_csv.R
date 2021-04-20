@@ -13,6 +13,14 @@ import_periods_csv <-
     # https://stackoverflow.com/questions/10085806/extracting-specific-columns-from-a-data-frame
     # on pourrait utiliser dplyr pour extraire des colonnes
     colnames(result) <- c("stat_unit", "begin", "end", "desc")
+
+    add_stat_units(result$stat_unit)
+
+    result <- cbind(
+      hash = get_hash(nrow(result)),
+      result
+    )
+
     analysr_env$periods <- rbind(analysr_env$periods, result)
     result
   }

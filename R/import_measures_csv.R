@@ -13,6 +13,17 @@ import_measures_csv <-
     # https://stackoverflow.com/questions/10085806/extracting-specific-columns-from-a-data-frame
     # on pourrait utiliser dplyr pour extraire des colonnes
     colnames(result) <- c("stat_unit", "date", "tag", "value")
+
+    add_stat_units(result$stat_unit)
+
+    result <- cbind(
+      hash = get_hash(nrow(result)),
+      result
+    )
+
+
+
+
     analysr_env$measures <- rbind(analysr_env$measures, result)
     result
   }
