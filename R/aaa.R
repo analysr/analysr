@@ -24,7 +24,7 @@ setup_new_env <- function() {
     colnames(analysr_env$descriptions) <- c("hash", "type", "value")
 
     # define current hash not used
-    analysr_env$current_hash <- 0
+    analysr_env$current_hash <- 1
 
 }
 setup_new_env()
