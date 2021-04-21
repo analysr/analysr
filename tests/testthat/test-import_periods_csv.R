@@ -34,7 +34,7 @@ test_that("import periods CSV  works", {
   expect_equal("hash", colnames(analysr_env$periods)[1])
 
   # check if current hash has changed in env
-  expect_equal(analysr_env$current_hash, 4)
+  expect_equal(analysr_env$current_hash, 5)
 })
 
 test_that("import periods CSV works when import twice", {
@@ -68,7 +68,7 @@ test_that("import periods CSV works when import twice", {
   expect_equal(nrow(analysr_env$stat_units), 2)
 
   # check if current hash has changed in env
-  expect_equal(analysr_env$current_hash, 6)
+  expect_equal(analysr_env$current_hash, 7)
 
   # check if hash column exist in dataframe colnames
   expect_equal("hash" %in% colnames(analysr_env$periods), TRUE)
