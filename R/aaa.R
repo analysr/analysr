@@ -19,6 +19,10 @@ setup_new_env <- function() {
     analysr_env$stat_units <- data.frame(matrix(ncol = 2, nrow = 0))
     colnames(analysr_env$stat_units) <- c("hash", "stat_unit")
 
+    # create data frame for descriptions
+    analysr_env$descriptions <- data.frame(matrix(ncol = 3, nrow = 0))
+    colnames(analysr_env$descriptions) <- c("hash", "type", "value")
+
     # define current hash not used
     analysr_env$current_hash <- 0
 
