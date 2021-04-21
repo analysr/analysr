@@ -69,3 +69,18 @@ test_that("import events CSV works when import twice", {
   # check if hash is first column
   expect_equal("hash", colnames(analysr_env$events)[1])
 })
+
+test_that("import events CSV works when import twice", {
+  # reset env
+  setup_new_env()
+
+  # import twice
+  import_events_csv("./csv/import_events_csv/before-optional-data.csv",
+                     "stat_unit",
+                     "date",
+                     "tag",
+                     c("context", "location"))
+                     
+  # 4 rows should have been added to descriptions table
+  expect_equal(nrow(analysr_env$descriptions), 4)
+})
