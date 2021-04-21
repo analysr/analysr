@@ -6,9 +6,8 @@
 #' @param hash a vector containing hash to associate
 #' @param types a vector of strings (the name of the columns to import)
 #' @param data the data frame you want to extract data from
-fill_descriptions <- function(hash, types, data) {
-
-  n <- length(hash) # can be optimized
+#' @param n (optional) length of hash if already calculated 
+fill_descriptions <- function(hash, types, data, n = length(hash)) {
 
   for (type in types) {
     result <- data.frame(hash = hash, type = rep(type, n), value = data[, type])
