@@ -1,5 +1,5 @@
 import_events_csv <-
-  function (csv_path,
+  function(csv_path,
             stat_unit = "stat_unit",
             date = "date",
             tag = "tag",

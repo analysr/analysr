@@ -3,7 +3,7 @@ test_that("fill_description works", {
   setup_new_env()
 
   hash <- c(1, 2, 3)
-  types <- c("location","during")
+  types <- c("location", "during")
   data <- data.frame(
     first_column = c("value_1", "value_2", "value_3"),
     second_column = c("value_1", "value_2", "value_3"),

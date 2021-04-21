@@ -21,7 +21,7 @@ test_that("import measures CSV  works", {
   # to check dataframes without hash
   expect_equal(
     dplyr::all_equal(
-      analysr_env$measures[c("stat_unit","date" ,"tag" ,"value")],
+      analysr_env$measures[c("stat_unit", "date", "tag", "value")],
       excepted), TRUE)
 
   # check that stat units have been added
@@ -68,7 +68,7 @@ test_that("import measures CSV works when import twice", {
   # to check dataframes without hash
   expect_equal(
     dplyr::all_equal(excepted,
-                     analysr_env$measures[c("stat_unit", "date", "tag", "value")]), TRUE)
+      analysr_env$measures[c("stat_unit", "date", "tag", "value")]), TRUE)
   # check that stat units have been added
   expect_equal(nrow(analysr_env$stat_units), 2)
 

@@ -63,7 +63,7 @@ test_that("import periods CSV works when import twice", {
   # to check dataframes without hash
   expect_equal(
     dplyr::all_equal(excepted,
-                     analysr_env$periods[c("stat_unit", "begin", "end", "desc")]), TRUE)
+      analysr_env$periods[c("stat_unit", "begin", "end", "desc")]), TRUE)
   # check that stat units have been added
   expect_equal(nrow(analysr_env$stat_units), 2)
 

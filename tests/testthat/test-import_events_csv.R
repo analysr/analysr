@@ -80,7 +80,7 @@ test_that("import events CSV works when import twice", {
                      "date",
                      "tag",
                      c("context", "location"))
-                     
+
   # 4 rows should have been added to descriptions table
   expect_equal(nrow(analysr_env$descriptions), 4)
 })
