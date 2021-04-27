@@ -5,7 +5,7 @@
 #' @param save_path A path to save current environment
 #' (existence is not required)
 #' @examples
-#' save_env_csv('~/analysr-env/')
+#' save_env_csv("~/analysr-env/")
 save_env_csv <- function(save_path) {
 
   if(missing(save_path)) {
