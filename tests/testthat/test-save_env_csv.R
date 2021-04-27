@@ -2,24 +2,16 @@ test_that("save_env_csv works", {
   # reset env
   setup_new_env()
 
-  test_folder <- file.path(getwd(), "save_env_csv_tmp/")
-  # create test folder (if not exist)
-  if(!dir.exists(test_folder)) {
-    dir.create(test_folder, showWarnings = FALSE)
-  }
-
-  save_env_csv("./save_env_csv_tmp/test/")
+  save_env_csv("./tmp/save_env_csv/test/")
 
   # check if dir exist
   # (should be created by the function)
-  expect_equal(dir.exists("./save_env_csv_tmp/test/"), TRUE)
+  expect_equal(dir.exists("./tmp/save_env_csv/test/"), TRUE)
   # check if files exists
-  expect_equal(file.exists("./save_env_csv_tmp/test/current_hash"), TRUE)
-  expect_equal(file.exists("./save_env_csv_tmp/test/events.csv"), TRUE)
-  expect_equal(file.exists("./save_env_csv_tmp/test/descriptions.csv"), TRUE)
-  expect_equal(file.exists("./save_env_csv_tmp/test/periods.csv"), TRUE)
-  expect_equal(file.exists("./save_env_csv_tmp/test/stat_units.csv"), TRUE)
+  expect_equal(file.exists("./tmp/save_env_csv/test/current_hash"), TRUE)
+  expect_equal(file.exists("./tmp/save_env_csv/test/events.csv"), TRUE)
+  expect_equal(file.exists("./tmp/save_env_csv/test/descriptions.csv"), TRUE)
+  expect_equal(file.exists("./tmp/save_env_csv/test/periods.csv"), TRUE)
+  expect_equal(file.exists("./tmp/save_env_csv/test/stat_units.csv"), TRUE)
 
-  # remove test folder
-  unlink(test_folder, recursive = TRUE, force = TRUE)
 })
