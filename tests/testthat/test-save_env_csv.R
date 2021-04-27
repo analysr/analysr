@@ -8,7 +8,7 @@ test_that("save_env_csv works", {
   save_env_csv("./save_env_csv_tmp/test/")
 
   # check if dir exist
-  # (schould be created by the function)
+  # (should be created by the function)
   expect_equal(dir.exists("./save_env_csv_tmp/test/"), TRUE)
   # check if files exists
   expect_equal(file.exists("./save_env_csv_tmp/test/current_hash"), TRUE)

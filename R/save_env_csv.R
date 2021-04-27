@@ -1,8 +1,6 @@
 #' Save env csv
 #'
-#' Return a number or verctor depending on `n` value
-#'
-#'
+#' Save current environment in a folder containing CSV
 #'
 #' @param save_path A path to save current environment
 #' (existence is not required)
@@ -38,6 +36,4 @@ save_env_csv <- function(save_path) {
   write(analysr_env$current_hash, file.path(save_path, 'current_hash'))
 
   # maybe it will be good to add a better way to save variable
-
-  #save(analysr_env, file = file.path(save_path, "data.RData"))
 }
