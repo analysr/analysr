@@ -1,4 +1,7 @@
 test_that("load_env_csv works", {
+  # reset env
+  setup_new_env()
+
   load_env_csv("./csv/load_env_csv/save/")
 
   expect_equal(analysr_env$current_hash, 9)

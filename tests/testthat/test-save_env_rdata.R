@@ -1,4 +1,7 @@
 test_that("save_env_rdata works", {
+  # reset env
+  setup_new_env()
+
   test_folder <- file.path(getwd(), "save_env_rdata_tmp/")
   # create test folder (if not exist)
   if(!dir.exists(test_folder)) {
