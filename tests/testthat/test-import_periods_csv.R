@@ -12,7 +12,7 @@ test_that("import periods CSV  works", {
                      "DESCRIPTION")
 
   quiet_read_csv <- purrr::quietly(readr::read_csv)
-  excepted <-
+  expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_periods_csv/after.csv")$result
     )
@@ -21,7 +21,7 @@ test_that("import periods CSV  works", {
   expect_equal(
     dplyr::all_equal(
       analysr_env$periods[c("stat_unit", "begin", "end", "desc")],
-      excepted), TRUE)
+      expected), TRUE)
 
 
   # check that stat units have been added
@@ -55,14 +55,14 @@ test_that("import periods CSV works when import twice", {
 
   quiet_read_csv <- purrr::quietly(readr::read_csv)
 
-  excepted <-
+  expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_periods_csv/after2.csv"
     )$result)
 
   # to check dataframes without hash
   expect_equal(
-    dplyr::all_equal(excepted,
+    dplyr::all_equal(expected,
       analysr_env$periods[c("stat_unit", "begin", "end", "desc")]), TRUE)
   # check that stat units have been added
   expect_equal(nrow(analysr_env$stat_units), 2)

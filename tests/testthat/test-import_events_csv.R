@@ -11,14 +11,14 @@ test_that("import events CSV  works", {
                      "TITLE")
 
   quiet_read_csv <- purrr::quietly(readr::read_csv)
-  excepted <-
+  expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_events_csv/after.csv")$result
     )
   # to check dataframes without hash
   expect_equal(
     dplyr::all_equal(analysr_env$events[c("stat_unit", "date", "tag")],
-                     excepted), TRUE)
+                     expected), TRUE)
 
   # check that stat units have been added
   expect_equal(nrow(analysr_env$stat_units), 2)
@@ -48,7 +48,7 @@ test_that("import events CSV works when import twice", {
                      "TITLE")
 
   quiet_read_csv <- purrr::quietly(readr::read_csv)
-  excepted <-
+  expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_events_csv/after2.csv"
     )$result)
@@ -56,7 +56,7 @@ test_that("import events CSV works when import twice", {
   # to check dataframes without hash
   expect_equal(
     dplyr::all_equal(analysr_env$events[c("stat_unit", "date", "tag")],
-                     excepted), TRUE)
+                     expected), TRUE)
 
   # check that stat units have been added
   expect_equal(nrow(analysr_env$stat_units), 2)
@@ -70,7 +70,7 @@ test_that("import events CSV works when import twice", {
   expect_equal("hash", colnames(analysr_env$events)[1])
 })
 
-test_that("import events CSV works when import twice", {
+test_that("import events CSV works and fill descriptions", {
   # reset env
   setup_new_env()
 
