@@ -23,7 +23,7 @@ test_that("multiplication works", {
   tag <- rep("Kaliemie", 8)
   value <- c(4.7, 7.1, 6.2, 5.3, 6.275, 7.250, 8.225, 6.6)
   status <- c("AGGREGATED", "AGGREGATED", "IMPUTED", "AGGREGATED", "IMPUTED",
-              "IMPUTED", "AGGREGATED", "AGGREGATED" )
+              "IMPUTED", "AGGREGATED", "AGGREGATED")
 
   expected_result <- data.frame(stat_unit, date, tag, value, status)
 

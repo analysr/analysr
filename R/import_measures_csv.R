@@ -12,9 +12,9 @@ import_measures_csv <-
 
     n <- nrow(result)
     hash <- get_hash(n)
-    
+
     if (!missing(optional_data)) {
-      fill_descriptions(hash,optional_data, result,n)
+      fill_descriptions(hash, optional_data, result, n)
     }
 
     result <- result[c(stat_unit, date, tag, value)]
@@ -23,7 +23,7 @@ import_measures_csv <-
 
     add_stat_units(result$stat_unit)
 
-   
+
     result <- cbind(
       hash,
       result

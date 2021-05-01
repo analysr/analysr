@@ -7,7 +7,7 @@
 #' @examples
 #' save_env_rdata("~/analysr-env/")
 save_env_rdata <- function(save_path) {
-  if(missing(save_path)) {
+  if (missing(save_path)) {
     # defines save path
     save_path <- getwd()
   }
@@ -15,6 +15,5 @@ save_env_rdata <- function(save_path) {
   save_name <- paste0(floor(as.numeric(Sys.time())), "-save.RData")
   save_file <- file.path(save_path, save_name)
 
-  save(analysr_env, file=save_file)
+  save(analysr_env, file = save_file)
 }
-

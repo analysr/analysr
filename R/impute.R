@@ -58,12 +58,12 @@ impute <-
       if (result$status[i] == "NOT TREATED") {
         result$status[i] <- "IMPUTED"
         j <- 1
-        while (i + j < n && result$status[i + j] == "NOT TREATED" ) {
+        while (i + j < n && result$status[i + j] == "NOT TREATED") {
           j <- j + 1
         }
 
         if (j * temporal_granularity <= information_lost_after) {
-          result[(i - 1):(i + j),] <- impute_method(result, i - 1, i + j)
+          result[(i - 1):(i + j), ] <- impute_method(result, i - 1, i + j)
 
           }
       }

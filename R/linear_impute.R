@@ -1,9 +1,7 @@
-linear_impute <-
-
-  function(data, first_line, last_line){
-    data <- data[first_line:last_line,]
-# here the first and last values of data are correct and we want to impute the
-    # in-between values
+linear_impute <- function(data, first_line, last_line) {
+    data <- data[first_line:last_line, ]
+    # here the first and last values of data are correct and we want to
+    # impute the in-between values
 
     n <- length(data$stat_unit)
 
@@ -19,7 +17,7 @@ linear_impute <-
     d_value <- global_value_difference * d_time / global_time_difference
 
 
-    imputed_values <- value_start + d_value * c(0:(n-1))
+    imputed_values <- value_start + d_value * c(0:(n - 1))
 
     data$value <- imputed_values #problème !
 

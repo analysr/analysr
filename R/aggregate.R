@@ -1,8 +1,8 @@
 aggregate <-
-  function (data,
+  function(data,
             interval_start,
             interval_end,
-            method){
+            method) {
 
     data <- subset(data, date < interval_end)
     data <- subset(data, date > interval_start)

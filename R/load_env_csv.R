@@ -14,7 +14,7 @@ load_env_csv <- function(save_path) {
 
   df_to_load %>%
     purrr::map(function(x) {
-      file_path = file.path(save_path, paste0(x, ".csv"))
+      file_path <- file.path(save_path, paste0(x, ".csv"))
       result_csv <- quiet_read_csv(file = file_path)$result
       result_csv <- as.data.frame(result_csv)
 
@@ -22,7 +22,8 @@ load_env_csv <- function(save_path) {
     })
 
   # load current_hash
-  analysr_env$current_hash <- as.numeric(readr::read_file(file.path(save_path, "current_hash")))
+  analysr_env$current_hash <- as.numeric(
+                        readr::read_file(file.path(save_path, "current_hash")))
 
   # maybe it will be good to add a better way to load variable
 }

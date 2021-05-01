@@ -8,7 +8,7 @@
 #' save_env_csv("~/analysr-env/")
 save_env_csv <- function(save_path) {
 
-  if(missing(save_path)) {
+  if (missing(save_path)) {
     # defines name (using a timestamp)
     save_name <- paste0(floor(as.numeric(Sys.time())), "-save")
 
@@ -18,7 +18,7 @@ save_env_csv <- function(save_path) {
 
 
   # create save folder (if not exist)
-  if(!dir.exists(save_path)) {
+  if (!dir.exists(save_path)) {
     dir.create(save_path, showWarnings = FALSE)
   }
 
@@ -28,12 +28,12 @@ save_env_csv <- function(save_path) {
 
   df_to_save %>%
     purrr::map(function(x) {
-      file_path = file.path(save_path, paste0(x, '.csv'))
-      write.csv(getElement(analysr_env, x),file_path, row.names = FALSE)
+      file_path <- file.path(save_path, paste0(x, ".csv"))
+      write.csv(getElement(analysr_env, x), file_path, row.names = FALSE)
     })
 
   # save current_hash
-  write(analysr_env$current_hash, file.path(save_path, 'current_hash'))
+  write(analysr_env$current_hash, file.path(save_path, "current_hash"))
 
   # maybe it will be good to add a better way to save variable
 }

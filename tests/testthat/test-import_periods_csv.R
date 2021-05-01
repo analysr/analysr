@@ -1,5 +1,4 @@
-# to compare dataframes :
-# https://community.rstudio.com/t/all-equal-on-tibbles-ignores-attributes/4299/2
+# to compare dataframes : https://bit.ly/3gNYsZ4
 
 test_that("import periods CSV  works", {
   # reset env
@@ -82,7 +81,7 @@ test_that("import periods CSV works and fill descriptions", {
   # reset env
   setup_new_env()
 
-  # import 
+  # import
   import_periods_csv("./csv/import_periods_csv/before-advanced.csv",
                      "PERSON",
                      "BEGIN",
@@ -106,12 +105,12 @@ test_that("import periods CSV works and fill descriptions", {
     as.data.frame(quiet_read_csv(
       file = "./csv/import_periods_csv/after-descriptions.csv")$result
     )
-  expected_descriptions <- transform(expected_descriptions, 
+  expected_descriptions <- transform(expected_descriptions,
                                      hash = as.integer(hash))
   # conflict when importing hash have to be an integer
 
   expect_equal(dplyr::all_equal(
       analysr_env$descriptions, expected_descriptions
   ), TRUE)
-  
+
 })
