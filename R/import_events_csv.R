@@ -24,7 +24,7 @@ import_events_csv <-
     add_stat_units(result$stat_unit)
 
     result <- cbind(
-      hash = hash,
+      hash,
       result
     )
 

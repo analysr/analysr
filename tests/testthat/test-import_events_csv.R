@@ -74,13 +74,34 @@ test_that("import events CSV works and fill descriptions", {
   # reset env
   setup_new_env()
 
-  # import twice
+  quiet_read_csv <- purrr::quietly(readr::read_csv)
+
+  # import 
   import_events_csv("./csv/import_events_csv/before-optional-data.csv",
                      "stat_unit",
                      "date",
                      "tag",
                      c("context", "location"))
 
-  # 4 rows should have been added to descriptions table
-  expect_equal(nrow(analysr_env$descriptions), 4)
+  expected <-
+    as.data.frame(quiet_read_csv(
+      file = "./csv/import_events_csv/after.csv")$result
+    )
+  # to check dataframes without hash
+  expect_equal(
+    dplyr::all_equal(analysr_env$events[c("stat_unit", "date", "tag")],
+                     expected), TRUE)
+
+  expected_descriptions <-
+    as.data.frame(quiet_read_csv(
+      file = "./csv/import_events_csv/after-descriptions.csv")$result
+    )
+  expected_descriptions <- transform(expected_descriptions, 
+                                     hash = as.integer(hash))
+  # conflict when importing hash have to be an integer
+
+  expect_equal(dplyr::all_equal(
+      analysr_env$descriptions, expected_descriptions
+  ), TRUE)
+  
 })

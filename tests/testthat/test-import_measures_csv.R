@@ -82,3 +82,42 @@ test_that("import measures CSV works when import twice", {
   expect_equal("hash", colnames(analysr_env$measures)[1])
 
 })
+
+test_that("import measures CSV  works and fill descriptions", {
+  # reset env
+  setup_new_env()
+  import_measures_csv(
+    "./csv/import_measures_csv/before-advanced.csv",
+    "patient",
+    "date_prlvt",
+    "type_examen",
+    "valeur",
+    c("effectue_par")
+  )
+
+  quiet_read_csv <- purrr::quietly(readr::read_csv)
+  expected <-
+    as.data.frame(quiet_read_csv(
+      file = "./csv/import_measures_csv/after.csv")$result
+    )
+
+  expect_equal(
+    dplyr::all_equal(
+      analysr_env$measures[c("stat_unit", "date", "tag", "value")],
+      expected), TRUE)
+
+
+
+  expected_descriptions <-
+    as.data.frame(quiet_read_csv(
+      file = "./csv/import_measures_csv/after-descriptions.csv")$result
+    )
+  expected_descriptions <- transform(expected_descriptions, hash = as.integer(hash))
+  # conflict when importing hash have to be an integer
+
+  expect_equal(dplyr::all_equal(
+      analysr_env$descriptions, expected_descriptions
+  ), TRUE)
+
+  # write.csv(analysr_env$descriptions, "after-descriptions.csv", row.names = FALSE)
+})

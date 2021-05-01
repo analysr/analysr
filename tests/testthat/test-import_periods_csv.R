@@ -77,3 +77,41 @@ test_that("import periods CSV works when import twice", {
   expect_equal("hash", colnames(analysr_env$periods)[1])
 
 })
+
+test_that("import periods CSV works and fill descriptions", {
+  # reset env
+  setup_new_env()
+
+  # import 
+  import_periods_csv("./csv/import_periods_csv/before-advanced.csv",
+                     "PERSON",
+                     "BEGIN",
+                     "END",
+                     "DESCRIPTION",
+                     c("LOCATION"))
+
+  quiet_read_csv <- purrr::quietly(readr::read_csv)
+  expected <-
+    as.data.frame(quiet_read_csv(
+      file = "./csv/import_periods_csv/after.csv")$result
+    )
+
+  # to check dataframes without hash
+  expect_equal(
+    dplyr::all_equal(
+      analysr_env$periods[c("stat_unit", "begin", "end", "desc")],
+      expected), TRUE)
+
+  expected_descriptions <-
+    as.data.frame(quiet_read_csv(
+      file = "./csv/import_periods_csv/after-descriptions.csv")$result
+    )
+  expected_descriptions <- transform(expected_descriptions, 
+                                     hash = as.integer(hash))
+  # conflict when importing hash have to be an integer
+
+  expect_equal(dplyr::all_equal(
+      analysr_env$descriptions, expected_descriptions
+  ), TRUE)
+  
+})
