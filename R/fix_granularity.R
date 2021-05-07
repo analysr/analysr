@@ -1,4 +1,4 @@
-impute <-
+fix_granularity <-
   function(data,
            tag_wanted,
            period_start,
@@ -13,7 +13,7 @@ impute <-
     data <- subset(data, tag = tag_wanted)
     data <- subset(data, date > period_start)
     data <- subset(data, date <= period_end + temporal_granularity)
-    data <- subset(data, stat_unit == stat_unit_wanted)#ok
+    data <- subset(data, stat_unit == stat_unit_wanted)
 
 
 # let's initialize our dataframe
@@ -25,7 +25,7 @@ impute <-
     status <- rep("NOT TREATED", n)
 
     result <- data.frame(stat_unit, date,
-                         tag, value, status)#ok
+                         tag, value, status)
 
 # we now have to fill the value column
 
@@ -51,7 +51,7 @@ impute <-
       }
     }
 
-    #ok
+
     #let's complete by imputing the missing values
     for (i in 1:n) {
 
