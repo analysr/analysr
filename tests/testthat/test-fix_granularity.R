@@ -1,4 +1,4 @@
-test_that("multiplication works", {
+test_that("fix_granularity works", {
 
   stat_unit <- c(101929076, 101929077, 101929077, rep(101929076, 9))
   date <- lubridate::ymd_hm(c("06-11-10 11:00", "06-10-23 12:00",
@@ -11,7 +11,7 @@ test_that("multiplication works", {
   value <- c(4.7, 0.4, 5.1, 7.4, 6.8, 5.3, 8.2, 7.9, 8.3, 8.5, 7.4, 5.8)
   d <- data.frame(stat_unit, date, tag, value)
 
-  result <- impute(data = d,
+  result <- fix_granularity(data = d,
                    tag_wanted = "Kaliemie",
                    period_start = lubridate::ymd_hm("06-11-10 10:00"),
                    period_end = lubridate::ymd_hm("06-11-17 10:00"),
