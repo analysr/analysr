@@ -1,15 +1,55 @@
+
 Package: analysr
-Title: What the Package Does (One Line, Title Case)
+Title: Analysr
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    c(person(given = "Cédric",
+           family = "Jung",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+           email = "cedric.jung@centrale.centralelille.fr"),
+    person(given = "Elisa",
+           family = "Jordan-Ferry",
+           role = c("aut"),
+           email = "elisa.ferry@centrale.centralelille.fr"),
+    person(given = "Thomas",
+           family = "Loridan",
+           role = c("aut"),
+           email = "thomas.loridan@centrale.centralelille.fr"),
+    person(given = "Aurelien",
+           family = "Fonlupt",
+           role = c("aut"),
+           email = "aurelien.fonlupt@centrale.centralelille.fr"),
+    person(given = "Manuel",
+           family = "Huertas",
+           role = c("aut"),
+           email = "manuel.huertas@centrale.centralelille.fr"),
+    person(given = "Louis",
+           family = "Damas",
+           role = c("aut"),
+           email = "louis.damas@centrale.centralelille.fr"),
+    person(given = "Gaspard",
+           family = "Loquet",
+           role = c("aut"),
+           email = "gaspard.loquet@centrale.centralelille.fr"),
+    person(given = "Marie",
+           family = "Lenglet",
+           role = c("aut"),
+           email = "marie.lenglet@centrale.centralelille.fr"),
+    person(given = "Paul",
+           family = "Barbotin",
+           role = c("aut"),
+           email = "paul.barbotin@centrale.centralelille.fr"),
+    person(given = "Pedro Lucas",
+           family = "Fernandes Carvalho",
+           role = c("aut"),
+           email = "pedro-lucas.fernandes-carvalho@centrale.centralelille.fr"),
+    person(given = "Guillaume",
+           family = "Leveque",
+           role = c("aut"),
+           email = "guillaume.leveque@centrale.centralelille.fr")
+           )
+Description: A query language for time-dependent data analysis.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

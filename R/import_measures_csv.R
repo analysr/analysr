@@ -1,3 +1,18 @@
+#' import_measures_csv
+#'
+#' Import measures from a CSV file
+#'
+#' @return The measures data frame resulted from the merge of imported data 
+#' and already imported data
+#'
+#' @param csv_path A path to the csv file.
+#' @param stat_unit A string containing the stat_unit label.
+#' @param date A string containing the date label.
+#' @param tag A string containing the tag label.
+#' @param value A string containing the value label.
+#' 
+#' @examples
+#' import_measures_csv(csv_path, stat_unit, date, tag, value)
 import_measures_csv <-
   function(csv_path,
             stat_unit = "stat_unit",
