@@ -9,3 +9,6 @@ setup_new_env()
 \description{
 Setup new envirenment
 }
+\examples{
+setup_new_env()
+}
