@@ -1,6 +1,5 @@
 fix_granularity <-
-  function(data,
-           tag_wanted,
+  function(tag_wanted,
            period_start,
            period_end,
            temporal_granularity,
@@ -10,21 +9,22 @@ fix_granularity <-
            information_lost_after = 5 * temporal_granularity) {
 
 #let's only take the data we need
-    data <- subset(data, tag = tag_wanted)
-    data <- subset(data, date > period_start)
-    data <- subset(data, date <= period_end + temporal_granularity)
-    data <- subset(data, stat_unit == stat_unit_wanted)
+    data <- subset(analysr_env$measures, tag = tag_wanted)
+    data <- subset(analysr_env$measures, date > period_start)
+    data <- subset(analysr_env$measures, date <= period_end + temporal_granularity)
+    data <- subset(analysr_env$measures, stat_unit == stat_unit_wanted)
 
 
 # let's initialize our dataframe
     date <- seq_date(period_start, period_end, temporal_granularity)
     n <- length(date)
+    hash <- get_hash(n)
     tag <- rep(tag_wanted, n)
     stat_unit <- rep(stat_unit_wanted, n)
     value <- 1:n
     status <- rep("NOT TREATED", n)
 
-    result <- data.frame(stat_unit, date,
+    result <- data.frame(hash, stat_unit, date,
                          tag, value, status)
 
 # we now have to fill the value column
@@ -51,7 +51,7 @@ fix_granularity <-
       }
     }
 
-    #ok
+
     #let's complete by imputing the missing values
     for (i in 1:n) {
 
@@ -68,5 +68,17 @@ fix_granularity <-
           }
       }
     }
+
+    data_unchanged <- subset(analysr_env$measures,
+                             tag != tag_wanted)
+    data_unchanged <- subset(analysr_env$measures,
+                             date <= period_start)
+    data_unchanged <- subset(analysr_env$measures,
+                             date > period_end + temporal_granularity)
+    data_unchanged <- subset(analysr_env$measures,
+                             stat_unit != stat_unit_wanted)
+
+    analysr_env$measures <- rbind(data_unchanged, result)
+
     result
 }
