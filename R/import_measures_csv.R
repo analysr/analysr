@@ -12,6 +12,7 @@ import_measures_csv <-
 
     n <- nrow(result)
     hash <- get_hash(n)
+    status <- rep("", n)
 
     if (!missing(optional_data)) {
       fill_descriptions(hash,optional_data, result,n)
@@ -23,10 +24,13 @@ import_measures_csv <-
 
     add_stat_units(result$stat_unit)
 
+    result$date <- lubridate::ymd_hms(result$date)
+
 
     result <- cbind(
       hash,
-      result
+      result,
+      status
     )
 
     analysr_env$measures <- rbind(analysr_env$measures, result)

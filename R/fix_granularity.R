@@ -9,10 +9,10 @@ fix_granularity <-
            information_lost_after = 5 * temporal_granularity) {
 
 #let's only take the data we need
-    data <- subset(analysr_env$measures, tag = tag_wanted)
-    data <- subset(analysr_env$measures, date > period_start)
-    data <- subset(analysr_env$measures, date <= period_end + temporal_granularity)
-    data <- subset(analysr_env$measures, stat_unit == stat_unit_wanted)
+    data <- subset(analysr_env$measures, tag == tag_wanted)
+    data <- subset(data, date >= period_start)
+    data <- subset(data, date < period_end + temporal_granularity)
+    data <- subset(data, stat_unit == stat_unit_wanted)
 
 
 # let's initialize our dataframe
@@ -39,6 +39,7 @@ fix_granularity <-
 
       sample <- subset(
         sample, date < (result$date[i] + temporal_granularity))
+
 
       if (length(sample$date) > 0) {
         #result$value[i] <- aggregate(sample,
