@@ -22,9 +22,6 @@ test_that("fix_granularity works", {
     stat_unit_wanted = 108,
     temporal_granularity = lubridate::hours())
 
-  print(result2)
-  print(expected_result2)
-
   expect_equal(result2, expected_result2)
 
 
