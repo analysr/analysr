@@ -4,9 +4,9 @@ test_that("setup_new_env works", {
 
   # test on measures table
 
-  expected_measures <- data.frame(matrix(ncol = 5, nrow = 0))
-  colnames(expected_measures) <-
-    c("hash", "stat_unit", "date", "tag", "value")
+  expected_measures <- data.frame(matrix(ncol = 6, nrow = 0))
+  colnames(expected_measures) <- c("hash", "stat_unit", "date", 
+                                  "tag", "value", "status")
 
   expect_equal(
     dplyr::all_equal(

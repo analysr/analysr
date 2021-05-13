@@ -6,14 +6,14 @@ analysr_env <- new.env(parent = emptyenv())
 #' setup_new_env()
 setup_new_env <- function() {
     # create data frame for measures
-    analysr_env$measures <- data.frame(matrix(ncol = 5, nrow = 0))
-    colnames(analysr_env$measures) <-
-        c("hash", "stat_unit", "date", "tag", "value")
+    analysr_env$measures <- data.frame(matrix(ncol = 6, nrow = 0))
+    colnames(analysr_env$measures) <- c("hash", "stat_unit", "date",
+                                        "tag", "value", "status")
 
     # create data frame for periods
     analysr_env$periods <- data.frame(matrix(ncol = 5, nrow = 0))
-    colnames(analysr_env$periods) <-
-        c("hash", "stat_unit", "begin", "end", "desc")
+    colnames(analysr_env$periods) <- c("hash", "stat_unit", "begin",
+                                        "end", "desc")
 
     # create data frame for events
     analysr_env$events <- data.frame(matrix(ncol = 4, nrow = 0))
