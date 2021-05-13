@@ -8,7 +8,8 @@ import_events_csv(
   csv_path,
   stat_unit = "stat_unit",
   date = "date",
-  tag = "tag"
+  tag = "tag",
+  optional_data
 )
 }
 \arguments{
@@ -19,6 +20,9 @@ import_events_csv(
 \item{date}{A string containing the date label.}
 
 \item{tag}{A string containing the tag label.}
+
+\item{optional_data}{A vector containing label to import in descriptions
+table.}
 }
 \value{
 The events data frame resulted from the merge of imported data
@@ -26,7 +30,4 @@ and already imported data
 }
 \description{
 Import events from a CSV file
-}
-\examples{
-import_events_csv(csv_path, stat_unit, date, tag)
 }

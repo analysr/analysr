@@ -1,4 +1,3 @@
-
 Package: analysr
 Title: Analysr
 Version: 0.0.0.9000
@@ -55,9 +54,11 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    fs
 Config/testthat/edition: 3
 Imports: 
     readr,
     purrr,
-    lubridate
+    lubridate,
+    dplyr

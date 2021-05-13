@@ -9,9 +9,10 @@
 #' @param stat_unit A string containing the stat_unit label.
 #' @param date A string containing the date label.
 #' @param tag A string containing the tag label.
+#' @param optional_data A vector containing label to import in descriptions
+#' table.
 #' 
-#' @examples
-#' import_events_csv(csv_path, stat_unit, date, tag)
+#' @export
 import_events_csv <-
   function(csv_path,
             stat_unit = "stat_unit",

@@ -1,10 +1,12 @@
 #' Load env csv
 #'
+#' 
 #' Load saved environment from a folder containing
 #'
 #' @param save_path A path to the save folder
-#' @examples
-#' load_env_csv("~/analysr-env/1237-save/")
+#' @import dplyr 
+#' 
+#' @export
 load_env_csv <- function(save_path) {
 
   # load dataframes

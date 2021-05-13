@@ -10,9 +10,10 @@
 #' @param begin A string containing the begin date label.
 #' @param end A string containing the end date label.
 #' @param desc A string containing the desc label.
+#' @param optional_data A vector containing label to import in descriptions 
+#' table.
 #'
-#' @examples
-#' import_periods_csv(csv_path, stat_unit, begin, end, desc)
+#' @export 
 import_periods_csv <-
   function(csv_path,
             stat_unit = "stat_unit",

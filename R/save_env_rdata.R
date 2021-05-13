@@ -5,7 +5,11 @@
 #' @param save_path A path to save current environment
 #' (existence is required)
 #' @examples
-#' save_env_rdata("~/analysr-env/")
+#' save_env_rdata("~/")
+#'
+#' @import dplyr
+#'
+#' @export
 save_env_rdata <- function(save_path) {
   if (missing(save_path)) {
     # defines save path
