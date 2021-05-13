@@ -9,7 +9,8 @@ import_periods_csv(
   stat_unit = "stat_unit",
   begin = "begin",
   end = "end",
-  desc = "desc"
+  desc = "desc",
+  optional_data
 )
 }
 \arguments{
@@ -22,6 +23,9 @@ import_periods_csv(
 \item{end}{A string containing the end date label.}
 
 \item{desc}{A string containing the desc label.}
+
+\item{optional_data}{A vector containing label to import in descriptions
+table.}
 }
 \value{
 The periods data frame resulted from the merge of imported data
@@ -29,7 +33,4 @@ and already imported data
 }
 \description{
 Import periods from a CSV file
-}
-\examples{
-import_periods_csv(csv_path, stat_unit, begin, end, desc)
 }

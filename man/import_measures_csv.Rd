@@ -9,7 +9,9 @@ import_measures_csv(
   stat_unit = "stat_unit",
   date = "date",
   tag = "tag",
-  value = "value"
+  value = "value",
+  optional_data,
+  status = "status"
 )
 }
 \arguments{
@@ -22,6 +24,11 @@ import_measures_csv(
 \item{tag}{A string containing the tag label.}
 
 \item{value}{A string containing the value label.}
+
+\item{optional_data}{A vector containing label to import in descriptions
+table.}
+
+\item{status}{A string containing the status label.}
 }
 \value{
 The measures data frame resulted from the merge of imported data
@@ -29,7 +36,4 @@ and already imported data
 }
 \description{
 Import measures from a CSV file
-}
-\examples{
-import_measures_csv(csv_path, stat_unit, date, tag, value)
 }

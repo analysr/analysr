@@ -14,8 +14,7 @@
 #' table.
 #' @param status A string containing the status label.
 #' 
-#' @examples
-#' import_measures_csv(csv_path, stat_unit, date, tag, value)
+#' @export 
 import_measures_csv <-
   function(csv_path,
             stat_unit = "stat_unit",
@@ -40,7 +39,7 @@ import_measures_csv <-
     } 
 
     if (!missing(optional_data)) {
-      fill_descriptions(hash,optional_data, result,n)
+      fill_descriptions(hash, optional_data, result,n)
     }
 
     result <- result[c(stat_unit, date, tag, value, status)]

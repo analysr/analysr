@@ -4,6 +4,7 @@ analysr_env <- new.env(parent = emptyenv())
 #'
 #' @examples
 #' setup_new_env()
+#' @export
 setup_new_env <- function() {
     # create data frame for measures
     analysr_env$measures <- data.frame(matrix(ncol = 6, nrow = 0))
@@ -42,6 +43,7 @@ setup_new_env()
 #' @param n A number.
 #' @examples
 #' get_hash(10)
+#' @export
 get_hash <- function(n) {
     if (n == 1) {
         result <- analysr_env$current_hash
