@@ -117,7 +117,9 @@
   stat_unit <span class='op'>=</span> <span class='st'>"stat_unit"</span>,
   date <span class='op'>=</span> <span class='st'>"date"</span>,
   tag <span class='op'>=</span> <span class='st'>"tag"</span>,
-  value <span class='op'>=</span> <span class='st'>"value"</span>
+  value <span class='op'>=</span> <span class='st'>"value"</span>,
+  <span class='va'>optional_data</span>,
+  status <span class='op'>=</span> <span class='st'>"status"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -143,6 +145,15 @@
       <th>value</th>
       <td><p>A string containing the value label.</p></td>
     </tr>
+    <tr>
+      <th>optional_data</th>
+      <td><p>A vector containing label to import in descriptions
+table.</p></td>
+    </tr>
+    <tr>
+      <th>status</th>
+      <td><p>A string containing the status label.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -150,9 +161,6 @@
     <p>The measures data frame resulted from the merge of imported data
 and already imported data</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>import_measures_csv</span><span class='op'>(</span><span class='va'>csv_path</span>, <span class='va'>stat_unit</span>, <span class='va'>date</span>, <span class='va'>tag</span>, <span class='va'>value</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in import_measures_csv(csv_path, stat_unit, date, tag, value): could not find function "import_measures_csv"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

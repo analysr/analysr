@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>import_periods_csv — import_periods_csv • analysr</title>
+<title>Fill descriptions — fill_descriptions • analysr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="import_periods_csv — import_periods_csv" />
-<meta property="og:description" content="Import periods from a CSV file" />
+<meta property="og:title" content="Fill descriptions — fill_descriptions" />
+<meta property="og:description" content="A function to fill descriptions table when importing data
+(typically those which are not in mandatory)" />
 
 
 
@@ -103,58 +104,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>import_periods_csv</h1>
+    <h1>Fill descriptions</h1>
     
-    <div class="hidden name"><code>import_periods_csv.Rd</code></div>
+    <div class="hidden name"><code>fill_descriptions.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Import periods from a CSV file</p>
+    <p>A function to fill descriptions table when importing data
+(typically those which are not in mandatory)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>import_periods_csv</span><span class='op'>(</span>
-  <span class='va'>csv_path</span>,
-  stat_unit <span class='op'>=</span> <span class='st'>"stat_unit"</span>,
-  begin <span class='op'>=</span> <span class='st'>"begin"</span>,
-  end <span class='op'>=</span> <span class='st'>"end"</span>,
-  desc <span class='op'>=</span> <span class='st'>"desc"</span>,
-  <span class='va'>optional_data</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>fill_descriptions</span><span class='op'>(</span><span class='va'>hash</span>, <span class='va'>types</span>, <span class='va'>data</span>, n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>hash</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>csv_path</th>
-      <td><p>A path to the csv file.</p></td>
+      <th>hash</th>
+      <td><p>a vector containing hash to associate</p></td>
     </tr>
     <tr>
-      <th>stat_unit</th>
-      <td><p>A string containing the stat_unit label.</p></td>
+      <th>types</th>
+      <td><p>a vector of strings (the name of the columns to import)</p></td>
     </tr>
     <tr>
-      <th>begin</th>
-      <td><p>A string containing the begin date label.</p></td>
+      <th>data</th>
+      <td><p>the data frame you want to extract data from</p></td>
     </tr>
     <tr>
-      <th>end</th>
-      <td><p>A string containing the end date label.</p></td>
-    </tr>
-    <tr>
-      <th>desc</th>
-      <td><p>A string containing the desc label.</p></td>
-    </tr>
-    <tr>
-      <th>optional_data</th>
-      <td><p>A vector containing label to import in descriptions
-table.</p></td>
+      <th>n</th>
+      <td><p>(optional) length of hash if already calculated</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>The periods data frame resulted from the merge of imported data
-and already imported data</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

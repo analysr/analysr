@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>import_periods_csv — import_periods_csv • analysr</title>
+<title>Save env csv — save_env_csv • analysr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="import_periods_csv — import_periods_csv" />
-<meta property="og:description" content="Import periods from a CSV file" />
+<meta property="og:title" content="Save env csv — save_env_csv" />
+<meta property="og:description" content="Save current environment in a folder containing CSV" />
 
 
 
@@ -103,59 +103,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>import_periods_csv</h1>
+    <h1>Save env csv</h1>
     
-    <div class="hidden name"><code>import_periods_csv.Rd</code></div>
+    <div class="hidden name"><code>save_env_csv.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Import periods from a CSV file</p>
+    <p>Save current environment in a folder containing CSV</p>
     </div>
 
-    <pre class="usage"><span class='fu'>import_periods_csv</span><span class='op'>(</span>
-  <span class='va'>csv_path</span>,
-  stat_unit <span class='op'>=</span> <span class='st'>"stat_unit"</span>,
-  begin <span class='op'>=</span> <span class='st'>"begin"</span>,
-  end <span class='op'>=</span> <span class='st'>"end"</span>,
-  desc <span class='op'>=</span> <span class='st'>"desc"</span>,
-  <span class='va'>optional_data</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>save_env_csv</span><span class='op'>(</span><span class='va'>save_path</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>csv_path</th>
-      <td><p>A path to the csv file.</p></td>
-    </tr>
-    <tr>
-      <th>stat_unit</th>
-      <td><p>A string containing the stat_unit label.</p></td>
-    </tr>
-    <tr>
-      <th>begin</th>
-      <td><p>A string containing the begin date label.</p></td>
-    </tr>
-    <tr>
-      <th>end</th>
-      <td><p>A string containing the end date label.</p></td>
-    </tr>
-    <tr>
-      <th>desc</th>
-      <td><p>A string containing the desc label.</p></td>
-    </tr>
-    <tr>
-      <th>optional_data</th>
-      <td><p>A vector containing label to import in descriptions
-table.</p></td>
+      <th>save_path</th>
+      <td><p>A path to save current environment
+(existence is not required)</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The periods data frame resulted from the merge of imported data
-and already imported data</p>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>save_env_csv</span><span class='op'>(</span><span class='st'>"~/"</span><span class='op'>)</span>
 
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
