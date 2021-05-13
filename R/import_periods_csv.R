@@ -2,7 +2,7 @@
 #'
 #' Import periods from a CSV file
 #'
-#' @return The periods data frame resulted from the merge of imported data 
+#' @return The periods data frame resulted from the merge of imported data
 #' and already imported data
 #'
 #' @param csv_path A path to the csv file.
@@ -10,10 +10,10 @@
 #' @param begin A string containing the begin date label.
 #' @param end A string containing the end date label.
 #' @param desc A string containing the desc label.
-#' @param optional_data A vector containing label to import in descriptions 
+#' @param optional_data A vector containing label to import in descriptions
 #' table.
 #'
-#' @export 
+#' @export
 import_periods_csv <-
   function(csv_path,
             stat_unit = "stat_unit",

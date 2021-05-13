@@ -2,7 +2,7 @@
 #'
 #' Import events from a CSV file
 #'
-#' @return The events data frame resulted from the merge of imported data 
+#' @return The events data frame resulted from the merge of imported data
 #' and already imported data
 #'
 #' @param csv_path A path to the csv file.
@@ -11,7 +11,7 @@
 #' @param tag A string containing the tag label.
 #' @param optional_data A vector containing label to import in descriptions
 #' table.
-#' 
+#'
 #' @export
 import_events_csv <-
   function(csv_path,

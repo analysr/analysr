@@ -2,7 +2,7 @@
 #'
 #' Import measures from a CSV file
 #'
-#' @return The measures data frame resulted from the merge of imported data 
+#' @return The measures data frame resulted from the merge of imported data
 #' and already imported data
 #'
 #' @param csv_path A path to the csv file.
@@ -10,11 +10,11 @@
 #' @param date A string containing the date label.
 #' @param tag A string containing the tag label.
 #' @param value A string containing the value label.
-#' @param optional_data A vector containing label to import in descriptions 
+#' @param optional_data A vector containing label to import in descriptions
 #' table.
 #' @param status A string containing the status label.
-#' 
-#' @export 
+#'
+#' @export
 import_measures_csv <-
   function(csv_path,
             stat_unit = "stat_unit",
@@ -36,7 +36,7 @@ import_measures_csv <-
         result,
         status = rep("", n)
       )
-    } 
+    }
 
     if (!missing(optional_data)) {
       fill_descriptions(hash, optional_data, result,n)
