@@ -119,5 +119,4 @@ test_that("import measures CSV  works and fill descriptions", {
       analysr_env$descriptions, expected_descriptions
   ), TRUE)
 
-  # write.csv(analysr_env$descriptions, "after-descriptions.csv", row.names = FALSE)
 })

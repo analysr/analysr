@@ -1,14 +1,11 @@
 test_that("fix_granularity works", {
 
-
-
-
-  ### DEUXIEME TEST
-
   setup_new_env()
 
-  expected_result2 <- import_modified_measures_csv(
+  expected_result2 <- import_measures_csv(
     csv_path = "./csv/fix_granularity_csv/test_temperature_after.csv")
+
+  # using readr may be better
 
   setup_new_env()
   import_measures_csv(
@@ -22,10 +19,8 @@ test_that("fix_granularity works", {
     stat_unit_wanted = 108,
     temporal_granularity = lubridate::hours())
 
-  expect_equal(result2, expected_result2)
-
-
-
+  expect_equal(result2[c("stat_unit", "date", "tag", "value", "status")],
+      expected_result2[c("stat_unit", "date", "tag", "value", "status")])
 
 
 })
