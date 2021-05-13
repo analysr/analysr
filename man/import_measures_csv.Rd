@@ -11,7 +11,9 @@ import_measures_csv(
   tag = "tag",
   value = "value",
   optional_data,
-  status = "status"
+  status = "status",
+  date_format_func = lubridate::ymd_hms,
+  date_format_reg
 )
 }
 \arguments{
@@ -26,9 +28,13 @@ import_measures_csv(
 \item{value}{A string containing the value label.}
 
 \item{optional_data}{A vector containing label to import in descriptions
-table.}
+table (not required).}
 
 \item{status}{A string containing the status label.}
+
+\item{date_format_func}{A function to format date with (not required).}
+
+\item{date_format_reg}{A expression to format date with (not required).}
 }
 \value{
 The measures data frame resulted from the merge of imported data
