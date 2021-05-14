@@ -1,3 +1,23 @@
+#' fix_granularity
+#'
+#' Sets a given granularity to a set of data by aggregating or imputing them.
+#'
+#' @return The part of analysr_env$measures that has been modified.
+#'
+#' @param tag_wanted A string containing the tag of the wanted data.
+#' @param period_start A date marking the beginning of the studied time period.
+#' @param period_end A date marking the end of the studied time period.
+#' @param temporal_granularity A duration fixing the wanted granularity.
+#' @param stat_unit_wanted An integer containing the stat_unit of the wanted data.
+#' Default: NULL
+#' @param aggregation_method A function to aggregate data.
+#' Default: mean_aggregate
+#' @param impute_method A function to impute data.
+#' Default: linear_impute
+#' @param information_lost_after A duration after which, if no data are found,
+#' no more will be imputed.
+#' Default: 5 * temporal_granularity
+#' @export
 fix_granularity <-
   function(tag_wanted,
            period_start,
