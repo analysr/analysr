@@ -1,5 +1,7 @@
 # to compare dataframes : https://bit.ly/3gNYsZ4
 
+quiet_read_csv <- purrr::quietly(readr::read_csv)
+
 test_that("import periods CSV  works", {
   # reset env
   setup_new_env()
@@ -10,7 +12,6 @@ test_that("import periods CSV  works", {
                      "END",
                      "DESCRIPTION")
 
-  quiet_read_csv <- purrr::quietly(readr::read_csv)
   expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_periods_csv/after.csv")$result
@@ -49,8 +50,6 @@ test_that("import periods CSV works when import twice", {
                      "END",
                      "DESCRIPTION")
 
-  quiet_read_csv <- purrr::quietly(readr::read_csv)
-
   expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_periods_csv/after2.csv"
@@ -82,7 +81,6 @@ test_that("import periods CSV works and fill descriptions", {
                      "DESCRIPTION",
                      c("LOCATION"))
 
-  quiet_read_csv <- purrr::quietly(readr::read_csv)
   expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_periods_csv/after.csv")$result
@@ -108,4 +106,32 @@ test_that("import periods CSV works and fill descriptions", {
 
   # check that tables are consistent
   expect_equal(check_tables_integrity(), TRUE)
+})
+test_that("import periods CSV works when importing different date formats", {
+
+  # expected
+  expected <- as.data.frame(quiet_read_csv(
+      file = "./csv/import_periods_csv/date/after.csv")$result)
+
+  # import ymd-HM
+  setup_new_env()
+  import_periods_csv(
+    "./csv/import_periods_csv/date/before-ymd-HM.csv",
+    date_format_reg = "ymd-HM"
+  )
+
+  expect_equal(
+    dplyr::all_equal(expected,
+      analysr_env$periods), TRUE)
+
+  # import dmy-HMS
+  setup_new_env()
+  import_periods_csv(
+    "./csv/import_periods_csv/date/before-dmy-HMS.csv",
+    date_format_reg = "dmy-HMS"
+  )
+
+  expect_equal(
+    dplyr::all_equal(expected,
+      analysr_env$periods), TRUE)
 })
