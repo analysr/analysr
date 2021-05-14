@@ -11,6 +11,10 @@
 #' @param tag A string containing the tag label.
 #' @param optional_data A vector containing label to import in descriptions
 #' table.
+#' @param date_format_func A function to format date with (not required).
+#' Default: `lubridate::parse_date_time(x, date_format_reg)`
+#' @param date_format_reg A expression to format date with (not required).
+#' Default: `"ymd-HMS"`
 #'
 #' @export
 import_events_csv <-
@@ -18,10 +22,14 @@ import_events_csv <-
             stat_unit = "stat_unit",
             date = "date",
             tag = "tag",
-            optional_data) {
+            optional_data,
+            date_format_func =
+                  (function(x) lubridate::parse_date_time(x, date_format_reg)),
+            date_format_reg = "ymd-HMS") {
     quiet_read_csv <- purrr::quietly(readr::read_csv)
 
-    result_csv <- quiet_read_csv(file = csv_path)$result
+    result_csv <- quiet_read_csv(file = csv_path,
+                                 col_types = readr::cols(date = "c"))$result
     result_csv <- as.data.frame(result_csv)
 
     n <- nrow(result_csv) # get row number only one time
@@ -37,6 +45,8 @@ import_events_csv <-
     colnames(result) <- c("stat_unit", "date", "tag")
 
     add_stat_units(result$stat_unit)
+
+    result$date <- date_format_func(result$date)
 
     result <- cbind(
       hash,

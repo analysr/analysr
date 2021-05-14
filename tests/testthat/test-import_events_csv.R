@@ -75,7 +75,8 @@ test_that("import events CSV works and fill descriptions", {
     "stat_unit",
     "date",
     "tag",
-    c("context", "location")
+    c("context", "location"),
+    date_format_reg = "ymd-HM"
   )
 
   expected <-
