@@ -23,7 +23,8 @@ check_tables_integrity <- function () {
       return(FALSE)
     }
     # check descriptions table
-    if (!all(colnames(analysr_env$descriptions) == c("hash", "type", "value"))) {
+    if (!all(colnames(analysr_env$descriptions) == c("hash", "type",
+                                                             "value"))) {
       warning("Analysr descriptions table is not consistent")
       return(FALSE)
     }

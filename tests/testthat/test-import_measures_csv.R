@@ -1,6 +1,8 @@
 # to compare dataframes :
 # https://community.rstudio.com/t/all-equal-on-tibbles-ignores-attributes/4299/2
 
+quiet_read_csv <- purrr::quietly(readr::read_csv)
+
 test_that("import measures CSV  works", {
   # reset env
   setup_new_env()
@@ -12,7 +14,6 @@ test_that("import measures CSV  works", {
     "valeur"
   )
 
-  quiet_read_csv <- purrr::quietly(readr::read_csv)
   expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_measures_csv/after.csv")$result
@@ -54,8 +55,6 @@ test_that("import measures CSV works when import twice", {
     "valeur"
   )
 
-  quiet_read_csv <- purrr::quietly(readr::read_csv)
-
   expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_measures_csv/after2.csv")$result)
@@ -86,7 +85,6 @@ test_that("import measures CSV  works and fill descriptions", {
     c("effectue_par")
   )
 
-  quiet_read_csv <- purrr::quietly(readr::read_csv)
   expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_measures_csv/after.csv")$result
@@ -113,4 +111,40 @@ test_that("import measures CSV  works and fill descriptions", {
 
   # check that tables are consistent
   expect_equal(check_tables_integrity(), TRUE)
+})
+test_that("import measures CSV works when importing different date formats", {
+  setup_new_env()
+
+  # expected
+  expected <- as.data.frame(quiet_read_csv(
+      file = "./csv/import_measures_csv/date/after.csv")$result)
+
+  # import ymd-HMS
+  import_measures_csv(
+    "./csv/import_measures_csv/date/before-ymd-HMS.csv"
+  )
+
+
+  # import dmy-HM
+  setup_new_env()
+  import_measures_csv(
+    "./csv/import_measures_csv/date/before-dmy-HM.csv",
+    date_format_reg = "dmy-HM"
+  )
+
+  expect_equal(
+    dplyr::all_equal(expected,
+      analysr_env$measures), TRUE)
+
+
+  # import ymd-HM
+  setup_new_env()
+  import_measures_csv(
+    "./csv/import_measures_csv/date/before-ymd-HM.csv",
+    date_format_reg = "ymd-HM"
+  )
+
+  expect_equal(
+    dplyr::all_equal(expected,
+      analysr_env$measures), TRUE)
 })

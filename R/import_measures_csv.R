@@ -29,7 +29,8 @@ import_measures_csv <-
             date_format_reg) {
     quiet_read_csv <- purrr::quietly(readr::read_csv)
 
-    result <- quiet_read_csv(file = csv_path)$result
+    result <- quiet_read_csv(file = csv_path,
+                             col_types = readr::cols(date = "c"))$result
     result <- as.data.frame(result)
 
     n <- nrow(result)
@@ -38,7 +39,7 @@ import_measures_csv <-
     if (!(status %in% colnames(result))) {
       result <- cbind(
         result,
-        status = rep("", n)
+        status = rep(NA, n)
       )
     }
 
@@ -46,17 +47,17 @@ import_measures_csv <-
       fill_descriptions(hash, optional_data, result,n)
     }
 
+    result <- result[c(stat_unit, date, tag, value, status)]
+    # we could use dplyr to extract colums https://bit.ly/32lGkNR
+    colnames(result) <- c("stat_unit", "date", "tag", "value", "status")
+
     if (missing(date_format_reg)) {
       # use function passed in argument (or default function)
       result$date <- date_format_func(result$date)
     } else {
       # use format passed in argument (or default)
-      result$date <- lubridate::parse_date_time2(result$date, date_format_reg)
+      result$date <- lubridate::parse_date_time(result$date, date_format_reg)
     }
-
-    result <- result[c(stat_unit, date, tag, value, status)]
-    # we could use dplyr to extract colums https://bit.ly/32lGkNR
-    colnames(result) <- c("stat_unit", "date", "tag", "value", "status")
 
     add_stat_units(result$stat_unit)
 
