@@ -60,8 +60,6 @@ import_measures_csv <-
 
     add_stat_units(result$stat_unit)
 
-    result$date <- lubridate::ymd_hms(result$date)
-
     result <- cbind(
       hash,
       result

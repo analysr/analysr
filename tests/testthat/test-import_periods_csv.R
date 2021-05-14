@@ -26,11 +26,8 @@ test_that("import periods CSV  works", {
   # check that stat units have been added
   expect_equal(nrow(analysr_env$stat_units), 2)
 
-  # check if hash column exist in dataframe
-  expect_equal("hash" %in% colnames(analysr_env$periods), TRUE)
-
-  # check if hash is first column
-  expect_equal("hash", colnames(analysr_env$periods)[1])
+  # check that tables are consistent
+  expect_equal(check_tables_integrity(), TRUE)
 
   # check if current hash has changed in env
   expect_equal(analysr_env$current_hash, 5)
@@ -69,12 +66,8 @@ test_that("import periods CSV works when import twice", {
   # check if current hash has changed in env
   expect_equal(analysr_env$current_hash, 7)
 
-  # check if hash column exist in dataframe colnames
-  expect_equal("hash" %in% colnames(analysr_env$periods), TRUE)
-
-  # check if hash is first column
-  expect_equal("hash", colnames(analysr_env$periods)[1])
-
+  # check that tables are consistent
+  expect_equal(check_tables_integrity(), TRUE)
 })
 
 test_that("import periods CSV works and fill descriptions", {
@@ -113,4 +106,6 @@ test_that("import periods CSV works and fill descriptions", {
       analysr_env$descriptions, expected_descriptions
   ), TRUE)
 
+  # check that tables are consistent
+  expect_equal(check_tables_integrity(), TRUE)
 })
