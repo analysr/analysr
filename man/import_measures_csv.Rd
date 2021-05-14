@@ -11,7 +11,9 @@ import_measures_csv(
   tag = "tag",
   value = "value",
   optional_data,
-  status = "status"
+  status = "status",
+  date_format_func = (function(x) lubridate::parse_date_time(x, date_format_reg)),
+  date_format_reg = "ymd-HMS"
 )
 }
 \arguments{
@@ -26,9 +28,17 @@ import_measures_csv(
 \item{value}{A string containing the value label.}
 
 \item{optional_data}{A vector containing label to import in descriptions
-table.}
+table (not required).}
 
 \item{status}{A string containing the status label.}
+
+\item{date_format_func}{A function to format date with (not required).
+Default: \code{lubridate::parse_date_time(x, date_format_reg)}
+If you want to use milliseconds \href{https://bit.ly/33JGr6s}{look at this}.}
+
+\item{date_format_reg}{A expression to format date with (not required).
+Default: \code{"ymd-HMS"}
+For more details see \href{https://bit.ly/3bp3FD0}{this documentation}.}
 }
 \value{
 The measures data frame resulted from the merge of imported data

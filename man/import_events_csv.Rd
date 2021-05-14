@@ -9,7 +9,9 @@ import_events_csv(
   stat_unit = "stat_unit",
   date = "date",
   tag = "tag",
-  optional_data
+  optional_data,
+  date_format_func = (function(x) lubridate::parse_date_time(x, date_format_reg)),
+  date_format_reg = "ymd-HMS"
 )
 }
 \arguments{
@@ -23,6 +25,12 @@ import_events_csv(
 
 \item{optional_data}{A vector containing label to import in descriptions
 table.}
+
+\item{date_format_func}{A function to format date with (not required).
+Default: \code{lubridate::parse_date_time(x, date_format_reg)}}
+
+\item{date_format_reg}{A expression to format date with (not required).
+Default: \code{"ymd-HMS"}}
 }
 \value{
 The events data frame resulted from the merge of imported data

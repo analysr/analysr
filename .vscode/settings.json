@@ -3,5 +3,7 @@
     "editor.rulers": [80,120],
     "workbench.colorCustomizations": {
         "editorRuler.foreground": "#ff4081"
-    }
+    },
+    "editor.trimAutoWhitespace": true,
+    "files.trimTrailingWhitespace": true
 }
