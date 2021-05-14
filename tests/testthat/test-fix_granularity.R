@@ -54,17 +54,17 @@ test_that("fix_granularity works", {
 
 
   ### THIRD TEST ###
-
+  ## Test if the gaps are well treated
   setup_new_env()
 
   expected_result3 <- import_measures_csv(
-      csv_path = "./csv/fix_granularity_csv/test_temperature_hole_after.csv")
+      csv_path = "./csv/fix_granularity_csv/test_temperature_gap_after.csv")
 
   # using readr may be better
 
   setup_new_env()
   import_measures_csv(
-    csv_path = "./csv/fix_granularity_csv/test_temperature_hole_before.csv")
+    csv_path = "./csv/fix_granularity_csv/test_temperature_gap_before.csv")
 
 
   result3 <- fix_granularity(
@@ -73,9 +73,6 @@ test_that("fix_granularity works", {
     period_end = lubridate::ymd_hms("10-03-12 10:00:00"),
     stat_unit_wanted = 108,
     temporal_granularity = lubridate::hours())
-
-  print(result3)
-  print(expected_result3)
 
   expect_equal(result3[c("stat_unit", "date", "tag", "value", "status")],
                expected_result3[c("stat_unit", "date", "tag", "value", "status")])
