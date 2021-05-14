@@ -113,17 +113,20 @@ test_that("import measures CSV  works and fill descriptions", {
   expect_equal(check_tables_integrity(), TRUE)
 })
 test_that("import measures CSV works when importing different date formats", {
-  setup_new_env()
 
   # expected
   expected <- as.data.frame(quiet_read_csv(
       file = "./csv/import_measures_csv/date/after.csv")$result)
 
   # import ymd-HMS
+  setup_new_env()
   import_measures_csv(
     "./csv/import_measures_csv/date/before-ymd-HMS.csv"
   )
 
+  expect_equal(
+    dplyr::all_equal(expected,
+      analysr_env$measures), TRUE)
 
   # import dmy-HM
   setup_new_env()
