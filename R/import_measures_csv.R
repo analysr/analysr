@@ -14,7 +14,9 @@
 #' table (not required).
 #' @param status A string containing the status label.
 #' @param date_format_func A function to format date with (not required).
+#' Default: `lubridate::parse_date_time(x, date_format_reg)`
 #' @param date_format_reg A expression to format date with (not required).
+#' Default: `"ymd-HMS"`
 #'
 #' @export
 import_measures_csv <-
@@ -25,8 +27,9 @@ import_measures_csv <-
             value = "value",
             optional_data,
             status = "status",
-            date_format_func = lubridate::ymd_hms,
-            date_format_reg) {
+            date_format_func =
+                  (function(x) lubridate::parse_date_time(x, date_format_reg)),
+            date_format_reg = "ymd-HMS") {
     quiet_read_csv <- purrr::quietly(readr::read_csv)
 
     result <- quiet_read_csv(file = csv_path,
@@ -51,13 +54,7 @@ import_measures_csv <-
     # we could use dplyr to extract colums https://bit.ly/32lGkNR
     colnames(result) <- c("stat_unit", "date", "tag", "value", "status")
 
-    if (missing(date_format_reg)) {
-      # use function passed in argument (or default function)
-      result$date <- date_format_func(result$date)
-    } else {
-      # use format passed in argument (or default)
-      result$date <- lubridate::parse_date_time(result$date, date_format_reg)
-    }
+    result$date <- date_format_func(result$date)
 
     add_stat_units(result$stat_unit)
 
