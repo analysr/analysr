@@ -33,10 +33,12 @@ table (not required).}
 \item{status}{A string containing the status label.}
 
 \item{date_format_func}{A function to format date with (not required).
-Default: \code{lubridate::parse_date_time(x, date_format_reg)}}
+Default: \code{lubridate::parse_date_time(x, date_format_reg)}
+If you want to use milliseconds \href{https://bit.ly/33JGr6s}{look at this}.}
 
 \item{date_format_reg}{A expression to format date with (not required).
-Default: \code{"ymd-HMS"}}
+Default: \code{"ymd-HMS"}
+For more details see \href{https://bit.ly/3bp3FD0}{this documentation}.}
 }
 \value{
 The measures data frame resulted from the merge of imported data

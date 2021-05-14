@@ -15,9 +15,10 @@
 #' @param status A string containing the status label.
 #' @param date_format_func A function to format date with (not required).
 #' Default: `lubridate::parse_date_time(x, date_format_reg)`
+#' If you want to use milliseconds [look at this](https://bit.ly/33JGr6s).
 #' @param date_format_reg A expression to format date with (not required).
 #' Default: `"ymd-HMS"`
-#'
+#' For more details see [this documentation](https://bit.ly/3bp3FD0).
 #' @export
 import_measures_csv <-
   function(csv_path,
