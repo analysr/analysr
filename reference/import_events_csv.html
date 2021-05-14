@@ -117,7 +117,9 @@
   stat_unit <span class='op'>=</span> <span class='st'>"stat_unit"</span>,
   date <span class='op'>=</span> <span class='st'>"date"</span>,
   tag <span class='op'>=</span> <span class='st'>"tag"</span>,
-  <span class='va'>optional_data</span>
+  <span class='va'>optional_data</span>,
+  date_format_func <span class='op'>=</span> <span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>date_format_reg</span><span class='op'>)</span><span class='op'>)</span>,
+  date_format_reg <span class='op'>=</span> <span class='st'>"ymd-HMS"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -143,6 +145,16 @@
       <th>optional_data</th>
       <td><p>A vector containing label to import in descriptions
 table.</p></td>
+    </tr>
+    <tr>
+      <th>date_format_func</th>
+      <td><p>A function to format date with (not required).
+Default: <code><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>lubridate::parse_date_time(x, date_format_reg)</a></code></p></td>
+    </tr>
+    <tr>
+      <th>date_format_reg</th>
+      <td><p>A expression to format date with (not required).
+Default: <code>"ymd-HMS"</code></p></td>
     </tr>
     </table>
 

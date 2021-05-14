@@ -119,7 +119,9 @@
   tag <span class='op'>=</span> <span class='st'>"tag"</span>,
   value <span class='op'>=</span> <span class='st'>"value"</span>,
   <span class='va'>optional_data</span>,
-  status <span class='op'>=</span> <span class='st'>"status"</span>
+  status <span class='op'>=</span> <span class='st'>"status"</span>,
+  date_format_func <span class='op'>=</span> <span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>date_format_reg</span><span class='op'>)</span><span class='op'>)</span>,
+  date_format_reg <span class='op'>=</span> <span class='st'>"ymd-HMS"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -148,11 +150,23 @@
     <tr>
       <th>optional_data</th>
       <td><p>A vector containing label to import in descriptions
-table.</p></td>
+table (not required).</p></td>
     </tr>
     <tr>
       <th>status</th>
       <td><p>A string containing the status label.</p></td>
+    </tr>
+    <tr>
+      <th>date_format_func</th>
+      <td><p>A function to format date with (not required).
+Default: <code><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>lubridate::parse_date_time(x, date_format_reg)</a></code>
+If you want to use milliseconds <a href='https://bit.ly/33JGr6s'>look at this</a>.</p></td>
+    </tr>
+    <tr>
+      <th>date_format_reg</th>
+      <td><p>A expression to format date with (not required).
+Default: <code>"ymd-HMS"</code>
+For more details see <a href='https://bit.ly/3bp3FD0'>this documentation</a>.</p></td>
     </tr>
     </table>
 
