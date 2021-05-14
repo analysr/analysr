@@ -23,9 +23,6 @@ test_that("fix_granularity works", {
     stat_unit_wanted = 101929076,
     temporal_granularity = lubridate::days())
 
-  print(result)
-  print(expected_result)
-
   expect_equal(result[c("stat_unit", "date", "tag", "value", "status")],
                expected_result[c("stat_unit", "date", "tag", "value", "status")])
 
@@ -53,6 +50,35 @@ test_that("fix_granularity works", {
 
   expect_equal(result2[c("stat_unit", "date", "tag", "value", "status")],
       expected_result2[c("stat_unit", "date", "tag", "value", "status")])
+
+
+
+  ### THIRD TEST ###
+
+  setup_new_env()
+
+  expected_result3 <- import_measures_csv(
+      csv_path = "./csv/fix_granularity_csv/test_temperature_hole_after.csv")
+
+  # using readr may be better
+
+  setup_new_env()
+  import_measures_csv(
+    csv_path = "./csv/fix_granularity_csv/test_temperature_hole_before.csv")
+
+
+  result3 <- fix_granularity(
+    tag_wanted = "Temperature",
+    period_start = lubridate::ymd_hms("10-03-11 10:00:00"),
+    period_end = lubridate::ymd_hms("10-03-12 10:00:00"),
+    stat_unit_wanted = 108,
+    temporal_granularity = lubridate::hours())
+
+  print(result3)
+  print(expected_result3)
+
+  expect_equal(result3[c("stat_unit", "date", "tag", "value", "status")],
+               expected_result3[c("stat_unit", "date", "tag", "value", "status")])
 
 
 })

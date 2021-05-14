@@ -22,7 +22,7 @@ fix_granularity <-
     tag <- rep(tag_wanted, n)
     stat_unit <- rep(stat_unit_wanted, n)
     value <- 1:n
-    status <- rep("NOT TREATED", n)
+    status <- rep("", n)
 
     result <- data.frame(hash, stat_unit, date,
                          tag, value, status)
@@ -54,22 +54,31 @@ fix_granularity <-
 
 
     #let's complete by imputing the missing values
-    for (i in 1:n) {
+    i <- 1
+    while (i < n) {
 
-      if (result$status[i] == "NOT TREATED") {
+      if (result$status[i] == "") {
         result$status[i] <- "IMPUTED"
         j <- 1
-        while (i + j < n && result$status[i + j] == "NOT TREATED" ) {
+        while (i + j < n && result$status[i + j] == "" ) {
           j <- j + 1
         }
 
         if (j * temporal_granularity <= information_lost_after) {
           result[(i - 1):(i + j),] <- impute_method(result, i - 1, i + j)
 
-          }
+        }
+        else {
+
+          result <- rbind(result[1:(i-1),], result[(i+j):n,])
+
+          n <- n - j
+        }
       }
+      i <- i + 1
     }
 
+    rownames(result) <- c(1:length(result$date))
     data_unchanged <- subset(analysr_env$measures,
                              tag != tag_wanted)
     data_unchanged <- subset(analysr_env$measures,

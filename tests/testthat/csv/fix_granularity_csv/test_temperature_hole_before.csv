@@ -1,0 +1,23 @@
+stat_unit,date,tag,value
+108,10-03-11 10:00:00,Temperature,400
+108,10-03-11 10:10:01,Colour,453
+108,10-03-11 10:20:02,Temperature,410
+115,10-03-11 13:00:03,Temperature,427
+108,10-03-11 13:00:04,Temperature,433
+108,10-03-11 13:43:05,Temperature,408
+108,10-03-11 14:12:06,Pressure,398
+187,10-03-11 13:00:07,Temperature,427
+108,10-03-11 14:33:06,Temperature,397
+108,10-03-11 15:43:09,Temperature,403
+108,10-03-11 16:36:10,Temperature,413
+108,10-03-11 18:07:11,Temperature,421
+108,10-03-11 18:54:12,Temperature,412
+108,10-03-11 19:12:13,Temperature,415
+108,10-03-12 07:56:24,Temperature,421
+108,10-03-12 08:13:25,Temperature,419
+108,10-03-12 08:46:26,Temperature,411
+108,10-03-12 09:03:27,Temperature,417
+108,10-03-12 09:27:28,Temperature,409
+108,10-03-12 09:56:29,Temperature,422
+108,10-03-12 10:27:30,Temperature,416
+108,10-03-12 11:27:31,Temperature,415
