@@ -1,6 +1,8 @@
 # to compare dataframes :
 # https://community.rstudio.com/t/all-equal-on-tibbles-ignores-attributes/4299/2
 
+quiet_read_csv <- purrr::quietly(readr::read_csv)
+
 test_that("import measures CSV  works", {
   # reset env
   setup_new_env()
@@ -12,7 +14,6 @@ test_that("import measures CSV  works", {
     "valeur"
   )
 
-  quiet_read_csv <- purrr::quietly(readr::read_csv)
   expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_measures_csv/after.csv")$result
@@ -27,11 +28,8 @@ test_that("import measures CSV  works", {
   # check that stat units have been added
   expect_equal(nrow(analysr_env$stat_units), 2)
 
-  # check if hash column exist in dataframe
-  expect_equal("hash" %in% colnames(analysr_env$measures), TRUE)
-
-  # check if hash is first column
-  expect_equal("hash", colnames(analysr_env$events)[1])
+  # check that tables are consistent
+  expect_equal(check_tables_integrity(), TRUE)
 
   # check if current hash has changed in env
   expect_equal(analysr_env$current_hash, 5)
@@ -57,10 +55,6 @@ test_that("import measures CSV works when import twice", {
     "valeur"
   )
 
-
-
-  quiet_read_csv <- purrr::quietly(readr::read_csv)
-
   expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_measures_csv/after2.csv")$result)
@@ -75,12 +69,8 @@ test_that("import measures CSV works when import twice", {
   # check if current hash has changed in env
   expect_equal(analysr_env$current_hash, 7)
 
-  # check if hash column exist in dataframe colnames
-  expect_equal("hash" %in% colnames(analysr_env$measures), TRUE)
-
-  # check if hash is first column
-  expect_equal("hash", colnames(analysr_env$measures)[1])
-
+  # check that tables are consistent
+  expect_equal(check_tables_integrity(), TRUE)
 })
 
 test_that("import measures CSV  works and fill descriptions", {
@@ -95,7 +85,6 @@ test_that("import measures CSV  works and fill descriptions", {
     c("effectue_par")
   )
 
-  quiet_read_csv <- purrr::quietly(readr::read_csv)
   expected <-
     as.data.frame(quiet_read_csv(
       file = "./csv/import_measures_csv/after.csv")$result
@@ -112,11 +101,54 @@ test_that("import measures CSV  works and fill descriptions", {
     as.data.frame(quiet_read_csv(
       file = "./csv/import_measures_csv/after-descriptions.csv")$result
     )
-  expected_descriptions <- transform(expected_descriptions, hash = as.integer(hash))
+  expected_descriptions <-
+                      transform(expected_descriptions, hash = as.integer(hash))
   # conflict when importing hash have to be an integer
 
   expect_equal(dplyr::all_equal(
       analysr_env$descriptions, expected_descriptions
   ), TRUE)
+
+  # check that tables are consistent
+  expect_equal(check_tables_integrity(), TRUE)
+})
+test_that("import measures CSV works when importing different date formats", {
+
+  # expected
+  expected <- as.data.frame(quiet_read_csv(
+      file = "./csv/import_measures_csv/date/after.csv")$result)
+
+  # import ymd-HMS
+  setup_new_env()
+  import_measures_csv(
+    "./csv/import_measures_csv/date/before-ymd-HMS.csv"
+  )
+
+  expect_equal(
+    dplyr::all_equal(expected,
+      analysr_env$measures), TRUE)
+
+  # import dmy-HM
+  setup_new_env()
+  import_measures_csv(
+    "./csv/import_measures_csv/date/before-dmy-HM.csv",
+    date_format_reg = "dmy-HM"
+  )
+
+  expect_equal(
+    dplyr::all_equal(expected,
+      analysr_env$measures), TRUE)
+
+
+  # import ymd-HM
+  setup_new_env()
+  import_measures_csv(
+    "./csv/import_measures_csv/date/before-ymd-HM.csv",
+    date_format_reg = "ymd-HM"
+  )
+
+  expect_equal(
+    dplyr::all_equal(expected,
+      analysr_env$measures), TRUE)
 
 })

@@ -14,7 +14,7 @@ test_that("linear_impute works", {
   result <- linear_impute(data, 1, 9)
 
   value <- c(3.0, 3.825, 4.65, 5.475, 6.3, 7.125, 7.95, 8.775, 9.6)
-  expected_result <- data.frame (stat_unit, date, tag, value)
+  expected_result <- data.frame(stat_unit, date, tag, value)
 
   expect_equal(result, expected_result)
 })

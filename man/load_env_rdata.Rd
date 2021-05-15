@@ -4,14 +4,13 @@
 \alias{load_env_rdata}
 \title{Load env RData}
 \usage{
-load_env_rdata(file, envir = parent.frame(), verbose = FALSE)
+
+load_env_rdata(save_path)
+
 }
 \arguments{
 \item{save_path}{A path to the save file}
 }
 \description{
 Load saved environment from a Rdata file
-}
-\examples{
-load_env_rdata("~/analysr-env/1237-save.Rdata")
 }

@@ -12,6 +12,3 @@ load_env_csv(save_path)
 \description{
 Load saved environment from a folder containing
 }
-\examples{
-load_env_csv("~/analysr-env/1237-save/")
-}

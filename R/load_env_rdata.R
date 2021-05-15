@@ -3,6 +3,8 @@
 #' Load saved environment from a Rdata file
 #'
 #' @param save_path A path to the save file
-#' @examples
-#' load_env_rdata("~/analysr-env/1237-save.Rdata")
-load_env_rdata <- load
+#'
+#' @export
+load_env_rdata <- function(save_path) {
+    load(save_path)
+}

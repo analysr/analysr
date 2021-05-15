@@ -80,12 +80,14 @@ fix_granularity <-
       if (result$status[i] == "") {
         result$status[i] <- "IMPUTED"
         j <- 1
+
         while (i + j < n && result$status[i + j] == "" ) {
+
           j <- j + 1
         }
 
         if (j * temporal_granularity <= information_lost_after) {
-          result[(i - 1):(i + j),] <- impute_method(result, i - 1, i + j)
+          result[(i - 1):(i + j), ] <- impute_method(result, i - 1, i + j)
 
         }
         else {

@@ -1,3 +1,9 @@
 ^analysr\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^LICENSE\.md$
+^\.vscode$
+^\.travis\.yml$

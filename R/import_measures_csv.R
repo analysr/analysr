@@ -22,15 +22,16 @@
 #' @export
 import_measures_csv <-
   function(csv_path,
-           stat_unit = "stat_unit",
-           date = "date",
-           tag = "tag",
-           value = "value",
-           optional_data,
-           status = "status",
-           date_format_func =
-             (function(x) lubridate::parse_date_time(x, date_format_reg)),
-           date_format_reg = "ymd-HMS") {
+            stat_unit = "stat_unit",
+            date = "date",
+            tag = "tag",
+            value = "value",
+            optional_data,
+            status = "status",
+            date_format_func =
+                  (function(x) lubridate::parse_date_time(x, date_format_reg)),
+            date_format_reg = "ymd-HMS") {
+
     quiet_read_csv <- purrr::quietly(readr::read_csv)
 
     result <- quiet_read_csv(file = csv_path,

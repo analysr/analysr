@@ -1,32 +1,5 @@
-# analysr-git-test
-A repo in order to learn how to use git and Github.
+# analysr
+A query language for time-dependent data analysis
 
-## Commands
-
-### Test
-
-```
-devtools::test()
-```
-or CTRL+SHIFT+T in RStudio
-
-
-### Load package 
-
-```
-devtools::load_all(".")
-```
-or CTRL+SHIFT+L in RStudio
-
-### Build
-
-```
-devtools::build()
-```
-
-### Documentation
-
-```
- devtools::document()
-```
-or CTRL+SHIFT+D in RStudio
+* [Package Documentation](https://analysr.github.io/analysr/)
+* [Learning R](https://analysr.github.io/learning/)

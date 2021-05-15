@@ -14,5 +14,7 @@ save_env_rdata(save_path)
 Save current environment in a Rdata file
 }
 \examples{
-save_env_rdata("~/analysr-env/")
+
+save_env_rdata("~/")
+
 }

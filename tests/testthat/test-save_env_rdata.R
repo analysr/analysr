@@ -5,5 +5,6 @@ test_that("save_env_rdata works", {
   save_env_rdata("./tmp/save_env_rdata/")
 
   # check if file exist
-  expect_equal(length(Sys.glob(file.path("./tmp/save_env_rdata/", "*.RData"))), 1)
+  expect_equal(length(
+    Sys.glob(file.path("./tmp/save_env_rdata/", "*.RData"))), 1)
 })
