@@ -8,6 +8,7 @@ analysr_env <- new.env(parent = emptyenv())
 setup_new_env <- function() {
     # create data frame for measures
     analysr_env$measures <- data.frame(matrix(ncol = 6, nrow = 0))
+
     colnames(analysr_env$measures) <- c("hash", "stat_unit", "date",
                                         "tag", "value", "status")
 

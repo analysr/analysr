@@ -4,7 +4,9 @@
 \alias{load_env_rdata}
 \title{Load env RData}
 \usage{
+
 load_env_rdata(save_path)
+
 }
 \arguments{
 \item{save_path}{A path to the save file}

@@ -150,4 +150,5 @@ test_that("import measures CSV works when importing different date formats", {
   expect_equal(
     dplyr::all_equal(expected,
       analysr_env$measures), TRUE)
+
 })
