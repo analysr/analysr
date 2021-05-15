@@ -90,7 +90,17 @@ fix_granularity <-
         }
         else {
 
-          result <- rbind(result[1:(i-1),], result[(i+j):n,])
+          if (i == 1) {
+            result <- result[(i+j):n,]
+          }
+
+          else if ( i+j == n ) {
+            result <- result[1:(i-1),]
+          }
+
+          else {
+            result <- rbind(result[1:(i-1),], result[(i+j):n,])
+          }
 
           n <- n - j
         }
