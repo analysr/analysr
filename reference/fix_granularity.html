@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Save env csv — save_env_csv • analysr</title>
+<title>fix_granularity — fix_granularity • analysr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Save env csv — save_env_csv" />
-<meta property="og:description" content="Save current environment in a folder containing CSV" />
+<meta property="og:title" content="fix_granularity — fix_granularity" />
+<meta property="og:description" content="Sets a given granularity to a set of data by aggregating or imputing them." />
 
 
 
@@ -103,33 +103,72 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Save env csv</h1>
+    <h1>fix_granularity</h1>
     
-    <div class="hidden name"><code>save_env_csv.Rd</code></div>
+    <div class="hidden name"><code>fix_granularity.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Save current environment in a folder containing CSV</p>
+    <p>Sets a given granularity to a set of data by aggregating or imputing them.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>save_env_csv</span><span class='op'>(</span><span class='va'>save_path</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>fix_granularity</span><span class='op'>(</span>
+  <span class='va'>tag_wanted</span>,
+  <span class='va'>period_start</span>,
+  <span class='va'>period_end</span>,
+  <span class='va'>temporal_granularity</span>,
+  stat_unit_wanted <span class='op'>=</span> <span class='cn'>NULL</span>,
+  aggregation_method <span class='op'>=</span> <span class='va'>mean_aggregate</span>,
+  impute_method <span class='op'>=</span> <span class='va'>linear_impute</span>,
+  information_lost_after <span class='op'>=</span> <span class='fl'>5</span> <span class='op'>*</span> <span class='va'>temporal_granularity</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>save_path</th>
-      <td><p>A path to save current environment
-(existence is not required)</p></td>
+      <th>tag_wanted</th>
+      <td><p>A string containing the tag of the wanted data.</p></td>
+    </tr>
+    <tr>
+      <th>period_start</th>
+      <td><p>A date marking the beginning of the studied time period.</p></td>
+    </tr>
+    <tr>
+      <th>period_end</th>
+      <td><p>A date marking the end of the studied time period.</p></td>
+    </tr>
+    <tr>
+      <th>temporal_granularity</th>
+      <td><p>A duration fixing the wanted granularity.</p></td>
+    </tr>
+    <tr>
+      <th>stat_unit_wanted</th>
+      <td><p>An integer containing the stat_unit of the wanted data.
+Default: NULL</p></td>
+    </tr>
+    <tr>
+      <th>aggregation_method</th>
+      <td><p>A function to aggregate data.
+Default: mean_aggregate</p></td>
+    </tr>
+    <tr>
+      <th>impute_method</th>
+      <td><p>A function to impute data.
+Default: linear_impute</p></td>
+    </tr>
+    <tr>
+      <th>information_lost_after</th>
+      <td><p>A duration after which, if no data are found,
+no more will be imputed.
+Default: 5 * temporal_granularity</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>save_env_csv</span><span class='op'>(</span><span class='st'>"~/"</span><span class='op'>)</span>
+    <p>The part of analysr_env$measures that has been modified.</p>
 
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
