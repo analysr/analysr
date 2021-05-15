@@ -1,124 +1,35 @@
 test_that("fix_granularity works", {
 
-  ### FIRST TEST ###
+  stat_unit <- c(101929076, 101929077, 101929077, rep(101929076, 9))
+  date <- lubridate::ymd_hm(c("06-11-10 11:00", "06-10-23 12:00",
+                              "06-11-10 12:00", "06-11-11 12:00",
+                              "06-11-11 20:00", "06-11-13 11:00",
+                              "06-11-16 11:00", "06-11-16 13:00",
+                              "06-11-16 15:00", "06-11-16 16:00",
+                              "06-11-17 11:00", "06-11-17 13:00"))
+  tag <- c("Kaliemie", "Cholesterol", rep("Kaliemie", 10))
+  value <- c(4.7, 0.4, 5.1, 7.4, 6.8, 5.3, 8.2, 7.9, 8.3, 8.5, 7.4, 5.8)
+  d <- data.frame(stat_unit, date, tag, value)
 
-  setup_new_env()
+  result <- fix_granularity(data = d,
+                   tag_wanted = "Kaliemie",
+                   period_start = lubridate::ymd_hm("06-11-10 10:00"),
+                   period_end = lubridate::ymd_hm("06-11-17 10:00"),
+                   temporal_granularity = lubridate::days(),
+                   stat_unit_wanted = 101929076)
 
-  expected_result <- import_measures_csv(
-    csv_path = "./csv/fix_granularity_csv/test_fix_granularity_after1.csv",
-    date_format_reg = "ymd-HM")
+  stat_unit <- rep(101929076, 8)
+  date <- lubridate::ymd_hm("06-11-10 10:00") + lubridate::days() * c(0:7)
+  tag <- rep("Kaliemie", 8)
+  value <- c(4.7, 7.1, 6.2, 5.3, 6.275, 7.250, 8.225, 6.6)
+  status <- c("AGGREGATED", "AGGREGATED", "IMPUTED", "AGGREGATED", "IMPUTED",
+              "IMPUTED", "AGGREGATED", "AGGREGATED")
 
-  # using readr may be better
-
-  setup_new_env()
-  import_measures_csv(
-    csv_path = "./csv/fix_granularity_csv/test_fix_granularity_before1.csv",
-    date_format_reg = "ymd-HM")
-
-
-  result <- fix_granularity(
-    tag_wanted = "Kaliemie",
-    period_start = lubridate::ymd_hm("06-11-10 10:00"),
-    period_end = lubridate::ymd_hm("06-11-17 10:00"),
-    stat_unit_wanted = 101929076,
-    temporal_granularity = lubridate::days())
-
-  expect_equal(result[c("stat_unit", "date", "tag", "value", "status")],
-               expected_result[c("stat_unit", "date", "tag", "value", "status")])
-
-
-  ### SECOND TEST ###
-
-  setup_new_env()
-
-  expected_result2 <- import_measures_csv(
-    csv_path = "./csv/fix_granularity_csv/test_temperature_after.csv")
-
-  # using readr may be better
-
-  setup_new_env()
-  import_measures_csv(
-    csv_path = "./csv/fix_granularity_csv/test_temperature_before.csv")
+  expected_result <- data.frame(stat_unit, date, tag, value, status)
 
 
-  result2 <- fix_granularity(
-    tag_wanted = "Temperature",
-    period_start = lubridate::ymd_hms("10-03-11 10:00:00"),
-    period_end = lubridate::ymd_hms("10-03-12 10:00:00"),
-    stat_unit_wanted = 108,
-    temporal_granularity = lubridate::hours())
-
-  expect_equal(result2[c("stat_unit", "date", "tag", "value", "status")],
-      expected_result2[c("stat_unit", "date", "tag", "value", "status")])
+  expect_equal(result, expected_result)
 
 
 
-  ### THIRD TEST ###
-  ## Test if the gaps are well treated
-  setup_new_env()
-
-  expected_result3 <- import_measures_csv(
-      csv_path = "./csv/fix_granularity_csv/test_temperature_gap_after.csv")
-
-  # using readr may be better
-
-  setup_new_env()
-  import_measures_csv(
-    csv_path = "./csv/fix_granularity_csv/test_temperature_gap_before.csv")
-
-
-  result3 <- fix_granularity(
-    tag_wanted = "Temperature",
-    period_start = lubridate::ymd_hms("10-03-11 10:00:00"),
-    period_end = lubridate::ymd_hms("10-03-12 10:00:00"),
-    stat_unit_wanted = 108,
-    temporal_granularity = lubridate::hours())
-
-  expect_equal(result3[c("stat_unit", "date", "tag", "value", "status")],
-               expected_result3[c("stat_unit", "date", "tag", "value", "status")])
-
-
-  ### FOURTH TEST ###
-  ## Test if the gaps are well treated (one gap in the middle and one at the end)
-  setup_new_env()
-
-  expected_result4 <- import_measures_csv(
-    csv_path = "./csv/fix_granularity_csv/test_temperature_gap_after.csv")
-
-  # using readr may be better
-
-  setup_new_env()
-  import_measures_csv(
-    csv_path = "./csv/fix_granularity_csv/test_temperature_gap_before.csv")
-
-
-  result4 <- fix_granularity(
-    tag_wanted = "Temperature",
-    period_start = lubridate::ymd_hms("10-03-11 10:00:00"),
-    period_end = lubridate::ymd_hms("10-03-13 10:00:00"),
-    stat_unit_wanted = 108,
-    temporal_granularity = lubridate::hours())
-  expect_equal(result4[c("stat_unit", "date", "tag", "value", "status")],
-               expected_result4[c("stat_unit", "date", "tag", "value", "status")])
-
-  ### FIFTH TEST ###
-  ## Test if the gaps are well treated (one gap in the middle and one at the beginning)
-  setup_new_env()
-
-  expected_result5 <- import_measures_csv(
-    csv_path = "./csv/fix_granularity_csv/test_temperature_gap_after.csv")
-
-  setup_new_env()
-  import_measures_csv(
-    csv_path = "./csv/fix_granularity_csv/test_temperature_gap_before.csv")
-
-
-  result5 <- fix_granularity(
-    tag_wanted = "Temperature",
-    period_start = lubridate::ymd_hms("10-03-10 10:00:00"),
-    period_end = lubridate::ymd_hms("10-03-12 10:00:00"),
-    stat_unit_wanted = 108,
-    temporal_granularity = lubridate::hours())
-  expect_equal(result5[c("stat_unit", "date", "tag", "value", "status")],
-               expected_result5[c("stat_unit", "date", "tag", "value", "status")])
 })
