@@ -28,12 +28,15 @@ fix_granularity <-
            impute_method = linear_impute,
            information_lost_after = 5 * temporal_granularity) {
 
-#let's only take the data we need
-    data <- subset(analysr_env$measures, tag == tag_wanted)
-    data <- subset(data, date >= period_start)
-    data <- subset(data, date < period_end + temporal_granularity)
-    data <- subset(data, stat_unit == stat_unit_wanted)
+    splits <- split(analysr_env$measures,
+                    analysr_env$measures$tag == tag_wanted
+                    & analysr_env$measures$date >= period_start
+                    & analysr_env$measures$date < period_end + temporal_granularity
+                    & analysr_env$measures$stat_unit == stat_unit_wanted)
 
+    data <- splits$"TRUE"
+    data_unchanged <- splits$"FALSE"
+    print(data_unchanged)
 
 # let's initialize our dataframe
     date <- seq_date(period_start, period_end, temporal_granularity)
@@ -110,17 +113,10 @@ fix_granularity <-
       i <- i + 1
     }
 
-    rownames(result) <- c(1:length(result$date))
-    data_unchanged <- subset(analysr_env$measures,
-                             tag != tag_wanted)
-    data_unchanged <- subset(analysr_env$measures,
-                             date <= period_start)
-    data_unchanged <- subset(analysr_env$measures,
-                             date > period_end + temporal_granularity)
-    data_unchanged <- subset(analysr_env$measures,
-                             stat_unit != stat_unit_wanted)
+    #rownames(result) <- c(1:length(result$date))
 
     analysr_env$measures <- rbind(data_unchanged, result)
 
-    result
+    rownames(analysr_env$measures) <- c(1:length(analysr_env$measures$date))
+
 }
