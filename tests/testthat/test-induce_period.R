@@ -26,8 +26,8 @@ test_that("induce_period works", {
   # check values
   expect_equal(dplyr::all_equal(analysr_env$measures, expected_measures), TRUE)
   expect_equal(dplyr::all_equal(analysr_env$periods, expected_periods), TRUE)
-  #expect_equal(dplyr::all_equal(analysr_env$stat_units, expected_stat_units),
-  #            TRUE)
+  expect_equal(dplyr::all_equal(analysr_env$stat_units, expected_stat_units),
+               TRUE)
 
   # check that tables are consistent
   expect_equal(check_tables_integrity(), TRUE)
