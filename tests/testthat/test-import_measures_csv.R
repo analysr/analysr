@@ -16,8 +16,9 @@ test_that("import measures CSV  works", {
 
   expected <-
     as.data.frame(quiet_read_csv(
-      file = "./csv/import_measures_csv/after.csv")$result
-    )
+      file = "./csv/import_measures_csv/after.csv",
+      col_types = readr::cols("hash" = "i")
+    )$result)
 
   # to check dataframes without hash
   expect_equal(
@@ -57,7 +58,9 @@ test_that("import measures CSV works when import twice", {
 
   expected <-
     as.data.frame(quiet_read_csv(
-      file = "./csv/import_measures_csv/after2.csv")$result)
+      file = "./csv/import_measures_csv/after2.csv",
+      col_types = readr::cols("hash" = "i")
+    )$result)
 
   # to check dataframes without hash
   expect_equal(
@@ -87,8 +90,9 @@ test_that("import measures CSV  works and fill descriptions", {
 
   expected <-
     as.data.frame(quiet_read_csv(
-      file = "./csv/import_measures_csv/after.csv")$result
-    )
+      file = "./csv/import_measures_csv/after.csv",
+      col_types = readr::cols("hash" = "i")
+    )$result)
 
   expect_equal(
     dplyr::all_equal(
@@ -116,7 +120,9 @@ test_that("import measures CSV works when importing different date formats", {
 
   # expected
   expected <- as.data.frame(quiet_read_csv(
-      file = "./csv/import_measures_csv/date/after.csv")$result)
+      file = "./csv/import_measures_csv/date/after.csv",
+      col_types = readr::cols("hash" = "i")
+  )$result)
 
   # import ymd-HMS
   setup_new_env()
