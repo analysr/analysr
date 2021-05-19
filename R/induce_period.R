@@ -10,9 +10,14 @@
 #'
 #' @export
 induce_period <- function(condition, tag_to_create, duration) {
-  condition <- expr(condition)
-  tag_to_check <- as_string(condition[[2]])
+  condition <- rlang::enexpr(condition)
+  # print(lobstr::ast(!!condition))
+
+  tag_to_check <- rlang::as_string(condition[[2]])[1]
   operator <- condition[[1]]
-  value <- condition[[3]]
-  # ast(!!condition)
+  wanted_value <- condition[[3]]
+  print(tag_to_check)
+  print(subset(analysr_env$measures, tag == tag_to_check))
+  print(subset(analysr_env$measures, value > wanted_value))
+  #print(eval(rlang::call2(operator, tag_to_check, value)))
 }

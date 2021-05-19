@@ -99,10 +99,10 @@ test_that("import measures CSV  works and fill descriptions", {
 
   expected_descriptions <-
     as.data.frame(quiet_read_csv(
-      file = "./csv/import_measures_csv/after-descriptions.csv")$result
-    )
-  expected_descriptions <-
-                      transform(expected_descriptions, hash = as.integer(hash))
+      file = "./csv/import_measures_csv/after-descriptions.csv",
+      col_types = readr::cols("hash" = "i")
+  )$result)
+
   # conflict when importing hash have to be an integer
 
   expect_equal(dplyr::all_equal(
