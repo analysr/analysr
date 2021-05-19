@@ -61,4 +61,5 @@ Imports:
     readr,
     purrr,
     lubridate,
-    dplyr
+    dplyr,
+    rlang

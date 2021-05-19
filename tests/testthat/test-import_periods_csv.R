@@ -14,8 +14,9 @@ test_that("import periods CSV  works", {
 
   expected <-
     as.data.frame(quiet_read_csv(
-      file = "./csv/import_periods_csv/after.csv")$result
-    )
+      file = "./csv/import_periods_csv/after.csv",
+      col_types = readr::cols("hash" = "i")
+    )$result)
 
   # to check dataframes without hash
   expect_equal(
@@ -52,7 +53,8 @@ test_that("import periods CSV works when import twice", {
 
   expected <-
     as.data.frame(quiet_read_csv(
-      file = "./csv/import_periods_csv/after2.csv"
+      file = "./csv/import_periods_csv/after2.csv",
+      col_types = readr::cols("hash" = "i")
     )$result)
 
   # to check dataframes without hash
@@ -83,8 +85,9 @@ test_that("import periods CSV works and fill descriptions", {
 
   expected <-
     as.data.frame(quiet_read_csv(
-      file = "./csv/import_periods_csv/after.csv")$result
-    )
+      file = "./csv/import_periods_csv/after.csv",
+      col_types = readr::cols("hash" = "i")
+    )$result)
 
   # to check dataframes without hash
   expect_equal(
@@ -92,12 +95,10 @@ test_that("import periods CSV works and fill descriptions", {
       analysr_env$periods[c("stat_unit", "begin", "end", "desc")],
       expected), TRUE)
 
-  expected_descriptions <-
-    as.data.frame(quiet_read_csv(
-      file = "./csv/import_periods_csv/after-descriptions.csv")$result
-    )
-  expected_descriptions <- transform(expected_descriptions,
-                                     hash = as.integer(hash))
+  expected_descriptions <- as.data.frame(quiet_read_csv(
+      file = "./csv/import_periods_csv/after-descriptions.csv",
+      col_types = readr::cols("hash" = "i")
+  )$result)
   # conflict when importing hash have to be an integer
 
   expect_equal(dplyr::all_equal(
@@ -111,7 +112,9 @@ test_that("import periods CSV works when importing different date formats", {
 
   # expected
   expected <- as.data.frame(quiet_read_csv(
-      file = "./csv/import_periods_csv/date/after.csv")$result)
+      file = "./csv/import_periods_csv/date/after.csv",
+      col_types = readr::cols("hash" = "i")
+  )$result)
 
   # import ymd-HM
   setup_new_env()
