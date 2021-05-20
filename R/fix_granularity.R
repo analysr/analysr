@@ -8,9 +8,9 @@
 #' @param period_start A date marking the beginning of the studied time period.
 #' @param period_end A date marking the end of the studied time period.
 #' @param temporal_granularity A duration fixing the wanted granularity.
-#' @param stat_unit_wanted An integer containing the stat_unit
+#' @param stat_unit_wanted An vector of integers containing the stat_units
 #' of the wanted data.
-#' Default: NULL
+#' Default: NULL (means every stat_unit)
 #' @param aggregation_method A function to aggregate data.
 #' Default: mean_aggregate
 #' @param impute_method A function to impute data.
@@ -19,7 +19,45 @@
 #' no more will be imputed.
 #' Default: 5 * temporal_granularity
 #' @export
+
+
 fix_granularity <-
+  function (tag_wanted,
+            period_start,
+            period_end,
+            temporal_granularity,
+            stat_unit_wanted = NULL,
+            aggregation_method = mean_aggregate,
+            impute_method = linear_impute,
+            information_lost_after = 5 * temporal_granularity) {
+
+    if (! is.null(stat_unit_wanted)) {
+      for (stat in stat_unit_wanted) {
+      fix_granularity_aux(tag_wanted,
+                          period_start,
+                          period_end,
+                          temporal_granularity,
+                          stat,
+                          aggregation_method,
+                          impute_method,
+                          information_lost_after)
+      }
+    }
+    else {
+      stat <- unique(analysr_env$measures$stat_unit)
+      fix_granularity(tag_wanted,
+                      period_start,
+                      period_end,
+                      temporal_granularity,
+                      stat,
+                      aggregation_method,
+                      impute_method,
+                      information_lost_after)
+    }
+  }
+
+
+fix_granularity_aux <-
   function(tag_wanted,
            period_start,
            period_end,
@@ -29,12 +67,14 @@ fix_granularity <-
            impute_method = linear_impute,
            information_lost_after = 5 * temporal_granularity) {
 
-#let's only take the data we need
-    data <- subset(analysr_env$measures, tag == tag_wanted)
-    data <- subset(data, date >= period_start)
-    data <- subset(data, date < period_end + temporal_granularity)
-    data <- subset(data, stat_unit == stat_unit_wanted)
+    splits <- split(analysr_env$measures,
+                    analysr_env$measures$tag == tag_wanted
+                    & analysr_env$measures$date >= period_start
+                    & analysr_env$measures$date < period_end + temporal_granularity
+                    & analysr_env$measures$stat_unit == stat_unit_wanted)
 
+    data <- splits$"TRUE"
+    data_unchanged <- splits$"FALSE"
 
 # let's initialize our dataframe
     date <- seq_date(period_start, period_end, temporal_granularity)
@@ -43,7 +83,7 @@ fix_granularity <-
     tag <- rep(tag_wanted, n)
     stat_unit <- rep(stat_unit_wanted, n)
     value <- 1:n
-    status <- rep("", n)
+    status <- rep(NA, n)
 
     result <- data.frame(hash, stat_unit, date,
                          tag, value, status)
@@ -62,27 +102,30 @@ fix_granularity <-
         sample, date < (result$date[i] + temporal_granularity))
 
 
-      if (length(sample$date) > 0) {
-        #result$value[i] <- aggregate(sample,
-                                     #result$date[i],
-                                     #result$date[i] +
-                                      # temporal_granularity,
-                                    # aggregation_method)
+      if (length(sample$date) > 1) {
         result$value[i] <- aggregation_method(sample$value)
         result$status[i] <- "AGGREGATED"
       }
+      else if (length(sample$date) > 0){
+        result$value[i] <- sample$value
+        result$status[i] <- NA
+      }
+      else{
+        result$status[i] <- "TO BE IMPUTED"
+      }
     }
-
 
     #let's complete by imputing the missing values
     i <- 1
     while (i < n) {
 
-      if (result$status[i] == "") {
+      if (!is.na(result$status[i]) && result$status[i] == "TO BE IMPUTED" ) {
+
         result$status[i] <- "IMPUTED"
         j <- 1
 
-        while (i + j < n && result$status[i + j] == "" ) {
+        while (i + j < n && !is.na(result$status[i + j]) &&
+               result$status[i + j] == "TO BE IMPUTED" ) {
 
           j <- j + 1
         }
@@ -111,17 +154,8 @@ fix_granularity <-
       i <- i + 1
     }
 
-    rownames(result) <- c(1:length(result$date))
-    data_unchanged <- subset(analysr_env$measures,
-                             tag != tag_wanted)
-    data_unchanged <- subset(analysr_env$measures,
-                             date <= period_start)
-    data_unchanged <- subset(analysr_env$measures,
-                             date > period_end + temporal_granularity)
-    data_unchanged <- subset(analysr_env$measures,
-                             stat_unit != stat_unit_wanted)
-
     analysr_env$measures <- rbind(data_unchanged, result)
 
-    result
+    rownames(analysr_env$measures) <- c(1:length(analysr_env$measures$date))
+
 }
