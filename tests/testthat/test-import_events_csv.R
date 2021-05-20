@@ -14,7 +14,9 @@ test_that("import events CSV  works", {
 
   expected <-
     as.data.frame(
-      quiet_read_csv(file = "./csv/import_events_csv/after.csv")$result)
+      quiet_read_csv(file = "./csv/import_events_csv/after.csv",
+                     col_types = readr::cols("hash" = "i")
+    )$result)
   # to check dataframes without hash
   expect_equal(
     dplyr::all_equal(analysr_env$events[c("stat_unit", "date", "tag")],
@@ -47,7 +49,9 @@ test_that("import events CSV works when import twice", {
   quiet_read_csv <- purrr::quietly(readr::read_csv)
   expected <-
     as.data.frame(
-      quiet_read_csv(file = "./csv/import_events_csv/after2.csv")$result)
+      quiet_read_csv(file = "./csv/import_events_csv/after2.csv",
+                     col_types = readr::cols("hash" = "i")
+    )$result)
 
   # to check dataframes without hash
   expect_equal(
@@ -80,7 +84,9 @@ test_that("import events CSV works and fill descriptions", {
 
   expected <-
     as.data.frame(
-      quiet_read_csv(file = "./csv/import_events_csv/after.csv")$result)
+      quiet_read_csv(file = "./csv/import_events_csv/after.csv",
+                     col_types = readr::cols("hash" = "i")
+    )$result)
   # to check dataframes without hash
   expect_equal(dplyr::all_equal(
                   analysr_env$events[c("stat_unit", "date", "tag")], expected),
@@ -88,10 +94,9 @@ test_that("import events CSV works and fill descriptions", {
 
   expected_descriptions <- as.data.frame(
     quiet_read_csv(
-      file = "./csv/import_events_csv/after-descriptions.csv")$result
-    )
-  expected_descriptions <- transform(expected_descriptions,
-                                     hash = as.integer(hash))
+      file = "./csv/import_events_csv/after-descriptions.csv",
+      col_types = readr::cols("hash" = "i")
+  )$result)
   # conflict when importing hash have to be an integer
 
   expect_equal(
@@ -105,7 +110,9 @@ test_that("import events CSV works when importing different date formats", {
 
   # expected
   expected <- as.data.frame(quiet_read_csv(
-      file = "./csv/import_events_csv/date/after.csv")$result)
+      file = "./csv/import_events_csv/date/after.csv",
+      col_types = readr::cols("hash" = "i")
+  )$result)
 
   # import ymd-HM
   setup_new_env()

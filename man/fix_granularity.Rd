@@ -24,7 +24,8 @@ fix_granularity(
 
 \item{temporal_granularity}{A duration fixing the wanted granularity.}
 
-\item{stat_unit_wanted}{An integer containing the stat_unit of the wanted data.
+\item{stat_unit_wanted}{An integer containing the stat_unit
+of the wanted data.
 Default: NULL}
 
 \item{aggregation_method}{A function to aggregate data.
