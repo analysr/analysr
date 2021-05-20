@@ -18,9 +18,9 @@ test_that("fix_granularity works", {
 
   fix_granularity(
     tag_wanted = "Kaliemie",
-    period_start = lubridate::ymd_hm("06-11-10 10:00"),
-    period_end = lubridate::ymd_hm("06-11-17 10:00"),
-    stat_unit_wanted = 101929076,
+    period_start = lubridate::ymd("06-11-10"),
+    period_end = lubridate::ymd("06-11-17"),
+    stat_unit_wanted = c(101929076, 101929077),
     temporal_granularity = lubridate::days())
 
   expect_equal(analysr_env$measures[c("stat_unit", "date", "tag", "value", "status")],
@@ -45,7 +45,7 @@ test_that("fix_granularity works", {
     tag_wanted = "Temperature",
     period_start = lubridate::ymd_hms("10-03-11 10:00:00"),
     period_end = lubridate::ymd_hms("10-03-12 10:00:00"),
-    stat_unit_wanted = 108,
+    stat_unit_wanted = c(108),
     temporal_granularity = lubridate::hours())
 
   expect_equal(analysr_env$measures[c("stat_unit", "date", "tag", "value", "status")],
@@ -71,7 +71,7 @@ test_that("fix_granularity works", {
     tag_wanted = "Temperature",
     period_start = lubridate::ymd_hms("10-03-11 10:00:00"),
     period_end = lubridate::ymd_hms("10-03-12 10:00:00"),
-    stat_unit_wanted = 108,
+    stat_unit_wanted = c(108),
     temporal_granularity = lubridate::hours())
 
   expect_equal(analysr_env$measures[c("stat_unit", "date", "tag", "value", "status")],
@@ -96,7 +96,7 @@ test_that("fix_granularity works", {
     tag_wanted = "Temperature",
     period_start = lubridate::ymd_hms("10-03-11 10:00:00"),
     period_end = lubridate::ymd_hms("10-03-13 10:00:00"),
-    stat_unit_wanted = 108,
+    stat_unit_wanted = c(108),
     temporal_granularity = lubridate::hours())
   expect_equal(analysr_env$measures[c("stat_unit", "date", "tag", "value", "status")],
                expected_result4[c("stat_unit", "date", "tag", "value", "status")])
@@ -117,7 +117,7 @@ test_that("fix_granularity works", {
     tag_wanted = "Temperature",
     period_start = lubridate::ymd_hms("10-03-10 10:00:00"),
     period_end = lubridate::ymd_hms("10-03-12 10:00:00"),
-    stat_unit_wanted = 108,
+    stat_unit_wanted = c(108),
     temporal_granularity = lubridate::hours())
 
   expect_equal(analysr_env$measures[c("stat_unit", "date", "tag", "value", "status")],
