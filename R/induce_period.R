@@ -11,6 +11,7 @@
 #'
 #' @export
 induce_period <- function(condition, tag_to_create, duration) {
+  #Test de modification de paul
   condition <- rlang::enexpr(condition)
   # Here we admit that a condition is like: tag operator value
   # e.g. Temperature > 37.5
