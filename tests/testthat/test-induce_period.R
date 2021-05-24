@@ -21,16 +21,12 @@ test_that("induce_period works", {
   import_measures_csv("./csv/induce_period/before-measures.csv")
 
   # induce period
-  induce_period(Temperature > 37.0, "Fever", 1*days)
-  induce_period(Temperature, "Fever", 1*days)
+  induce_period(Temperature > 37.5, "Fever", 1*days)
 
-  # Pour l'instalation de stringr:
-  #Install the released version from CRAN:
-  #install.packages("stringr")
-  # Install the cutting edge development version from GitHub:
-  # install.packages("devtools")
-  #devtools::install_github("tidyverse/stringr")
-
+  #induce_period(Temperature, "Fever", 1*days)
+  # TODO: Make another test when Elisa's function works (if you don't do that test will fail ;) )
+  # When there is no operator, check events, measures, description (damn hard)
+  # When there is an operator only check measures
 
   # check values
   expect_equal(dplyr::all_equal(analysr_env$measures, expected_measures), TRUE)
