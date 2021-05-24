@@ -62,4 +62,5 @@ Imports:
     purrr,
     lubridate,
     dplyr,
-    rlang
+    rlang,
+    stringr

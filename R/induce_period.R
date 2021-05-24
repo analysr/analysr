@@ -10,12 +10,39 @@
 #' @param duration A duration.
 #'
 #' @export
-induce_period <- function(condition, tag_to_create, duration) {
+induce_period <- function(condition, tag_to_create, durationB) {
   #Test de modification de paul
   condition <- rlang::enexpr(condition)
+  durationParsed <- rlang::enexpr(durationB)
+  #print(durationParsed[[1]])#*
+  #print(durationParsed[[2]])#1
+  #print(durationParsed[[3]])#Days
+
+  if (durationParsed[[3]] == "seconds"){
+    duration <- durationParsed[[2]]*lubridate::seconds()
+  }
+  else if (durationParsed[[3]] == "minutes"){
+    duration <- durationParsed[[2]]*lubridate::minutes()
+  }
+  else if (durationParsed[[3]] == "hours"){
+    duration <- durationParsed[[2]]*lubridate::hours()
+  }
+  else if (durationParsed[[3]] == "days"){
+    duration <- durationParsed[[2]]*lubridate::days()
+  }
+  else if (durationParsed[[3]] == "weeks"){
+    duration <- durationParsed[[2]]*lubridate::weeks()
+  }
+  else if (durationParsed[[3]] == "months"){
+    duration <- durationParsed[[2]]*lubridate::months()
+  }
+  else if (durationParsed[[3]] == "years"){
+    duration <- durationParsed[[2]]*lubridate::years()
+  }
+
   # Here we admit that a condition is like: tag operator value
   # e.g. Temperature > 37.5
-
+  print(duration)
   # Lorsque la condition est en deux parties avec un element de logique
   if (length(condition) > 2){
     print("Methode avec opérateur")
