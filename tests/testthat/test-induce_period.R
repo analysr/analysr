@@ -21,7 +21,8 @@ test_that("induce_period works", {
   import_measures_csv("./csv/induce_period/before-measures.csv")
 
   # induce period
-  induce_period(Temperature > 37.5, "Fever", 1*lubridate::days())
+  induce_period(Temperature > 37.0, "Fever", 1*lubridate::days())
+  induce_period(Temperature, "Fever", 1*lubridate::days())
 
   # check values
   expect_equal(dplyr::all_equal(analysr_env$measures, expected_measures), TRUE)
