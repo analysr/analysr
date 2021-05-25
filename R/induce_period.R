@@ -29,13 +29,6 @@ induce_period <- function(condition, tag_to_create, duration) {
 
       data <- subset(analysr_env$measures, tag == tag_to_check)
       data <- data[eval(rlang::call2(operator, data$value, wanted_value)),]
-
-      n <- nrow(data)
-
-      result <- data.frame(hash = get_hash(n), stat_unit=data$stat_unit,
-                           begin=data$date, end=data$date+duration, desc=rep(tag_to_create,n))
-
-      analysr_env$periods <- rbind(analysr_env$periods, result)
   }
 
   else if (length(condition > 0)){
@@ -45,14 +38,14 @@ induce_period <- function(condition, tag_to_create, duration) {
 
     data <- subset(analysr_env$measures, tag == tag_to_check)
 
-    n <- nrow(data)
 
-    result <- data.frame(hash = get_hash(n), stat_unit=data$stat_unit,
-                         begin=data$date, end=data$date+duration, desc=rep(tag_to_create,n))
-
-    analysr_env$periods <- rbind(analysr_env$periods, result)
   } else {
     # Method not developed
   }
+  n <- nrow(data)
 
+  result <- data.frame(hash = get_hash(n), stat_unit=data$stat_unit,
+                       begin=data$date, end=data$date+duration, desc=rep(tag_to_create,n))
+
+  analysr_env$periods <- rbind(analysr_env$periods, result)
 }
