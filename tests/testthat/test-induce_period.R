@@ -25,8 +25,7 @@ test_that("induce_period works", {
 
   #induce_period(Temperature, "Fever", 1*days)
   # TODO: Make another test when Elisa's function works (if you don't do that test will fail ;) )
-  # When there is no operator, check events, measures, description (damn hard)
-  # When there is an operator only check measures
+
 
   # check values
   expect_equal(dplyr::all_equal(analysr_env$measures, expected_measures), TRUE)

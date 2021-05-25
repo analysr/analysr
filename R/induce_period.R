@@ -29,18 +29,17 @@ induce_period <- function(condition, tag_to_create, duration) {
 
       data <- subset(analysr_env$measures, tag == tag_to_check)
       data <- data[eval(rlang::call2(operator, data$value, wanted_value)),]
-  }
-
-  else if (length(condition > 0)){
+  } else {
     # Method without operator
+    # When there is no operator, check events, measures with description (damn hard)
+
 
     tag_to_check <- rlang::as_string(toString(condition))
 
-    data <- subset(analysr_env$measures, tag == tag_to_check)
+    data <- subset(analysr_env$events, tag == tag_to_check)
 
+    # TODO: to check measures with description (check on description)
 
-  } else {
-    # Method not developed
   }
   n <- nrow(data)
 
