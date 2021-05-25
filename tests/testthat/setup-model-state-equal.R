@@ -19,9 +19,15 @@ model_state_equal <- function(after_path) {
 
   # load current_hash
   after_env$current_hash <- as.numeric(
-                        readr::read_file(file.path(save_path, "current_hash")))
+                        readr::read_file(file.path(after_path, "current_hash.txt")))
 
   # TODO: Throw an error if a table does not match
   # Compare after_env and analysr_env
   # Use `stop` func https://stackoverflow.com/a/1608170/6579059
+
+  for (df in df_to_load){
+    if (!dplyr::all_equal(getElement(analysr_env,df), getElement(after_env,df))){
+      stop("Table ", df, " does not match.")
+    }
+  }
 }

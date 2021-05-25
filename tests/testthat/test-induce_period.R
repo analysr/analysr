@@ -4,18 +4,18 @@ quiet_read_csv <- purrr::quietly(readr::read_csv)
 test_that("induce_period works", {
   setup_new_env()
 
-  expected_measures <- as.data.frame(quiet_read_csv(
-      file = "./csv/induce_period/after-measures.csv",
-      col_types = readr::cols("hash" = "i")
-  )$result)
-  expected_periods <- as.data.frame(quiet_read_csv(
-      file = "./csv/induce_period/after-periods.csv",
-      col_types = readr::cols("hash" = "i")
-  )$result)
-  expected_stat_units <- as.data.frame(quiet_read_csv(
-    file = "./csv/induce_period/after-stat_units.csv",
-    col_types = readr::cols("hash" = "i")
-  )$result)
+  # expected_measures <- as.data.frame(quiet_read_csv(
+  #     file = "./csv/induce_period/after-measures.csv",
+  #     col_types = readr::cols("hash" = "i")
+  # )$result)
+  # expected_periods <- as.data.frame(quiet_read_csv(
+  #     file = "./csv/induce_period/after-periods.csv",
+  #     col_types = readr::cols("hash" = "i")
+  # )$result)
+  # expected_stat_units <- as.data.frame(quiet_read_csv(
+  #   file = "./csv/induce_period/after-stat_units.csv",
+  #   col_types = readr::cols("hash" = "i")
+  # )$result)
 
   # import measures
   import_measures_csv("./csv/induce_period/before-measures.csv")
@@ -23,23 +23,22 @@ test_that("induce_period works", {
   # induce period
   induce_period(Temperature > 37.5, "Fever", 1*days)
 
-  #induce_period(Temperature, "Fever", 1*days)
-  # TODO: Make another test when Elisa's function works (if you don't do that test will fail ;) )
-  # When there is no operator, check events, measures, description (damn hard)
-  # When there is an operator only check measures
+  # # TODO: Make another test when Elisa's function works (if you don't do that test will fail ;) )
+  # # When there is no operator, check events, measures, description (damn hard)
+  # # When there is an operator only check measures
+  #
+  # # check values
+  # expect_equal(dplyr::all_equal(analysr_env$measures, expected_measures), TRUE)
+  # expect_equal(dplyr::all_equal(analysr_env$periods, expected_periods), TRUE)
+  # expect_equal(dplyr::all_equal(analysr_env$stat_units, expected_stat_units),
+  #              TRUE)
+  #
+  # # check that tables are consistent
+  # expect_equal(check_tables_integrity(), TRUE)
+  #
+  # #check that other tables are empty
+  # expect_equal(nrow(analysr_env$descriptions), 0)
+  # expect_equal(nrow(analysr_env$events), 0)
 
-  # check values
-  expect_equal(dplyr::all_equal(analysr_env$measures, expected_measures), TRUE)
-  expect_equal(dplyr::all_equal(analysr_env$periods, expected_periods), TRUE)
-  expect_equal(dplyr::all_equal(analysr_env$stat_units, expected_stat_units),
-               TRUE)
-
-  # check that tables are consistent
-  expect_equal(check_tables_integrity(), TRUE)
-
-  #check that other tables are empty
-  expect_equal(nrow(analysr_env$descriptions), 0)
-  expect_equal(nrow(analysr_env$events), 0)
-
-
+  model_state_equal("./csv/induce_period/after")
 })
