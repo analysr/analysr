@@ -5,7 +5,7 @@ test_that("setup_new_env works", {
   # test on measures table
 
   expected_measures <- data.frame(matrix(ncol = 6, nrow = 0))
-  colnames(expected_measures) <- c("hash", "stat_unit", "date", 
+  colnames(expected_measures) <- c("hash", "stat_unit", "date",
                                   "tag", "value", "status")
 
   expect_equal(
@@ -17,7 +17,7 @@ test_that("setup_new_env works", {
 
   expected_periods <- data.frame(matrix(ncol = 5, nrow = 0))
   colnames(expected_periods) <-
-    c("hash", "stat_unit", "begin", "end", "desc")
+    c("hash", "stat_unit", "begin", "end", "tag")
 
   expect_equal(
     dplyr::all_equal(

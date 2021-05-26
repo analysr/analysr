@@ -9,7 +9,7 @@
 #' @param stat_unit A string containing the stat_unit label.
 #' @param begin A string containing the begin date label.
 #' @param end A string containing the end date label.
-#' @param desc A string containing the desc label.
+#' @param tag A string containing the tag label.
 #' @param optional_data A vector containing label to import in descriptions
 #' table.
 #' @param date_format_func A function to format date with (not required).
@@ -23,7 +23,7 @@ import_periods_csv <-
             stat_unit = "stat_unit",
             begin = "begin",
             end = "end",
-            desc = "desc",
+            tag = "tag",
             optional_data,
             date_format_func =
                   (function(x) lubridate::parse_date_time(x, date_format_reg)),
@@ -42,9 +42,9 @@ import_periods_csv <-
       fill_descriptions(hash, optional_data, result, n)
     }
 
-    result <- result[c(stat_unit, begin, end, desc)]
+    result <- result[c(stat_unit, begin, end, tag)]
     # we could use dplyr to extract colums https://bit.ly/32lGkNR
-    colnames(result) <- c("stat_unit", "begin", "end", "desc")
+    colnames(result) <- c("stat_unit", "begin", "end", "tag")
 
     add_stat_units(result$stat_unit)
 

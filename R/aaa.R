@@ -15,7 +15,7 @@ setup_new_env <- function() {
     # create data frame for periods
     analysr_env$periods <- data.frame(matrix(ncol = 5, nrow = 0))
     colnames(analysr_env$periods) <- c("hash", "stat_unit", "begin",
-                                        "end", "desc")
+                                        "end", "tag")
 
     # create data frame for events
     analysr_env$events <- data.frame(matrix(ncol = 4, nrow = 0))

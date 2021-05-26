@@ -9,7 +9,7 @@ import_periods_csv(
   stat_unit = "stat_unit",
   begin = "begin",
   end = "end",
-  desc = "desc",
+  tag = "tag",
   optional_data,
   date_format_func = (function(x) lubridate::parse_date_time(x, date_format_reg)),
   date_format_reg = "ymd-HMS"
@@ -24,7 +24,7 @@ import_periods_csv(
 
 \item{end}{A string containing the end date label.}
 
-\item{desc}{A string containing the desc label.}
+\item{tag}{A string containing the tag label.}
 
 \item{optional_data}{A vector containing label to import in descriptions
 table.}

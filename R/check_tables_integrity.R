@@ -12,7 +12,7 @@ check_tables_integrity <- function () {
     }
     # check periods table
     if (!all(colnames(analysr_env$periods) == c("hash", "stat_unit", "begin",
-                                              "end", "desc"))) {
+                                              "end", "tag"))) {
       warning("Analysr periods table is not consistent")
       return(FALSE)
     }

@@ -21,7 +21,7 @@ test_that("import periods CSV  works", {
   # to check dataframes without hash
   expect_equal(
     dplyr::all_equal(
-      analysr_env$periods[c("stat_unit", "begin", "end", "desc")],
+      analysr_env$periods[c("stat_unit", "begin", "end", "tag")],
       expected), TRUE)
 
 
@@ -60,7 +60,7 @@ test_that("import periods CSV works when import twice", {
   # to check dataframes without hash
   expect_equal(
     dplyr::all_equal(expected,
-      analysr_env$periods[c("stat_unit", "begin", "end", "desc")]), TRUE)
+      analysr_env$periods[c("stat_unit", "begin", "end", "tag")]), TRUE)
   # check that stat units have been added
   expect_equal(nrow(analysr_env$stat_units), 2)
 
@@ -92,7 +92,7 @@ test_that("import periods CSV works and fill descriptions", {
   # to check dataframes without hash
   expect_equal(
     dplyr::all_equal(
-      analysr_env$periods[c("stat_unit", "begin", "end", "desc")],
+      analysr_env$periods[c("stat_unit", "begin", "end", "tag")],
       expected), TRUE)
 
   expected_descriptions <- as.data.frame(quiet_read_csv(
