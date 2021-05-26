@@ -29,8 +29,8 @@ setup_new_env <- function() {
     analysr_env$descriptions <- data.frame(matrix(ncol = 3, nrow = 0))
     colnames(analysr_env$descriptions) <- c("hash", "type", "value")
 
-    # define current hash not used
-    analysr_env$current_hash <- as.integer(1)
+    # define current hash used (the first hash to be used will be 1)
+    analysr_env$current_hash <- as.integer(0)
 
 }
 setup_new_env()
@@ -47,10 +47,10 @@ setup_new_env()
 #' @export
 get_hash <- function(n) {
     if (n == 1) {
-        result <- analysr_env$current_hash
+        result <- analysr_env$current_hash + 1
         analysr_env$current_hash <- 1 + analysr_env$current_hash
     } else {
-        result <- analysr_env$current_hash:(n - 1 + analysr_env$current_hash)
+        result <- (analysr_env$current_hash + 1):(n + analysr_env$current_hash)
         analysr_env$current_hash <- n + analysr_env$current_hash
     }
     as.integer(result)

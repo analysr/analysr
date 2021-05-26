@@ -6,15 +6,15 @@ model_state_equal <- function(after_path) {
   result <- TRUE
 
   # load current_hash
-  after_env$current_hash <- as.numeric(readr::read_file(file.path(after_path,
+  after_env$current_hash <- as.integer(readr::read_file(file.path(after_path,
                                                           "current_hash.txt")))
 
   # check current_hash
-  if (after_env$current_hash != analysr_env$current_hash ) {
+  if (after_env$current_hash != analysr_env$current_hash) {
     result <- paste0("Variable current_hash does not match:\n current: ",
                      analysr_env$current_hash, "\n expected: ",
                      after_env$current_hash)
-    stop(result)
+    return(result)
   }
 
 
@@ -37,11 +37,11 @@ model_state_equal <- function(after_path) {
 
   # check data_frames
   for (df in df_to_load) {
-    valid <- dplyr::all_equal(getElement(analysr_env,df),
-                              getElement(after_env,df))
+    valid <- dplyr::all_equal(getElement(analysr_env, df),
+                              getElement(after_env, df))
     if (valid != TRUE) {
-      result <- paste0("Table ", df, " does not match:\n", valid)
-      stop(result)
+        result <- paste0("Table ", df, " does not match:\n", valid)
+        return(result)
     }
   }
 

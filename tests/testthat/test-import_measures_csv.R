@@ -33,7 +33,7 @@ test_that("import measures CSV  works", {
   expect_equal(check_tables_integrity(), TRUE)
 
   # check if current hash has changed in env
-  expect_equal(analysr_env$current_hash, 5)
+  expect_equal(analysr_env$current_hash, 4)
 })
 
 test_that("import measures CSV works when import twice", {
@@ -70,7 +70,7 @@ test_that("import measures CSV works when import twice", {
   expect_equal(nrow(analysr_env$stat_units), 2)
 
   # check if current hash has changed in env
-  expect_equal(analysr_env$current_hash, 7)
+  expect_equal(analysr_env$current_hash, 6)
 
   # check that tables are consistent
   expect_equal(check_tables_integrity(), TRUE)

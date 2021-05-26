@@ -55,7 +55,7 @@ test_that("setup_new_env works", {
       expected_descriptions), TRUE)
 
   expect_equal(
-    analysr_env$current_hash,1
+    analysr_env$current_hash, 0
   )
 
 })
@@ -65,13 +65,13 @@ test_that("get_hash works", {
   setup_new_env()
 
   expect_equal(
-    get_hash(1),1
+    get_hash(1), 1
   )
 
   setup_new_env()
 
   expect_equal(
-    get_hash(15),1:15
+    get_hash(15), 1:15
   )
 
 })
