@@ -1,7 +1,3 @@
-# to compare dataframes : https://bit.ly/3gNYsZ4
-
-quiet_read_csv <- purrr::quietly(readr::read_csv)
-
 test_that("import periods CSV  works", {
   # reset env
   setup_new_env()
@@ -13,7 +9,6 @@ test_that("import periods CSV  works", {
                      "DESCRIPTION")
   expect_equal(model_state_equal("./csv/import_periods_csv/after1"), TRUE)
 })
-
 test_that("import periods CSV works when import twice", {
   # reset env
   setup_new_env()

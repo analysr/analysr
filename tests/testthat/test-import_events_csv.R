@@ -1,6 +1,3 @@
-
-quiet_read_csv <- purrr::quietly(readr::read_csv)
-
 test_that("import events CSV  works", {
   # reset env
   setup_new_env()

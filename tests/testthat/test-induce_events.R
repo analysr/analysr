@@ -1,6 +1,3 @@
-
-quiet_read_csv <- purrr::quietly(readr::read_csv)
-
 test_that("induce_period works", {
   setup_new_env()
 

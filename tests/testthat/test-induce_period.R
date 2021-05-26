@@ -1,5 +1,3 @@
-
-
 test_that("induce_period works", {
   setup_new_env()
 

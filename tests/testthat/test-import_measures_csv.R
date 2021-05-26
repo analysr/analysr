@@ -1,6 +1,3 @@
-
-quiet_read_csv <- purrr::quietly(readr::read_csv)
-
 test_that("import measures CSV  works", {
   # reset env
   setup_new_env()
@@ -13,7 +10,6 @@ test_that("import measures CSV  works", {
   )
   expect_equal(model_state_equal("./csv/import_measures_csv/after1"), TRUE)
 })
-
 test_that("import measures CSV works when import twice", {
   # reset env
   setup_new_env()

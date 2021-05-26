@@ -6,8 +6,6 @@ test_that("load_env_csv works", {
 
   expect_equal(analysr_env$current_hash, 9)
 
-  quiet_read_csv <- purrr::quietly(readr::read_csv)
-
   df_to_load <-
     c("measures",
       "periods",
