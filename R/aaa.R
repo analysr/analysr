@@ -53,5 +53,5 @@ get_hash <- function(n) {
         result <- analysr_env$current_hash:(n - 1 + analysr_env$current_hash)
         analysr_env$current_hash <- n + analysr_env$current_hash
     }
-    result
+    as.integer(result)
 }

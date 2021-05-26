@@ -44,8 +44,9 @@ induce_period <- function(condition, tag_to_create, duration) {
   }
   n <- nrow(data)
 
-  result <- data.frame(hash = get_hash(n), stat_unit=data$stat_unit,
-                       begin=data$date, end=data$date+duration, desc=rep(tag_to_create,n))
+  result <- data.frame(hash = get_hash(n), stat_unit = data$stat_unit,
+                       begin = data$date, end = data$date + duration,
+                       desc = rep(tag_to_create, n))
 
   analysr_env$periods <- rbind(analysr_env$periods, result)
 }

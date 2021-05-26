@@ -18,7 +18,8 @@ load_env_csv <- function(save_path) {
     purrr::map(function(x) {
       file_path <- file.path(save_path, paste0(x, ".csv"))
       result_csv <- quiet_read_csv(file = file_path,
-                                   col_types = readr::cols("hash" = "i"))$result
+                                   col_types = readr::cols("hash" = "i",
+                                    "stat_unit" = "c"))$result
       result_csv <- as.data.frame(result_csv)
 
       assign(x, result_csv, envir = analysr_env)
