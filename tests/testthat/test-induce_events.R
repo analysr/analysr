@@ -18,7 +18,7 @@ test_that("induce_period works", {
   )$result)
 
   # import measures
-  import_measures_csv("./csv/induce_period/before-measures.csv")
+  import_measures_csv("./csv/induce_events/before-measures.csv")
 
   # induce period
   induce_events(Temperature > 37.5, "Hospitalisation")
