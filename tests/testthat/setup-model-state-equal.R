@@ -3,6 +3,21 @@ model_state_equal <- function(after_path) {
   # Create an environment to store after data
   after_env <- new.env(parent = emptyenv())
 
+  result <- TRUE
+
+  # load current_hash
+  after_env$current_hash <- as.numeric(readr::read_file(file.path(after_path,
+                                                          "current_hash.txt")))
+
+  # check current_hash
+  if (after_env$current_hash != analysr_env$current_hash ) {
+    result <- paste0("Variable current_hash does not match:\n current: ",
+                     analysr_env$current_hash, "\n expected: ",
+                     after_env$current_hash)
+    stop(result)
+  }
+
+
   # load dataframes
   df_to_load <- c("measures",  "events", "stat_units",
                   "descriptions", "periods")
@@ -20,19 +35,7 @@ model_state_equal <- function(after_path) {
       assign(x, result_csv, envir = after_env)
     })
 
-  # load current_hash
-  after_env$current_hash <- as.numeric(readr::read_file(file.path(after_path,
-                                                        "current_hash.txt")))
-
-  result <- TRUE
-
-  if (after_env$current_hash != analysr_env$current_hash ) {
-    result <- paste0("Variable current_hash does not match:\n current: ",
-                     analysr_env$current_hash, "\n expected: ",
-                     after_env$current_hash)
-    stop(result)
-  }
-
+  # check data_frames
   for (df in df_to_load) {
     valid <- dplyr::all_equal(getElement(analysr_env,df),
                               getElement(after_env,df))
