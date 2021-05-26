@@ -14,7 +14,7 @@ model_state_equal <- function(after_path) {
     result <- paste0("Variable current_hash does not match:\n current: ",
                      analysr_env$current_hash, "\n expected: ",
                      after_env$current_hash)
-    return(result)
+    stop(result)
   }
 
 
@@ -37,11 +37,18 @@ model_state_equal <- function(after_path) {
 
   # check data_frames
   for (df in df_to_load) {
-    valid <- dplyr::all_equal(getElement(analysr_env, df),
-                              getElement(after_env, df))
+    actual <- getElement(analysr_env, df)
+    actual[is.na(actual)] <- "NA"
+    expected <- getElement(after_env, df)
+    expected[is.na(expected)] <- "NA"
+    valid <- dplyr::all_equal(expected,expected)
     if (valid != TRUE) {
         result <- paste0("Table ", df, " does not match:\n", valid)
-        return(result)
+        print("Actual data frame:")
+        print(actual)
+        print("Expected data frame:")
+        print(expected)
+        stop(result)
     }
   }
 
