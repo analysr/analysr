@@ -4,7 +4,7 @@ quiet_read_csv <- purrr::quietly(readr::read_csv)
 
 test_that("description_query works", {
 
-  load_env_csv(save_path = "./csv/load_env_csv/save")
+  load_env_csv(save_path = "./csv/description_query/before1")
 
 
   # TODO: do a function to reduce size of it
