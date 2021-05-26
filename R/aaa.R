@@ -21,11 +21,11 @@ setup_new_env <- function() {
     analysr_env$events <- data.frame(matrix(ncol = 4, nrow = 0))
     colnames(analysr_env$events) <- c("hash", "stat_unit", "date", "tag")
 
-    # create data frame for stat_units
+    # create data frame for stat_units
     analysr_env$stat_units <- data.frame(matrix(ncol = 2, nrow = 0))
     colnames(analysr_env$stat_units) <- c("hash", "stat_unit")
 
-    # create data frame for descriptions
+    # create data frame for descriptions
     analysr_env$descriptions <- data.frame(matrix(ncol = 3, nrow = 0))
     colnames(analysr_env$descriptions) <- c("hash", "type", "value")
 
@@ -53,5 +53,5 @@ get_hash <- function(n) {
         result <- analysr_env$current_hash:(n - 1 + analysr_env$current_hash)
         analysr_env$current_hash <- n + analysr_env$current_hash
     }
-    result
+    as.integer(result)
 }

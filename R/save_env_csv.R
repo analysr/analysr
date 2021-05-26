@@ -6,11 +6,11 @@
 #' (existence is not required)
 #' @examples
 #' save_env_csv("~/")
-#' 
+#'
 #' @import dplyr
 #' @importFrom utils write.csv
-#' 
-#' @export 
+#'
+#' @export
 save_env_csv <- function(save_path) {
 
   if (missing(save_path)) {
@@ -38,7 +38,7 @@ save_env_csv <- function(save_path) {
     })
 
   # save current_hash
-  write(analysr_env$current_hash, file.path(save_path, "current_hash"))
+  write(analysr_env$current_hash, file.path(save_path, "current_hash.txt"))
 
   # maybe it will be good to add a better way to save variable
 }

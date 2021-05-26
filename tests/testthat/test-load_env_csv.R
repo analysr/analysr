@@ -23,7 +23,9 @@ test_that("load_env_csv works", {
       file_path <-
         file.path("./csv/load_env_csv/save/", paste0(x, ".csv"))
       expected <-
-        as.data.frame(quiet_read_csv(file = file_path)$result)
+        as.data.frame(quiet_read_csv(file = file_path,
+                                col_types = readr::cols("hash" = "i",
+                                "stat_unit" = "c"))$result)
       expect_equal(dplyr::all_equal(df, expected), TRUE)
     })
 
