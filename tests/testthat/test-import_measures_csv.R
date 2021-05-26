@@ -1,5 +1,3 @@
-# to compare dataframes :
-# https://community.rstudio.com/t/all-equal-on-tibbles-ignores-attributes/4299/2
 
 quiet_read_csv <- purrr::quietly(readr::read_csv)
 
