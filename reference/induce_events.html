@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>import_periods_csv — import_periods_csv • analysr</title>
+<title>induce_event — induce_events • analysr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,9 @@
 
 
 
-<meta property="og:title" content="import_periods_csv — import_periods_csv" />
-<meta property="og:description" content="Import periods from a CSV file" />
+<meta property="og:title" content="induce_event — induce_events" />
+<meta property="og:description" content="Create event from measures table depending on a condition,
+and add them to events table" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -111,70 +112,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>import_periods_csv</h1>
+    <h1>induce_event</h1>
     
-    <div class="hidden name"><code>import_periods_csv.Rd</code></div>
+    <div class="hidden name"><code>induce_events.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Import periods from a CSV file</p>
+    <p>Create event from measures table depending on a condition,
+and add them to events table</p>
     </div>
 
-    <pre class="usage"><span class='fu'>import_periods_csv</span><span class='op'>(</span>
-  <span class='va'>csv_path</span>,
-  stat_unit <span class='op'>=</span> <span class='st'>"stat_unit"</span>,
-  begin <span class='op'>=</span> <span class='st'>"begin"</span>,
-  end <span class='op'>=</span> <span class='st'>"end"</span>,
-  tag <span class='op'>=</span> <span class='st'>"tag"</span>,
-  <span class='va'>optional_data</span>,
-  date_format_func <span class='op'>=</span> <span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>date_format_reg</span><span class='op'>)</span><span class='op'>)</span>,
-  date_format_reg <span class='op'>=</span> <span class='st'>"ymd-HMS"</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>induce_events</span><span class='op'>(</span><span class='va'>condition</span>, <span class='va'>event</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>csv_path</th>
-      <td><p>A path to the csv file.</p></td>
+      <th>condition</th>
+      <td><p>A condition (to be defined).</p></td>
     </tr>
     <tr>
-      <th>stat_unit</th>
-      <td><p>A string containing the stat_unit label.</p></td>
-    </tr>
-    <tr>
-      <th>begin</th>
-      <td><p>A string containing the begin date label.</p></td>
-    </tr>
-    <tr>
-      <th>end</th>
-      <td><p>A string containing the end date label.</p></td>
-    </tr>
-    <tr>
-      <th>tag</th>
-      <td><p>A string containing the tag label.</p></td>
-    </tr>
-    <tr>
-      <th>optional_data</th>
-      <td><p>A vector containing label to import in descriptions
-table.</p></td>
-    </tr>
-    <tr>
-      <th>date_format_func</th>
-      <td><p>A function to format date with (not required).
-Default: <code><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>lubridate::parse_date_time(x, date_format_reg)</a></code></p></td>
-    </tr>
-    <tr>
-      <th>date_format_reg</th>
-      <td><p>A expression to format date with (not required).
-Default: <code>"ymd-HMS"</code></p></td>
+      <th>duration</th>
+      <td><p>A duration.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The periods data frame resulted from the merge of imported data
-and already imported data</p>
+    <p>The part of  that have been created.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
