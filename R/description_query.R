@@ -33,13 +33,13 @@ description_query <-
       stat_unit <- c(stat_unit, wanted_periods$stat_unit)
       stat_unit <- c(stat_unit, wanted_events$stat_unit)
 
-      begin <- str(wanted_measures$date)
+      begin <- wanted_measures$date
       begin <- c(begin, wanted_periods$begin)
       begin <- c(begin, wanted_events$date)
 
       #end <- rep(NA, length(wanted_measures$hash))
 
-      end <- lubridate::ymd_hms(wanted_periods$end)
+      end <- wanted_periods$end
       end <- c(end, rep(NA, length(wanted_events$hash)))
 
       tag <- wanted_measures$tag
