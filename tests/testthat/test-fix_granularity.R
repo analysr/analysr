@@ -2,7 +2,7 @@ test_that("fix_granularity works (test 1)", {
 
   setup_new_env()
 
-  load_env_csv("./csv/fix_granularity_csv/before1")
+  load_env_csv("./csv/fix_granularity/before1")
 
   fix_granularity(
     tag_wanted = "Kaliemie",
@@ -11,13 +11,13 @@ test_that("fix_granularity works (test 1)", {
     stat_unit_wanted = c(101929076, 101929077),
     temporal_granularity = lubridate::days())
 
-  expect_equal(model_state_equal("./csv/fix_granularity_csv/after1"), TRUE)
+  expect_equal(model_state_equal("./csv/fix_granularity/after1"), TRUE)
 
 })
 test_that("fix_granularity works (test 2)", {
   setup_new_env()
 
-  load_env_csv("./csv/fix_granularity_csv/before2")
+  load_env_csv("./csv/fix_granularity/before2")
 
   fix_granularity(
     tag_wanted = "Temperature",
@@ -26,12 +26,12 @@ test_that("fix_granularity works (test 2)", {
     stat_unit_wanted = c(108),
     temporal_granularity = lubridate::hours())
 
-  expect_equal(model_state_equal("./csv/fix_granularity_csv/after2"), TRUE)
+  expect_equal(model_state_equal("./csv/fix_granularity/after2"), TRUE)
 })
 test_that("fix_granularity works: test if the gaps are well treated", {
   setup_new_env()
 
-  load_env_csv("./csv/fix_granularity_csv/before3")
+  load_env_csv("./csv/fix_granularity/before3")
 
   fix_granularity(
     tag_wanted = "Temperature",
@@ -40,13 +40,13 @@ test_that("fix_granularity works: test if the gaps are well treated", {
     stat_unit_wanted = c(108),
     temporal_granularity = lubridate::hours())
 
-  expect_equal(model_state_equal("./csv/fix_granularity_csv/after3"), TRUE)
+  expect_equal(model_state_equal("./csv/fix_granularity/after3"), TRUE)
 })
 test_that("fix_granularity works: test if the gaps are well treated
           (one gap in the middle and one at the end)", {
   setup_new_env()
 
-  load_env_csv("./csv/fix_granularity_csv/before4")
+  load_env_csv("./csv/fix_granularity/before4")
 
   fix_granularity(
     tag_wanted = "Temperature",
@@ -55,13 +55,13 @@ test_that("fix_granularity works: test if the gaps are well treated
     stat_unit_wanted = c(108),
     temporal_granularity = lubridate::hours())
 
-  expect_equal(model_state_equal("./csv/fix_granularity_csv/after4"), TRUE)
+  expect_equal(model_state_equal("./csv/fix_granularity/after4"), TRUE)
 })
 test_that("fix_granularity works: test if the gaps are well treated
           (one gap in the middle and one at the beginning)", {
   setup_new_env()
 
-  load_env_csv("./csv/fix_granularity_csv/before5")
+  load_env_csv("./csv/fix_granularity/before5")
 
   fix_granularity(
     tag_wanted = "Temperature",
@@ -70,5 +70,5 @@ test_that("fix_granularity works: test if the gaps are well treated
     stat_unit_wanted = c(108),
     temporal_granularity = lubridate::hours())
 
-  expect_equal(model_state_equal("./csv/fix_granularity_csv/after5"), TRUE)
+  expect_equal(model_state_equal("./csv/fix_granularity/after5"), TRUE)
 })
