@@ -6,33 +6,12 @@ test_that("import periods CSV  works", {
   # reset env
   setup_new_env()
 
-  import_periods_csv("./csv/import_periods_csv/before-advanced.csv",
+  import_periods_csv("./csv/import_periods_csv/to_import_1.csv",
                      "PERSON",
                      "BEGIN",
                      "END",
                      "DESCRIPTION")
-
-  expected <-
-    as.data.frame(quiet_read_csv(
-      file = "./csv/import_periods_csv/after.csv",
-      col_types = readr::cols("hash" = "i")
-    )$result)
-
-  # to check dataframes without hash
-  expect_equal(
-    dplyr::all_equal(
-      analysr_env$periods[c("stat_unit", "begin", "end", "tag")],
-      expected), TRUE)
-
-
-  # check that stat units have been added
-  expect_equal(nrow(analysr_env$stat_units), 2)
-
-  # check that tables are consistent
-  expect_equal(check_tables_integrity(), TRUE)
-
-  # check if current hash has changed in env
-  expect_equal(analysr_env$current_hash, 4)
+  expect_equal(model_state_equal("./csv/import_periods_csv/after1"), TRUE)
 })
 
 test_that("import periods CSV works when import twice", {
@@ -40,35 +19,17 @@ test_that("import periods CSV works when import twice", {
   setup_new_env()
 
   # import twice
-  import_periods_csv("./csv/import_periods_csv/before.csv",
+  import_periods_csv("./csv/import_periods_csv/to_import_2.csv",
                      "PERSON",
                      "BEGIN",
                      "END",
                      "DESCRIPTION")
-  import_periods_csv("./csv/import_periods_csv/before.csv",
+  import_periods_csv("./csv/import_periods_csv/to_import_2.csv",
                      "PERSON",
                      "BEGIN",
                      "END",
                      "DESCRIPTION")
-
-  expected <-
-    as.data.frame(quiet_read_csv(
-      file = "./csv/import_periods_csv/after2.csv",
-      col_types = readr::cols("hash" = "i")
-    )$result)
-
-  # to check dataframes without hash
-  expect_equal(
-    dplyr::all_equal(expected,
-      analysr_env$periods[c("stat_unit", "begin", "end", "tag")]), TRUE)
-  # check that stat units have been added
-  expect_equal(nrow(analysr_env$stat_units), 2)
-
-  # check if current hash has changed in env
-  expect_equal(analysr_env$current_hash, 6)
-
-  # check that tables are consistent
-  expect_equal(check_tables_integrity(), TRUE)
+  expect_equal(model_state_equal("./csv/import_periods_csv/after2"), TRUE)
 })
 
 test_that("import periods CSV works and fill descriptions", {
@@ -76,37 +37,13 @@ test_that("import periods CSV works and fill descriptions", {
   setup_new_env()
 
   # import
-  import_periods_csv("./csv/import_periods_csv/before-advanced.csv",
+  import_periods_csv("./csv/import_periods_csv/to_import_1.csv",
                      "PERSON",
                      "BEGIN",
                      "END",
                      "DESCRIPTION",
                      c("LOCATION"))
-
-  expected <-
-    as.data.frame(quiet_read_csv(
-      file = "./csv/import_periods_csv/after.csv",
-      col_types = readr::cols("hash" = "i")
-    )$result)
-
-  # to check dataframes without hash
-  expect_equal(
-    dplyr::all_equal(
-      analysr_env$periods[c("stat_unit", "begin", "end", "tag")],
-      expected), TRUE)
-
-  expected_descriptions <- as.data.frame(quiet_read_csv(
-      file = "./csv/import_periods_csv/after-descriptions.csv",
-      col_types = readr::cols("hash" = "i")
-  )$result)
-  # conflict when importing hash have to be an integer
-
-  expect_equal(dplyr::all_equal(
-      analysr_env$descriptions, expected_descriptions
-  ), TRUE)
-
-  # check that tables are consistent
-  expect_equal(check_tables_integrity(), TRUE)
+  expect_equal(model_state_equal("./csv/import_periods_csv/after3"), TRUE)
 })
 test_that("import periods CSV works when importing different date formats", {
 
