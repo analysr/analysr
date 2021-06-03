@@ -20,7 +20,7 @@ induce_period <- function(condition, tag_to_create, duration) {
   if (length(condition) > 2){
       # Method with operator
       # Here we admit that a condition is like: tag operator value
-      # e.g. Temperature > 37.5
+      # e.g. Temperature > 38.5
 
       tag_to_check <- rlang::as_string(condition[[2]])[1]
 
@@ -34,7 +34,7 @@ induce_period <- function(condition, tag_to_create, duration) {
     # When there is no operator, check events, measures with description (damn hard)
 
 
-    tag_to_check <- rlang::as_string(toString(condition))
+    tag_to_check <- rlang::as_string(condition)
 
     data <- subset(analysr_env$events, tag == tag_to_check)
 
