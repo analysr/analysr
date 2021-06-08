@@ -68,10 +68,10 @@ fix_granularity_aux <-
            information_lost_after = 5 * temporal_granularity) {
 
     splits <- split(analysr_env$measures,
-                    analysr_env$measures$tag == tag_wanted
-                    & analysr_env$measures$date >= period_start
-                    & analysr_env$measures$date < period_end + temporal_granularity
-                    & analysr_env$measures$stat_unit == stat_unit_wanted)
+                analysr_env$measures$tag == tag_wanted
+                & analysr_env$measures$date >= period_start
+                & analysr_env$measures$date < period_end + temporal_granularity
+                & analysr_env$measures$stat_unit == stat_unit_wanted)
 
     data <- splits$"TRUE"
     data_unchanged <- splits$"FALSE"
@@ -118,7 +118,7 @@ fix_granularity_aux <-
     #let's complete by imputing the missing values
     i <- 1
     while (i < n) {
-
+      # while loop useful because of the indexes problems
       if (!is.na(result$status[i]) && result$status[i] == "TO BE IMPUTED" ) {
 
         result$status[i] <- "IMPUTED"
@@ -137,15 +137,15 @@ fix_granularity_aux <-
         else {
 
           if (i == 1) {
-            result <- result[(i+j):n,]
+            result <- result[(i + j):n,]
           }
 
-          else if ( i+j == n ) {
-            result <- result[1:(i-1),]
+          else if (i + j == n) {
+            result <- result[1:(i - 1), ]
           }
 
           else {
-            result <- rbind(result[1:(i-1),], result[(i+j):n,])
+            result <- rbind(result[1:(i - 1),], result[(i + j):n, ])
           }
 
           n <- n - j
