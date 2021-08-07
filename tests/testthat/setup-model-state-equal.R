@@ -1,10 +1,21 @@
-model_state_equal <- function(after_path, model) {
+model_state_equal <- function(after_path, model, query_expected) {
 
   if (missing(model)) {
     model <- analysr_env
   }
 
-  # Create an environment to store after data
+  # check if query are identical
+  if (!missing(query_expected)) {
+    if (!identical(query_expected, model$query)) {
+      print("Actual query list:")
+      print(model$query)
+      print("Expected query list:")
+      print(query_expected)
+      stop("Query list does not match")
+    }
+  }
+
+  # create an environment to store after data
   after_env <- new.env(parent = emptyenv())
 
   result <- TRUE
