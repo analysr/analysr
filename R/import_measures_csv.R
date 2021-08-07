@@ -49,7 +49,7 @@ import_measures_csv <-
     }
 
     if (!missing(optional_data)) {
-      fill_descriptions(hash, optional_data, result,n)
+      fill_descriptions(hash, optional_data, result, n)
     }
 
     result <- result[c(stat_unit, date, tag, value, status)]

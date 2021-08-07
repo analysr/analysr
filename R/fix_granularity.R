@@ -22,7 +22,7 @@
 
 
 fix_granularity <-
-  function (tag_wanted,
+  function(tag_wanted,
             period_start,
             period_end,
             temporal_granularity,
@@ -106,7 +106,7 @@ fix_granularity_aux <-
         result$value[i] <- aggregation_method(sample$value)
         result$status[i] <- "AGGREGATED"
       }
-      else if (length(sample$date) > 0){
+      else if (length(sample$date) > 0) {
         result$value[i] <- sample$value
         result$status[i] <- NA
       }
@@ -119,13 +119,13 @@ fix_granularity_aux <-
     i <- 1
     while (i < n) {
       # while loop useful because of the indexes problems
-      if (!is.na(result$status[i]) && result$status[i] == "TO BE IMPUTED" ) {
+      if (!is.na(result$status[i]) && result$status[i] == "TO BE IMPUTED") {
 
         result$status[i] <- "IMPUTED"
         j <- 1
 
         while (i + j < n && !is.na(result$status[i + j]) &&
-               result$status[i + j] == "TO BE IMPUTED" ) {
+               result$status[i + j] == "TO BE IMPUTED") {
 
           j <- j + 1
         }
@@ -137,7 +137,7 @@ fix_granularity_aux <-
         else {
 
           if (i == 1) {
-            result <- result[(i + j):n,]
+            result <- result[(i + j):n, ]
           }
 
           else if (i + j == n) {
@@ -145,7 +145,7 @@ fix_granularity_aux <-
           }
 
           else {
-            result <- rbind(result[1:(i - 1),], result[(i + j):n, ])
+            result <- rbind(result[1:(i - 1), ], result[(i + j):n, ])
           }
 
           n <- n - j
@@ -156,6 +156,6 @@ fix_granularity_aux <-
 
     analysr_env$measures <- rbind(data_unchanged, result)
 
-    rownames(analysr_env$measures) <- c(1:length(analysr_env$measures$date))
+    rownames(analysr_env$measures) <- seq_len(length(analysr_env$measures$date))
 
 }

@@ -3,7 +3,7 @@
 #' Check table integrity
 #'
 #' A function to check the integrity of analysr tables
-check_tables_integrity <- function () {
+check_tables_integrity <- function() {
     # check measures table
     if (!all(colnames(analysr_env$measures) == c("hash", "stat_unit", "date",
                                                 "tag", "value", "status"))) {
