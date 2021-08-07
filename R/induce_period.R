@@ -26,12 +26,15 @@ induce_period <- function(condition, tag_to_create, duration) {
       if (is.symbol(condition[[3]])) {
         tag_to_check <- rlang::as_string(condition[[3]])[1]
         wanted_value <- condition[[2]]
+        data <- subset(analysr_env$measures, tag == tag_to_check)
+        data <- data[eval(rlang::call2(operator, wanted_value, data$value)),]
+
       } else {
         tag_to_check <- rlang::as_string(condition[[2]])[1]
         wanted_value <- condition[[3]]
+        data <- subset(analysr_env$measures, tag == tag_to_check)
+        data <- data[eval(rlang::call2(operator, data$value, wanted_value)),]
       }
-      data <- subset(analysr_env$measures, tag == tag_to_check)
-      data <- data[eval(rlang::call2(operator, data$value, wanted_value)),]
 
   } else {
     # Method without operator

@@ -42,10 +42,12 @@ model_state_equal <- function(after_path, model) {
   # check data_frames
   for (df in df_to_load) {
     actual <- getElement(model, df)
-    actual[is.na(actual)] <- "NA"
     expected <- getElement(after_env, df)
-    expected[is.na(expected)] <- "NA"
-    valid <- dplyr::all_equal(expected,expected)
+    # convert to same type (TODO: find a better solution)
+    actual <- actual %>% mutate_all(as.character)
+    expected <- expected %>% mutate_all(as.character)
+
+    valid <- dplyr::all_equal(expected,actual)
     if (valid != TRUE) {
         result <- paste0("Table ", df, " does not match:\n", valid)
         print("Actual data frame:")
