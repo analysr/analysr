@@ -1,4 +1,8 @@
-model_state_equal <- function(after_path) {
+model_state_equal <- function(after_path, model) {
+
+  if (missing(model)) {
+    model <- analysr_env
+  }
 
   # Create an environment to store after data
   after_env <- new.env(parent = emptyenv())
@@ -10,9 +14,9 @@ model_state_equal <- function(after_path) {
                                                           "current_hash.txt")))
 
   # check current_hash
-  if (after_env$current_hash != analysr_env$current_hash) {
+  if (after_env$current_hash != model$current_hash) {
     result <- paste0("Variable current_hash does not match:\n current: ",
-                     analysr_env$current_hash, "\n expected: ",
+                     model$current_hash, "\n expected: ",
                      after_env$current_hash)
     stop(result)
   }
@@ -37,7 +41,7 @@ model_state_equal <- function(after_path) {
 
   # check data_frames
   for (df in df_to_load) {
-    actual <- getElement(analysr_env, df)
+    actual <- getElement(model, df)
     actual[is.na(actual)] <- "NA"
     expected <- getElement(after_env, df)
     expected[is.na(expected)] <- "NA"
