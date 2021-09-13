@@ -1,10 +1,12 @@
 is_before <- function(entry, duration, events) {
   # check if (entry date) =< (event date) and (entry date) >= (event date + duration)
   found <- FALSE
-  print(entry)
+
   for (i in rownames(events)) {
-    end <- events[i,]$date - duration
-    if (entry$date %within% list(events[i,]$date, end)) {
+    start <- events[i,]$date - duration
+    end <- events[i,]$date
+    if ((entry$date <= end) && (start <= entry$date)) {
+      found = TRUE
       break
     }
   }
@@ -26,7 +28,10 @@ before <- function(model, event) {
   duration <- nmodel$query$at_most
   events <- subset(nmodel$events, tag == event)
 
-  nmodel$measures <- nmodel$measures[is_before_list(nmodel$measures, duration, events)]
+  nmodel$measures <- nmodel$measures[is_before_list(nmodel$measures, duration, events),]
+
+  # delete at_most tag from query after all
+  nmodel$query <- purrr::list_modify(nmodel$query,"at_most" = NULL)
 
   nmodel
 }
