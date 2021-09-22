@@ -1,3 +1,6 @@
+#' analysr_env
+#'
+#' @export
 analysr_env <- new.env(parent = emptyenv())
 
 #' Setup new envirenment
