@@ -1,5 +1,6 @@
-
-
+#' observed
+#'
+#' @export
 observed <- function (model, condition) {
   condition <- rlang::enexpr(condition)
   nmodel <- model

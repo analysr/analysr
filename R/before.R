@@ -21,6 +21,9 @@ is_before_list <- function(entries, duration, events) {
   status
 }
 
+#' before
+#'
+#' @export
 before <- function(model, event) {
   nmodel <- model
   # TODO: check if at_most and tag flag exist

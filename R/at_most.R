@@ -1,4 +1,6 @@
-
+#' at_most
+#'
+#' @export
 at_most <- function (model, e) {
   nmodel <- model
   e <- rlang::enexpr(e)
