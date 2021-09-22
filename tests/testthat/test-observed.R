@@ -6,10 +6,11 @@ test_that("observed works with simple condition", {
 
   # observed
   model <- observed(analysr_env, Temperature > 38.5)
-  query <- list(tag="Temperature")
+
+  query <- list(condition=rlang::expr(Temperature > 38.5), tag="Temperature")
 
   # check model
-  expect_equal(model_state_equal("./csv/observed/after1", model, query), TRUE)
+  expect_equal(model_state_equal("./csv/observed/before1", model, query), TRUE)
 })
 test_that("observed works  with simple reverse condition", {
   setup_new_env()
@@ -19,8 +20,8 @@ test_that("observed works  with simple reverse condition", {
 
   # observed
   model <- observed(analysr_env, 38.5 < Temperature)
-  query <- list(tag="Temperature")
+  query <- list(condition=rlang::expr(38.5 < Temperature), tag="Temperature")
 
   # check model
-  expect_equal(model_state_equal("./csv/observed/after1", model, query), TRUE)
+  expect_equal(model_state_equal("./csv/observed/before1", model, query), TRUE)
 })
