@@ -9,6 +9,9 @@ analysr_env <- new.env(parent = emptyenv())
 #' setup_new_env()
 #' @export
 setup_new_env <- function() {
+    # create query
+    analysr_env$query <- list()
+
     # create data frame for measures
     analysr_env$measures <- data.frame(matrix(ncol = 6, nrow = 0))
 

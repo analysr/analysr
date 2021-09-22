@@ -58,6 +58,10 @@ test_that("setup_new_env works", {
     analysr_env$current_hash, 0
   )
 
+  expect_equal(
+    analysr_env$query, list()
+  )
+
 })
 
 test_that("get_hash works", {
