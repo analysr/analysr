@@ -38,6 +38,11 @@ setup_new_env <- function() {
     # define current hash used (the first hash to be used will be 1)
     analysr_env$current_hash <- as.integer(0)
 
+    # create data frame for selection
+    analysr_env$selection <- data.frame(matrix(ncol = 2, nrow = 0))
+
+    colnames(analysr_env$selection) <- c("stat_unit", "date")
+
 }
 setup_new_env()
 

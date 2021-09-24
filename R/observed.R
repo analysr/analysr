@@ -26,7 +26,7 @@ observed <- function (model, condition) {
       nmodel <- nmodel[eval(rlang::call2(operator, nmodel$value, rvalue)),]
       stat_unit <- nmodel$stat_unit
       date <- nmodel$date
-      model$query$selection <- data.frame(stat_unit, date)
+      model$selection <- data.frame(stat_unit, date)
     }
 
     else {
@@ -40,7 +40,7 @@ observed <- function (model, condition) {
       nmodel <- nmodel[eval(rlang::call2(operator, nmodel$value, rvalue)),]
       stat_unit <- nmodel$stat_unit
       date <- nmodel$date
-      model$query$selection <- data.frame(stat_unit, date)
+      model$selection <- data.frame(stat_unit, date)
 
     }
 
