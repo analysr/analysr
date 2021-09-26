@@ -4,6 +4,7 @@
 observed <- function (model, condition) {
   condition <- rlang::enexpr(condition)
 
+  model$selection <- model$selection[0,] # here we reset the selection
   model$query <- list() # here we reset the query
   model$query$condition <- condition
 
