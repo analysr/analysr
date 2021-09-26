@@ -4,7 +4,7 @@
 observed <- function (model, condition) {
   condition <- rlang::enexpr(condition)
 
- # model$query <- list(condition=condition)
+  model$query <- list() # here we reset the query
   model$query$condition <- condition
 
   if (length(condition) > 2){
