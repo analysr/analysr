@@ -3,14 +3,12 @@ test_that("before works", {
 
   # import model
   load_env_csv("./csv/before/before")
-  model <- observed(analysr_env, Temperature > 38.5)
-
-  # at_most
-  model <- at_most(model, 15 * days)
-
-  # before
-  result <- before(model, "Surgery")
-
+  result <- (
+  analysr_env
+    %>% observed(Temperature > 38.5)
+    %>% at_most(15 * days)
+    %>% before("Surgery")
+  )
   query <- list(condition=rlang::expr(Temperature > 38.5),
                 tag="Temperature",
                 duration_type = "at_most",
@@ -23,7 +21,7 @@ test_that("before works", {
   expect_equal(result, exp_result)
 
   # check model (model should have changed, query also)
-  expect_equal(model_state_equal("./csv/before/after", model, query), TRUE)
+  expect_equal(model_state_equal("./csv/before/after", analysr_env, query), TRUE)
 
 
 
