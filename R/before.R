@@ -1,3 +1,26 @@
+is_before <- function(entry, duration, events) {
+  # check if (entry date) =< (event date) and (entry date) >= (event date + duration)
+  found <- FALSE
+
+  for (i in rownames(events)) {
+    start <- events[i,]$date - duration
+    end <- events[i,]$date
+    if ((entry$date <= end) && (start <= entry$date)) {
+      found = TRUE
+      break
+    }
+  }
+  events[i,]$stat_unit
+}
+
+is_before_list <- function(entries, duration, events) {
+  status <- c()
+  for (i in rownames(entries)) {
+    status <- c(status, is_before(entries[i,], duration, events))
+  }
+  unique(status)
+}
+
 #' before
 #'
 #' @export
@@ -6,32 +29,13 @@ before <- function(model, event_tag) {
   if (model$query$duration_type == "at_most"){
 
     res <- c()
-    for (i in length(model$selection)){
-      events <- subset(model$events, tag == event_tag)
-      events <- subset(events, stat_unit == model$selection$stat_unit[i])
-      events <- subset(events, date <= model$query$duration +
-                         model$selection$date[i])
-      events <- subset(events, date >= model$selection$date[i])
 
-      if (length(events) > 0){
-        res <- c(res, model$selection$stat_unit[i])
-      }
-    }
+    duration <- model$query$duration
+    events <- subset(model$events, tag == event_tag)
+
+    res <- is_before_list(model$measures, duration, events)
   }
 
-  else if (model$query$duration_type == "at_least"){
-    res <- c()
-    for (i in length(model$selection)){
-      events <- subset(model$events, tag == event_tag)
-      events <- subset(events, stat_unit == model$selection$stat_unit[i])
-      events <- subset(events, date >= model$query$duration +
-                         model$selection$date[i])
-
-      if (length(events) > 0){
-        res <- c(res, model$selection$stat_unit[i])
-      }
-    }
-  }
 
   as.double(res)
 
