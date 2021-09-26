@@ -8,8 +8,14 @@ test_that("at_most works", {
   # at_most
   model <- at_most(model, 15*days)
 
-  query <- list(tag="Temperature", at_most=lubridate::duration(15, "days"))
 
-  # check model (model should not have changed, only query had)
+
+  query <- list(condition=rlang::expr(Temperature > 38.5),
+                tag="Temperature",
+                duration_type = "at_most",
+                duration=lubridate::duration(15, "days"))
+
+  # check model (model should not have changed, only query has)
+
   expect_equal(model_state_equal("./csv/at_most/model", model, query), TRUE)
 })

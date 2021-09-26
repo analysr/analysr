@@ -3,41 +3,58 @@
 #' @export
 observed <- function (model, condition) {
   condition <- rlang::enexpr(condition)
-  nmodel <- model
 
-  nmodel$query <- list()
+  model$selection <- model$selection[0,] # here we reset the selection
+  model$query <- list() # here we reset the query
+  model$query$condition <- condition
 
   if (length(condition) > 2){
     # Method with operator
     # Here we admit that a condition is like: tag operator value
     # e.g. Temperature > 38.5
 
+    #if there's an operator, the information will be in the measure table
+
     operator <- condition[[1]]
     if (is.symbol(condition[[3]])) {
-      nmodel$query$tag <- rlang::as_string(condition[[3]])[1]
-      wanted_value <- condition[[2]]
-      nmodel$measures <- subset(nmodel$measures, tag == nmodel$query$tag)
-      nmodel$measures <- nmodel$measures[eval(rlang::call2(operator, wanted_value, nmodel$measures$value)),]
-
-    } else {
-      nmodel$query$tag <- rlang::as_string(condition[[2]])[1]
-      wanted_value <- condition[[3]]
-      nmodel$measures <- subset(nmodel$measures, tag == nmodel$query$tag)
-      nmodel$measures <- nmodel$measures[eval(rlang::call2(operator, nmodel$measures$value, wanted_value)),]
+      model$query$tag <- rlang::as_string(condition[[3]])[1]
+      #let's select the stat_units that have the query condition
+      # the list will be in stocked in query$stat_units_selected
+      nmodel <- model
+      tag_to_check <- condition[[3]]
+      rvalue <- condition [[2]]
+      nmodel <- subset(model$measures, tag == tag_to_check)
+      nmodel <- nmodel[eval(rlang::call2(operator, nmodel$value, rvalue)),]
+      stat_unit <- nmodel$stat_unit
+      date <- nmodel$date
+      model$selection <- data.frame(stat_unit, date)
     }
 
-  } else {
+    else {
+      model$query$tag <- rlang::as_string(condition[[2]])[1]
+      #let's select the stat_units that have the query condition
+      # the list will be in stocked in query$stat_units_selected
+      nmodel <- model
+      tag_to_check <- condition[[2]]
+      rvalue <- condition [[3]]
+      nmodel <- subset(model$measures, tag == tag_to_check)
+      nmodel <- nmodel[eval(rlang::call2(operator, nmodel$value, rvalue)),]
+      stat_unit <- nmodel$stat_unit
+      date <- nmodel$date
+      model$selection <- data.frame(stat_unit, date)
+
+    }
+
+  }
+
+
+  else {
     # Method without operator
     # When there is no operator, check events or description, measures with description (damn hard)
 
+    model$query$tag <- rlang::as_string(condition)
 
-    nmodel$query$tag <- rlang::as_string(condition)
-
-    nmodel$events <- subset(nmodel$events, tag == nmodel$query$tag)
-    nmodel$periods <- subset(nmodel$periods, tag == nmodel$query$tag)
-
-    # TODO: to check description (check on description)
 
   }
-  nmodel
+  model
 }
