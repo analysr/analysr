@@ -40,7 +40,7 @@ test_that("before works", {
   )
 
   #expected_result
-  exp_result <- c(5,1)
+  exp_result <- c(1,7)
 
   #check result
   expect_equal(result, exp_result)
