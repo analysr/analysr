@@ -27,3 +27,26 @@ test_that("before works", {
 
 
 })
+test_that("before works", {
+  setup_new_env()
+
+  # import model
+  load_env_csv("./csv/before/test2")
+  result <- (
+    analysr_env
+    %>% observed(Temperature > 38.5)
+    %>% at_most(15 * days)
+    %>% before("Surgery")
+  )
+
+  #expected_result
+  exp_result <- c(5,1)
+
+  #check result
+  expect_equal(result, exp_result)
+
+
+
+
+
+})
