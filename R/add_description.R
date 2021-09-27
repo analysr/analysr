@@ -1,6 +1,14 @@
 
 stat_unit_from_hash <- function(stat_units) {
-  subset(analysr_env$stat_units, stat_unit == stat_units)[["hash"]]
+  result <- c()
+  for (i in rownames(analysr_env$stat_units)) {
+    for (j in stat_units) {
+      if (analysr_env$stat_units[i,]$stat_unit == j) {
+        result <- c(result, analysr_env$stat_units[i,]$hash)
+      }
+    }
+  }
+  result
 }
 
 
