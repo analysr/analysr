@@ -4,7 +4,7 @@
 \alias{before}
 \title{before}
 \usage{
-before(model, event)
+before(model, event_tag)
 }
 \description{
 before
