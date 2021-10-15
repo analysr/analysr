@@ -41,9 +41,7 @@ observed <- function (model, condition) {
       stat_unit <- temp$stat_unit
       date <- temp$date
       model$selection <- data.frame(stat_unit, date)
-    }
-
-    else {
+    } else {
       model$query$tag <- rlang::as_string(condition[[2]])[1]
       # let's select the stat_units that have the query condition
       # the list will be in stocked in query$stat_units_selected
@@ -57,10 +55,7 @@ observed <- function (model, condition) {
 
     }
 
-  }
-
-
-  else {
+  } else {
     # Method without operator
     # When there is no operator, check events or description,
     # measures with description (damn hard)
