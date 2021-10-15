@@ -1,3 +1,17 @@
+stat_unit_from_hash <- function(hashs) {
+  result <- c()
+  for (i in rownames(analysr_env$stat_units)) {
+    for (j in hashs) {
+      if (analysr_env$stat_units[i,]$hash == j) {
+        result <- c(result, analysr_env$stat_units[i,]$stat_unit)
+      }
+    }
+  }
+  result
+}
+
+
+
 #' observed
 #'
 #' @export
@@ -18,29 +32,27 @@ observed <- function (model, condition) {
     operator <- condition[[1]]
     if (is.symbol(condition[[3]])) {
       model$query$tag <- rlang::as_string(condition[[3]])[1]
-      #let's select the stat_units that have the query condition
+      # let's select the stat_units that have the query condition
       # the list will be in stocked in query$stat_units_selected
-      nmodel <- model
       tag_to_check <- condition[[3]]
       rvalue <- condition [[2]]
-      nmodel <- subset(model$measures, tag == tag_to_check)
-      nmodel <- nmodel[eval(rlang::call2(operator, nmodel$value, rvalue)),]
-      stat_unit <- nmodel$stat_unit
-      date <- nmodel$date
+      temp <- subset(model$measures, tag == tag_to_check)
+      temp <- temp[eval(rlang::call2(operator, rvalue, temp$value)),]
+      stat_unit <- temp$stat_unit
+      date <- temp$date
       model$selection <- data.frame(stat_unit, date)
     }
 
     else {
       model$query$tag <- rlang::as_string(condition[[2]])[1]
-      #let's select the stat_units that have the query condition
+      # let's select the stat_units that have the query condition
       # the list will be in stocked in query$stat_units_selected
-      nmodel <- model
       tag_to_check <- condition[[2]]
       rvalue <- condition [[3]]
-      nmodel <- subset(model$measures, tag == tag_to_check)
-      nmodel <- nmodel[eval(rlang::call2(operator, nmodel$value, rvalue)),]
-      stat_unit <- nmodel$stat_unit
-      date <- nmodel$date
+      temp <- subset(model$measures, tag == tag_to_check)
+      temp <- temp[eval(rlang::call2(operator, temp$value, rvalue)),]
+      stat_unit <- temp$stat_unit
+      date <- temp$date
       model$selection <- data.frame(stat_unit, date)
 
     }
@@ -50,11 +62,26 @@ observed <- function (model, condition) {
 
   else {
     # Method without operator
-    # When there is no operator, check events or description, measures with description (damn hard)
+    # When there is no operator, check events or description,
+    # measures with description (damn hard)
 
     model$query$tag <- rlang::as_string(condition)
 
+    tag_to_check <- condition
 
+    # Check on events table
+    temp <- subset(model$events, tag == tag_to_check)
+    stat_unit <- temp$stat_unit
+    date <- temp$date
+    model$selection <- data.frame(stat_unit, date)
+
+    # Check on descriptions table
+    temp <- subset(model$descriptions, type == tag_to_check)
+    stat_unit <- stat_unit_from_hash(temp$hash)
+    date <- rep(NA, length(stat_unit))
+    model$selection <- rbind(model$selection, data.frame(stat_unit, date))
+
+    # TODO: Check on periods table
   }
   model
 }
