@@ -114,3 +114,20 @@ test_that("observed works on desciption with value", {
   # check here with before (as nothing should have changed on model)
   expect_equal(model_state_equal("./csv/observed/before5", model, query), TRUE)
 })
+test_that("observed works on periods", {
+  setup_new_env()
+
+  # import measures
+  load_env_csv("./csv/observed/before6")
+
+  # observed
+  model <- observed(analysr_env, Hospitalization)
+
+
+  query <- list(condition = rlang::expr(Hospitalization), tag = "Hospitalization")
+
+
+  # check model
+  # check here with before (as nothing should have changed on model)
+  expect_equal(model_state_equal("./csv/observed/before6", model, query), TRUE)
+})
