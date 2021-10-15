@@ -1,5 +1,5 @@
 
-stat_unit_from_hash <- function(stat_units) {
+hash_from_stat_unit <- function(stat_units) {
   result <- c()
   for (i in rownames(analysr_env$stat_units)) {
     for (j in stat_units) {
@@ -17,7 +17,7 @@ stat_unit_from_hash <- function(stat_units) {
 #' @export
 add_description <- function (stat_units, label) {
   n <- length(stat_units)
-  hash <- stat_unit_from_hash(stat_units)
+  hash <- hash_from_stat_unit(stat_units)
   result <- data.frame(hash = hash, type = rep(label, n), value = TRUE)
   analysr_env$descriptions <- rbind(analysr_env$descriptions, result)
 }
