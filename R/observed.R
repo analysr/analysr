@@ -10,7 +10,25 @@ stat_unit_from_hash <- function(hashs) {
   result
 }
 
+check_integer <- function(n) {
+    !grepl("[^[:digit:]]", format(n,  digits = 20, scientific = TRUE))
+}
 
+convert_to_best_type <- function(vect) {
+    to_convert <- FALSE
+
+    for (i in vect) {
+       if (check_integer(i)) {
+        to_convert <- TRUE
+        break
+      }
+    }
+    if (to_convert) {
+      suppressWarnings(as.numeric(vect))
+    } else {
+      vect
+    }
+}
 
 #' observed
 #'
@@ -31,28 +49,53 @@ observed <- function (model, condition) {
 
     operator <- condition[[1]]
     if (is.symbol(condition[[3]])) {
+
       model$query$tag <- rlang::as_string(condition[[3]])[1]
       # let's select the stat_units that have the query condition
       # the list will be in stocked in query$stat_units_selected
       tag_to_check <- condition[[3]]
       rvalue <- condition [[2]]
+
+      # Check on measures table
       temp <- subset(model$measures, tag == tag_to_check)
       temp <- temp[eval(rlang::call2(operator, rvalue, temp$value)),]
       stat_unit <- temp$stat_unit
       date <- temp$date
-      model$selection <- data.frame(stat_unit, date)
+      model$selection <- rbind(model$selection, data.frame(stat_unit, date))
+
+      # Check on descriptions table
+      temp <- subset(model$descriptions, type == tag_to_check)
+      temp <- temp[eval(rlang::call2(operator, rvalue,
+                                    convert_to_best_type(temp$value))),]
+      stat_unit <- stat_unit_from_hash(temp$hash)
+      date <- rep(NA, length(stat_unit))
+      model$selection <- rbind(model$selection, data.frame(stat_unit, date))
+
     } else {
+
       model$query$tag <- rlang::as_string(condition[[2]])[1]
       # let's select the stat_units that have the query condition
       # the list will be in stocked in query$stat_units_selected
       tag_to_check <- condition[[2]]
       rvalue <- condition [[3]]
+
+
+      # Check on measures table
       temp <- subset(model$measures, tag == tag_to_check)
       temp <- temp[eval(rlang::call2(operator, temp$value, rvalue)),]
       stat_unit <- temp$stat_unit
       date <- temp$date
-      model$selection <- data.frame(stat_unit, date)
+      model$selection <- rbind(model$selection, data.frame(stat_unit, date))
 
+
+      # Check on descriptions table
+      temp <- subset(model$descriptions, type == tag_to_check)
+      temp <- temp[eval(rlang::call2(operator,
+                        convert_to_best_type(temp$value), rvalue)),]
+
+      stat_unit <- stat_unit_from_hash(temp$hash)
+      date <- rep(NA, length(stat_unit))
+      model$selection <- rbind(model$selection, data.frame(stat_unit, date))
     }
 
   } else {
@@ -68,7 +111,7 @@ observed <- function (model, condition) {
     temp <- subset(model$events, tag == tag_to_check)
     stat_unit <- temp$stat_unit
     date <- temp$date
-    model$selection <- data.frame(stat_unit, date)
+    model$selection <- rbind(model$selection, data.frame(stat_unit, date))
 
     # Check on descriptions table
     temp <- subset(model$descriptions, type == tag_to_check)
