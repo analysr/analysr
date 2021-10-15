@@ -113,6 +113,14 @@ observed <- function (model, condition) {
     date <- temp$date
     model$selection <- rbind(model$selection, data.frame(stat_unit, date))
 
+    # Check on periods table
+    temp <- subset(model$periods, tag == tag_to_check)
+    stat_unit <- temp$stat_unit
+    date <- temp$begin
+    date_end <- temp$end
+    model$selection <- rbind(model$selection,
+                             data.frame(stat_unit, date, date_end))
+
     # Check on descriptions table
     temp <- subset(model$descriptions, type == tag_to_check)
     stat_unit <- stat_unit_from_hash(temp$hash)
