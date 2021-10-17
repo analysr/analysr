@@ -1,3 +1,4 @@
+# those tests can de facto test prepare_query function
 test_that("observed works with simple condition", {
   setup_new_env()
 

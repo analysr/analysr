@@ -7,7 +7,7 @@ test_that("before works", {
   analysr_env
     %>% observed(Temperature > 38.5)
     %>% at_most(15 * days)
-    %>% before("Surgery")
+    %>% before(Surgery)
   )
   query <- list(condition = rlang::expr(Temperature > 38.5),
                 tag = "Temperature",
@@ -37,7 +37,7 @@ test_that("before works with at_most", {
     analysr_env
     %>% observed(Temperature > 38.5)
     %>% at_most(15 * days)
-    %>% before("Surgery")
+    %>% before(Surgery)
   )
 
   #expected_result
@@ -56,7 +56,7 @@ test_that("before works with at_least", {
     analysr_env
     %>% observed(Temperature > 38.5)
     %>% at_least(15 * days)
-    %>% before("Surgery")
+    %>% before(Surgery)
   )
 
   #expected_result
