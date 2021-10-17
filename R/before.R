@@ -1,18 +1,34 @@
-is_before <- function(entry, duration, events) {
-  # check if (entry date) =< (event date) and (entry date) >= (event date + duration)
+is_before <- function(entry, duration, selection, type) {
+
   found <- FALSE
-  events <- subset(events, stat_unit == entry$stat_unit)
+  selection <- subset(selection, stat_unit == entry$stat_unit)
 
-  for (i in rownames(events)) {
-    date <- as.numeric(entry$date)
-    start <- as.numeric(events[i,]$date - duration)
-    end <- as.numeric(events[i,]$date)
 
-    if ((date<= end) && (start <= date)) {
-      found <- TRUE
-      break
+  if (type == "at_most") {
+    for (i in rownames(selection)) {
+      date <- as.numeric(entry$date)
+      start <- as.numeric(selection[i,]$date - duration)
+      end <- as.numeric(selection[i,]$date)
+      # check if (entry date) =< (event date)
+      #      and (entry date) >= (event date + duration)
+      if ((date <= end) && (start <= date)) {
+        found <- TRUE
+        break
+      }
     }
   }
+  if (type == "at_least") {
+    for (i in rownames(selection)) {
+      date <- as.numeric(entry$date)
+      max <- as.numeric(selection[i,]$date - duration)
+      # check if (entry date) =< (event date - duration)
+      if (date <= max) {
+        found <- TRUE
+        break
+      }
+    }
+  }
+
   if (found == TRUE) {
     entry$stat_unit
   } else {
@@ -21,10 +37,10 @@ is_before <- function(entry, duration, events) {
 
 }
 
-is_before_list <- function(entries, duration, events) {
+is_before_list <- function(entries, duration, selection, type) {
   stat_units <- c()
   for (i in rownames(entries)) {
-    stat_unit <- is_before(entries[i,], duration, events)
+    stat_unit <- is_before(entries[i,], duration, selection, type)
 
     stat_units <- c(stat_units, stat_unit)
   }
@@ -34,17 +50,21 @@ is_before_list <- function(entries, duration, events) {
 #' before
 #'
 #' @export
-before <- function(model, event_tag) {
+before <- function(model, condition) {
 
-  if (model$query$duration_type == "at_most"){
 
-    res <- c()
+  res <- c()
 
-    duration <- model$query$duration
-    events <- subset(model$events, tag == event_tag)
+  duration <- model$query$duration
+  condition <- rlang::enexpr(condition)
+  before_selection <- prepare_query(model, condition)
 
-    res <- is_before_list(model$selection, duration, events)
-  }
+  # TODO: improve periods handeling (here only start date are take into account)
+  # TODO2: what to do with NA values when condition is on descriptions table ?
+
+  res <- is_before_list(model$selection, duration,
+                        before_selection, model$query$duration_type)
+
 
 
   as.double(res)

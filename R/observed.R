@@ -30,17 +30,9 @@ convert_to_best_type <- function(vect) {
     }
 }
 
-#' observed
-#'
-#' @export
-observed <- function (model, condition) {
-  condition <- rlang::enexpr(condition)
-
-  model$selection <- model$selection[0,] # here we reset the selection
-  model$query <- list() # here we reset the query
-  model$query$condition <- condition
-
-  if (length(condition) > 2){
+prepare_query <- function(model, condition) {
+  selection <- data.frame()
+  if (length(condition) > 2) {
     # Method with operator
     # Here we admit that a condition is like: tag operator value
     # e.g. Temperature > 38.5
@@ -49,8 +41,6 @@ observed <- function (model, condition) {
 
     operator <- condition[[1]]
     if (is.symbol(condition[[3]])) {
-
-      model$query$tag <- rlang::as_string(condition[[3]])[1]
       # let's select the stat_units that have the query condition
       # the list will be in stocked in query$stat_units_selected
       tag_to_check <- condition[[3]]
@@ -61,7 +51,7 @@ observed <- function (model, condition) {
       temp <- temp[eval(rlang::call2(operator, rvalue, temp$value)),]
       stat_unit <- temp$stat_unit
       date <- temp$date
-      model$selection <- rbind(model$selection, data.frame(stat_unit, date))
+      selection <- rbind(selection, data.frame(stat_unit, date))
 
       # Check on descriptions table
       temp <- subset(model$descriptions, type == tag_to_check)
@@ -69,11 +59,10 @@ observed <- function (model, condition) {
                                     convert_to_best_type(temp$value))),]
       stat_unit <- stat_unit_from_hash(temp$hash)
       date <- rep(NA, length(stat_unit))
-      model$selection <- rbind(model$selection, data.frame(stat_unit, date))
+      selection <- rbind(selection, data.frame(stat_unit, date))
 
     } else {
 
-      model$query$tag <- rlang::as_string(condition[[2]])[1]
       # let's select the stat_units that have the query condition
       # the list will be in stocked in query$stat_units_selected
       tag_to_check <- condition[[2]]
@@ -85,7 +74,7 @@ observed <- function (model, condition) {
       temp <- temp[eval(rlang::call2(operator, temp$value, rvalue)),]
       stat_unit <- temp$stat_unit
       date <- temp$date
-      model$selection <- rbind(model$selection, data.frame(stat_unit, date))
+      selection <- rbind(selection, data.frame(stat_unit, date))
 
 
       # Check on descriptions table
@@ -95,7 +84,7 @@ observed <- function (model, condition) {
 
       stat_unit <- stat_unit_from_hash(temp$hash)
       date <- rep(NA, length(stat_unit))
-      model$selection <- rbind(model$selection, data.frame(stat_unit, date))
+      selection <- rbind(selection, data.frame(stat_unit, date))
     }
 
   } else {
@@ -103,30 +92,53 @@ observed <- function (model, condition) {
     # When there is no operator, check events or description,
     # measures with description (damn hard)
 
-    model$query$tag <- rlang::as_string(condition)
-
     tag_to_check <- condition
 
     # Check on events table
     temp <- subset(model$events, tag == tag_to_check)
     stat_unit <- temp$stat_unit
     date <- temp$date
-    model$selection <- rbind(model$selection, data.frame(stat_unit, date))
+    selection <- rbind(selection, data.frame(stat_unit, date))
 
     # Check on periods table
     temp <- subset(model$periods, tag == tag_to_check)
     stat_unit <- temp$stat_unit
     date <- temp$begin
     date_end <- temp$end
-    model$selection <- rbind(model$selection,
+    selection <- rbind(selection,
                              data.frame(stat_unit, date, date_end))
 
     # Check on descriptions table
     temp <- subset(model$descriptions, type == tag_to_check)
     stat_unit <- stat_unit_from_hash(temp$hash)
     date <- rep(NA, length(stat_unit))
-    model$selection <- rbind(model$selection, data.frame(stat_unit, date))
+    selection <- rbind(selection, data.frame(stat_unit, date))
 
   }
+  selection
+}
+
+#' observed
+#'
+#' @export
+observed <- function(model, condition) {
+  condition <- rlang::enexpr(condition)
+
+  model$selection <- model$selection[0,] # here we reset the selection
+  model$query <- list() # here we reset the query
+  model$query$condition <- condition
+
+  model$selection <- prepare_query(model, condition)
+
+  if (length(condition) > 2) {
+    if (is.symbol(condition[[3]])) {
+      model$query$tag <- rlang::as_string(condition[[3]])[1]
+    } else {
+      model$query$tag <- rlang::as_string(condition[[2]])[1]
+    }
+  } else {
+    model$query$tag <- rlang::as_string(condition)
+  }
+
   model
 }
