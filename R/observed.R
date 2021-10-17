@@ -127,7 +127,6 @@ observed <- function (model, condition) {
     date <- rep(NA, length(stat_unit))
     model$selection <- rbind(model$selection, data.frame(stat_unit, date))
 
-    # TODO: Check on periods table
   }
   model
 }
