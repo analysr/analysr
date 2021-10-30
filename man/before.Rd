@@ -4,7 +4,12 @@
 \alias{before}
 \title{before}
 \usage{
-before(model, event_tag)
+before(model, condition)
+}
+\arguments{
+\item{model}{An AnalysR model}
+
+\item{condition}{A condition}
 }
 \description{
 before

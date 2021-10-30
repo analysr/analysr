@@ -7,12 +7,12 @@
 induce_events(condition, event)
 }
 \arguments{
-\item{condition}{A condition (to be defined).}
+\item{condition}{A condition.}
 
-\item{duration}{A duration.}
+\item{event}{An event name.}
 }
 \value{
-The part of  that have been created.
+The part of event tablethat have been created.
 }
 \description{
 Create event from measures table depending on a condition,

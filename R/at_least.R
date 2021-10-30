@@ -1,5 +1,8 @@
 #' at_least
 #'
+#' @param model An AnalysR model
+#' @param e A duration expression like: 1*days
+#'
 #' @export
 at_least <- function (model, e) {
 

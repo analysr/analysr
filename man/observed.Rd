@@ -6,6 +6,11 @@
 \usage{
 observed(model, condition)
 }
+\arguments{
+\item{model}{An AnalysR model}
+
+\item{condition}{A condition}
+}
 \description{
 observed
 }

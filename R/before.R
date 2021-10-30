@@ -49,6 +49,9 @@ is_before_list <- function(entries, duration, selection, type) {
 
 #' before
 #'
+#' @param model An AnalysR model
+#' @param condition A condition
+#'
 #' @export
 before <- function(model, condition) {
 

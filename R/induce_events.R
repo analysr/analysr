@@ -3,10 +3,10 @@
 #' Create event from measures table depending on a condition,
 #' and add them to events table
 #'
-#' @return The part of  that have been created.
+#' @return The part of event tablethat have been created.
 #'
-#' @param condition A condition (to be defined).
-#' @param duration A duration.
+#' @param condition A condition.
+#' @param event An event name.
 #'
 #' @export
 induce_events <- function(condition, event) {

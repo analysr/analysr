@@ -120,6 +120,9 @@ prepare_query <- function(model, condition) {
 
 #' observed
 #'
+#' @param model An AnalysR model
+#' @param condition A condition
+#'
 #' @export
 observed <- function(model, condition) {
   condition <- rlang::enexpr(condition)

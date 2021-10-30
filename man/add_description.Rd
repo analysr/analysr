@@ -6,6 +6,11 @@
 \usage{
 add_description(stat_units, label)
 }
+\arguments{
+\item{stat_units}{A vector of stats_units to be added}
+
+\item{label}{Label to write in description table}
+}
 \description{
 add_description
 }

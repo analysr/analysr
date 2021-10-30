@@ -14,6 +14,9 @@ hash_from_stat_unit <- function(stat_units) {
 
 #' add_description
 #'
+#' @param stat_units A vector of stats_units to be added
+#' @param label Label to write in description table
+#'
 #' @export
 add_description <- function (stat_units, label) {
   label <- gsub(" ", "_", label) # maybe use global config
