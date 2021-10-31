@@ -47,7 +47,7 @@ test_that("from to works on a request", {
     %>% to("2006/11/11 09:00:00")
     %>% before("Surgery")
   )
-  show_env(analysr_env)
+
   #expected_result
   exp_result <- c(7)
 
