@@ -2,13 +2,19 @@
 
 #' @name having
 #'
-#' @param model An AnalysR model
-#' @param condition
+#' @param rmodel An AnalysR model or a list of stat_unit id
+#' @param condition A condition.
 #'
 #' @export
 having <- function(model, condition) {
   condition <- rlang::enexpr(condition)
   selection <- data.frame()
+  # check if the input is a vector or an AnalysR env
+  if (is.vector(model)) {
+    rmodel <- analysr_env
+  } else {
+    rmodel <- model
+  }
   if (length(condition) > 2) {
     # Method with operator
     # Here we admit that a condition is like: tag operator value
@@ -24,7 +30,7 @@ having <- function(model, condition) {
       rvalue <- condition[[2]]
 
       # Check on descriptions table
-      temp <- subset(model$descriptions, type == tag_to_check)
+      temp <- subset(rmodel$descriptions, type == tag_to_check)
       temp <- temp[eval(rlang::call2(
         operator, rvalue,
         convert_to_best_type(temp$value)
@@ -36,7 +42,7 @@ having <- function(model, condition) {
       rvalue <- condition[[3]]
 
       # Check on descriptions table
-      temp <- subset(model$descriptions, type == tag_to_check)
+      temp <- subset(rmodel$descriptions, type == tag_to_check)
       temp <- temp[eval(rlang::call2(
         operator,
         convert_to_best_type(temp$value), rvalue
@@ -51,17 +57,17 @@ having <- function(model, condition) {
     # measures with description (damn hard)
 
     # Check on descriptions table
-    temp <- subset(model$descriptions, type == tag_to_check)
+    temp <- subset(rmodel$descriptions, type == tag_to_check)
     stat_unit <- stat_unit_from_hash(temp$hash)
     selection <- rbind(selection, data.frame(stat_unit))
   }
 
-  # check if value is a vector or an AnalysR env
+  # check if the input is a vector or an AnalysR env
   if (!is.vector(model)) {
-    model$selection <- merge(model$selection, selection, by = "stat_unit")
+    rmodel$selection <- merge(rmodel$selection, selection, by = "stat_unit")
 
-    return(model)
+    return(rmodel)
   } else {
-
+    return(intersect(selection$stat_unit, model))
   }
 }
