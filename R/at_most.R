@@ -4,8 +4,7 @@
 #' @param e A duration expression like: 1*days
 #'
 #' @export
-at_most <- function (model, e) {
-
+at_most <- function(model, e) {
   model$query$duration_type <- "at_most"
 
   e <- rlang::enexpr(e)
