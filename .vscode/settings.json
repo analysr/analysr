@@ -5,5 +5,8 @@
         "editorRuler.foreground": "#ff4081"
     },
     "editor.trimAutoWhitespace": true,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "[r]": {
+        "editor.defaultFormatter": "Ikuyadeu.r"
+    }
 }
