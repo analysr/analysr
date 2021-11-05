@@ -7,10 +7,16 @@
 #' @param types a vector of strings (the name of the columns to import)
 #' @param data the data frame you want to extract data from
 #' @param n (optional) length of hash if already calculated
-fill_descriptions <- function(hash, types, data, n = length(hash)) {
+fill_descriptions <- function(hashes, types, data, n = length(hash)) {
 
-  for (type in types) {
-    result <- data.frame(hash = hash, type = rep(type, n), value = data[, type])
-    analysr_env$descriptions <- rbind(analysr_env$descriptions, result)
-  }
+    prepare_data <- dplyr::select(data,dplyr::all_of(types))
+    prepare_data <- dplyr::mutate(prepare_data, hash = hashes,
+                    .before = types[1])
+
+    result <- tidyr::pivot_longer(prepare_data,
+                                  cols = types,
+                                  names_to = "type",
+                                  values_to = "value")
+    analysr_env$descriptions <- dplyr::bind_rows(analysr_env$descriptions,
+                                result)
 }
