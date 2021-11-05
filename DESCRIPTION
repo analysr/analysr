@@ -63,5 +63,6 @@ Imports:
     purrr,
     lubridate,
     dplyr,
+    tidyr,
     rlang,
     stringr
