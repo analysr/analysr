@@ -13,35 +13,40 @@ setup_new_env <- function() {
     analysr_env$query <- list()
 
     # create data frame for measures
-    analysr_env$measures <- data.frame(matrix(ncol = 6, nrow = 0))
-
-    colnames(analysr_env$measures) <- c("hash", "stat_unit", "date",
-                                        "tag", "value", "status")
+    analysr_env$measures <- tibble::tibble(hash = integer(0),
+                                    stat_unit = character(0),
+                                    date = as.POSIXct(NA),
+                                    tag  = character(0),
+                                    value = character(0),
+                                    status = character(0))
 
     # create data frame for periods
-    analysr_env$periods <- data.frame(matrix(ncol = 5, nrow = 0))
-    colnames(analysr_env$periods) <- c("hash", "stat_unit", "begin",
-                                        "end", "tag")
+    analysr_env$periods <- tibble::tibble(hash = integer(0),
+                                  stat_unit = character(0),
+                                  begin = as.POSIXct(NA),
+                                  end = as.POSIXct(NA),
+                                   tag  = character(0))
 
     # create data frame for events
-    analysr_env$events <- data.frame(matrix(ncol = 4, nrow = 0))
-    colnames(analysr_env$events) <- c("hash", "stat_unit", "date", "tag")
+    analysr_env$events <- tibble::tibble(hash = integer(0),
+                                  stat_unit = character(0),
+                                  date = as.POSIXct(NA),
+                                  tag  = character(0))
 
     # create data frame for stat_units
-    analysr_env$stat_units <- data.frame(matrix(ncol = 2, nrow = 0))
-    colnames(analysr_env$stat_units) <- c("hash", "stat_unit")
-
+    analysr_env$stat_units <- tibble::tibble(hash = as.integer(0),
+                                    stat_unit = character(0))
     # create data frame for descriptions
-    analysr_env$descriptions <- data.frame(matrix(ncol = 3, nrow = 0))
-    colnames(analysr_env$descriptions) <- c("hash", "type", "value")
 
+    analysr_env$descriptions <- tibble::tibble(hash = as.integer(0),
+                                    type = character(0),
+                                    value = character(0))
     # define current hash used (the first hash to be used will be 1)
     analysr_env$current_hash <- as.integer(0)
 
     # create data frame for selection
-    analysr_env$selection <- data.frame(matrix(ncol = 2, nrow = 0))
-
-    colnames(analysr_env$selection) <- c("stat_unit", "date")
+    analysr_env$selection <- tibble::tibble(stat_unit = character(0),
+                                    date = as.POSIXct(NA))
 
 }
 setup_new_env()
