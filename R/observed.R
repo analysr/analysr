@@ -11,6 +11,8 @@ stat_unit_from_hash <- function(hashs) {
 }
 
 
+
+
 hash_from_stat_unit <- function(stat_units) {
   result <- c()
   for (i in rownames(analysr_env$stat_units)) {
@@ -43,8 +45,36 @@ convert_to_best_type <- function(vect) {
     }
 }
 
+
+
+get_entries_from_hash <- function (model, preselection) {
+    result <- tibble::tibble()
+
+    # Check on stat_unit table
+    temp <- dplyr::inner_join(model$stat_units, preselection, by = "hash")
+    stat_unit <- temp$stat_unit
+    date_obs <- rep(NA, length(stat_unit))
+    hash_stat_unit <- temp$hash
+    hash_obs <- rep(NA, length(stat_unit))
+    result <- rbind(result,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+
+
+    # Check on measures table
+    temp <- dplyr::inner_join(model$measures, preselection, by = "hash")
+    stat_unit <- temp$stat_unit
+    date_obs <- temp$date
+    hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+    hash_obs <- temp$hash
+    result <- rbind(result,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+
+    result
+}
+
+
 prepare_query <- function(model, condition) {
-  selection <- data.frame()
+  selection <- tibble::tibble()
   if (length(condition) > 2) {
     # Method with operator
     # Here we admit that a condition is like: tag operator value
@@ -70,12 +100,12 @@ prepare_query <- function(model, condition) {
                       data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
       # Check on descriptions table
-      # temp <- subset(model$descriptions, type == tag_to_check)
-      # temp <- temp[eval(rlang::call2(operator, rvalue,
-      #                               convert_to_best_type(temp$value))),]
-      # stat_unit <- stat_unit_from_hash(temp$hash)
-      # date_obs <- rep(NA, length(stat_unit))
-      # selection <- rbind(selection, data.frame(stat_unit, date_obs))
+      temp <- subset(model$descriptions, type == tag_to_check)
+      temp <- temp[eval(rlang::call2(operator, rvalue,
+                                    convert_to_best_type(temp$value))),]
+      if (nrow(temp) != 0) {
+        selection <- rbind(selection, get_entries_from_hash(model, temp))
+      }
 
     } else {
 
@@ -97,13 +127,13 @@ prepare_query <- function(model, condition) {
 
 
       # Check on descriptions table
-      # temp <- subset(model$descriptions, type == tag_to_check)
-      # temp <- temp[eval(rlang::call2(operator,
-      #                   convert_to_best_type(temp$value), rvalue)),]
+      temp <- subset(model$descriptions, type == tag_to_check)
+      temp <- temp[eval(rlang::call2(operator,
+                        convert_to_best_type(temp$value), rvalue)),]
 
-      # stat_unit <- stat_unit_from_hash(temp$hash)
-      # date <- rep(NA, length(stat_unit))
-      # selection <- rbind(selection, data.frame(stat_unit, date))
+      if (nrow(temp) != 0) {
+        selection <- rbind(selection, get_entries_from_hash(model, temp))
+      }
     }
 
   } else {
@@ -133,10 +163,10 @@ prepare_query <- function(model, condition) {
         data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
 
     # Check on descriptions table
-    # temp <- subset(model$descriptions, type == tag_to_check)
-    # stat_unit <- stat_unit_from_hash(temp$hash)
-    # date <- rep(NA, length(stat_unit))
-    # selection <- rbind(selection, data.frame(stat_unit, date))
+    temp <- subset(model$descriptions, type == tag_to_check)
+    if (nrow(temp) != 0) {
+        selection <- rbind(selection, get_entries_from_hash(model, temp))
+    }
 
   }
   selection
