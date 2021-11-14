@@ -64,6 +64,25 @@ get_entries_from_hash <- function (model, preselection) {
     result <- rbind(result,
                       data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
+    # Check on events table
+    temp <- dplyr::inner_join(model$events, preselection, by = "hash")
+    stat_unit <- temp$stat_unit
+    date_obs <- temp$date
+    hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+    hash_obs <- temp$hash
+    result <- rbind(result,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+
+    # Check on periods table
+    temp <- dplyr::inner_join(model$periods, preselection, by = "hash")
+    stat_unit <- temp$stat_unit
+    date_obs <- temp$date
+    hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+    date_obs_end <- temp$end
+    hash_obs <- temp$hash
+    result <- rbind(result,
+        data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
+
     result
 }
 
