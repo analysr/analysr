@@ -10,6 +10,19 @@ stat_unit_from_hash <- function(hashs) {
   result
 }
 
+
+hash_from_stat_unit <- function(stat_units) {
+  result <- c()
+  for (i in rownames(analysr_env$stat_units)) {
+    for (j in stat_units) {
+      if (analysr_env$stat_units[i,]$stat_unit == j) {
+        result <- c(result, analysr_env$stat_units[i,]$hash)
+      }
+    }
+  }
+  result
+}
+
 check_integer <- function(n) {
     !grepl("[^[:digit:]]", format(n,  digits = 20, scientific = TRUE))
 }
@@ -50,16 +63,19 @@ prepare_query <- function(model, condition) {
       temp <- subset(model$measures, tag == tag_to_check)
       temp <- temp[eval(rlang::call2(operator, rvalue, temp$value)),]
       stat_unit <- temp$stat_unit
-      date <- temp$date
-      selection <- rbind(selection, data.frame(stat_unit, date))
+      date_obs <- temp$date
+      hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+      hash_obs <- temp$hash
+      selection <- rbind(selection,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
       # Check on descriptions table
-      temp <- subset(model$descriptions, type == tag_to_check)
-      temp <- temp[eval(rlang::call2(operator, rvalue,
-                                    convert_to_best_type(temp$value))),]
-      stat_unit <- stat_unit_from_hash(temp$hash)
-      date <- rep(NA, length(stat_unit))
-      selection <- rbind(selection, data.frame(stat_unit, date))
+      # temp <- subset(model$descriptions, type == tag_to_check)
+      # temp <- temp[eval(rlang::call2(operator, rvalue,
+      #                               convert_to_best_type(temp$value))),]
+      # stat_unit <- stat_unit_from_hash(temp$hash)
+      # date_obs <- rep(NA, length(stat_unit))
+      # selection <- rbind(selection, data.frame(stat_unit, date_obs))
 
     } else {
 
@@ -73,18 +89,21 @@ prepare_query <- function(model, condition) {
       temp <- subset(model$measures, tag == tag_to_check)
       temp <- temp[eval(rlang::call2(operator, temp$value, rvalue)),]
       stat_unit <- temp$stat_unit
-      date <- temp$date
-      selection <- rbind(selection, data.frame(stat_unit, date))
+      date_obs <- temp$date
+      hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+      hash_obs <- temp$hash
+      selection <- rbind(selection,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
 
       # Check on descriptions table
-      temp <- subset(model$descriptions, type == tag_to_check)
-      temp <- temp[eval(rlang::call2(operator,
-                        convert_to_best_type(temp$value), rvalue)),]
+      # temp <- subset(model$descriptions, type == tag_to_check)
+      # temp <- temp[eval(rlang::call2(operator,
+      #                   convert_to_best_type(temp$value), rvalue)),]
 
-      stat_unit <- stat_unit_from_hash(temp$hash)
-      date <- rep(NA, length(stat_unit))
-      selection <- rbind(selection, data.frame(stat_unit, date))
+      # stat_unit <- stat_unit_from_hash(temp$hash)
+      # date <- rep(NA, length(stat_unit))
+      # selection <- rbind(selection, data.frame(stat_unit, date))
     }
 
   } else {
@@ -97,22 +116,27 @@ prepare_query <- function(model, condition) {
     # Check on events table
     temp <- subset(model$events, tag == tag_to_check)
     stat_unit <- temp$stat_unit
-    date <- temp$date
-    selection <- rbind(selection, data.frame(stat_unit, date))
+    date_obs <- temp$date
+    hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+    hash_obs <- temp$hash
+    selection <- rbind(selection,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
     # Check on periods table
     temp <- subset(model$periods, tag == tag_to_check)
     stat_unit <- temp$stat_unit
-    date <- temp$begin
-    date_end <- temp$end
+    hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+    date_obs <- temp$begin
+    date_obs_end <- temp$end
+    hash_obs <- temp$hash
     selection <- rbind(selection,
-                             data.frame(stat_unit, date, date_end))
+        data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
 
     # Check on descriptions table
-    temp <- subset(model$descriptions, type == tag_to_check)
-    stat_unit <- stat_unit_from_hash(temp$hash)
-    date <- rep(NA, length(stat_unit))
-    selection <- rbind(selection, data.frame(stat_unit, date))
+    # temp <- subset(model$descriptions, type == tag_to_check)
+    # stat_unit <- stat_unit_from_hash(temp$hash)
+    # date <- rep(NA, length(stat_unit))
+    # selection <- rbind(selection, data.frame(stat_unit, date))
 
   }
   selection
