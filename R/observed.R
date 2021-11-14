@@ -10,15 +10,18 @@ stat_unit_from_hash <- function(hashs) {
   result
 }
 
-hash_from_stat_unit <- function(stat_units) {
+hash_from_stat_unit <- function(model, stat_units) {
   result <- c()
-  for (i in rownames(analysr_env$stat_units)) {
-    for (j in stat_units) {
-      if (analysr_env$stat_units[i,]$stat_unit == j) {
-        result <- c(result, analysr_env$stat_units[i,]$hash)
+  if (length(stat_units) != 0) {
+    for (i in rownames(model$stat_units)) {
+      for (j in stat_units) {
+        if (model$stat_units[i,]$stat_unit == j) {
+          result <- c(result, model$stat_units[i,]$hash)
+        }
       }
     }
   }
+
   result
 }
 
@@ -47,42 +50,48 @@ get_entries_from_hash <- function (model, preselection) {
 
     # Check on stat_unit table
     temp <- dplyr::inner_join(model$stat_units, preselection, by = "hash")
-    stat_unit <- temp$stat_unit
-    date_obs <- rep(NA, length(stat_unit))
-    hash_stat_unit <- temp$hash
-    hash_obs <- rep(NA, length(stat_unit))
-    result <- rbind(result,
+    if ((n <- nrow(temp)) != 0) {
+      stat_unit <- temp$stat_unit
+      date_obs <- rep(NA, n)
+      hash_stat_unit <- temp$hash
+      hash_obs <- rep(NA, n)
+      result <- rbind(result,
                       data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
-
+    }
 
     # Check on measures table
     temp <- dplyr::inner_join(model$measures, preselection, by = "hash")
-    stat_unit <- temp$stat_unit
-    date_obs <- temp$date
-    hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
-    hash_obs <- temp$hash
-    result <- rbind(result,
+    if (nrow(temp) != 0) {
+      stat_unit <- temp$stat_unit
+      date_obs <- temp$date
+      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+      hash_obs <- temp$hash
+      result <- rbind(result,
                       data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+    }
 
     # Check on events table
     temp <- dplyr::inner_join(model$events, preselection, by = "hash")
-    stat_unit <- temp$stat_unit
-    date_obs <- temp$date
-    hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
-    hash_obs <- temp$hash
-    result <- rbind(result,
+    if (nrow(temp) != 0) {
+      stat_unit <- temp$stat_unit
+      date_obs <- temp$date
+      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+      hash_obs <- temp$hash
+      result <- rbind(result,
                       data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+    }
 
     # Check on periods table
     temp <- dplyr::inner_join(model$periods, preselection, by = "hash")
-    stat_unit <- temp$stat_unit
-    date_obs <- temp$date
-    hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
-    date_obs_end <- temp$end
-    hash_obs <- temp$hash
-    result <- rbind(result,
+    if (nrow(temp) != 0) {
+      stat_unit <- temp$stat_unit
+      date_obs <- temp$date
+      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+      date_obs_end <- temp$end
+      hash_obs <- temp$hash
+      result <- rbind(result,
         data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
-
+    }
     result
 }
 
@@ -107,7 +116,7 @@ prepare_query <- function(model, condition) {
       temp <- temp[eval(rlang::call2(operator, rvalue, temp$value)),]
       stat_unit <- temp$stat_unit
       date_obs <- temp$date
-      hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
       hash_obs <- temp$hash
       selection <- rbind(selection,
                       data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
@@ -133,7 +142,7 @@ prepare_query <- function(model, condition) {
       temp <- temp[eval(rlang::call2(operator, temp$value, rvalue)),]
       stat_unit <- temp$stat_unit
       date_obs <- temp$date
-      hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
       hash_obs <- temp$hash
       selection <- rbind(selection,
                       data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
@@ -160,7 +169,7 @@ prepare_query <- function(model, condition) {
     temp <- subset(model$events, tag == tag_to_check)
     stat_unit <- temp$stat_unit
     date_obs <- temp$date
-    hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+    hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
     hash_obs <- temp$hash
     selection <- rbind(selection,
                       data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
@@ -168,7 +177,7 @@ prepare_query <- function(model, condition) {
     # Check on periods table
     temp <- subset(model$periods, tag == tag_to_check)
     stat_unit <- temp$stat_unit
-    hash_stat_unit <- hash_from_stat_unit(temp$stat_unit)
+    hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
     date_obs <- temp$begin
     date_obs_end <- temp$end
     hash_obs <- temp$hash
