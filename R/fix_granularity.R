@@ -155,7 +155,4 @@ fix_granularity_aux <-
     }
 
     analysr_env$measures <- rbind(data_unchanged, result)
-
-    rownames(analysr_env$measures) <- seq_len(length(analysr_env$measures$date))
-
 }
