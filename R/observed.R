@@ -10,9 +10,6 @@ stat_unit_from_hash <- function(hashs) {
   result
 }
 
-
-
-
 hash_from_stat_unit <- function(stat_units) {
   result <- c()
   for (i in rownames(analysr_env$stat_units)) {
@@ -45,8 +42,6 @@ convert_to_best_type <- function(vect) {
     }
 }
 
-
-
 get_entries_from_hash <- function (model, preselection) {
     result <- tibble::tibble()
 
@@ -71,7 +66,6 @@ get_entries_from_hash <- function (model, preselection) {
 
     result
 }
-
 
 prepare_query <- function(model, condition) {
   selection <- tibble::tibble()
