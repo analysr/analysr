@@ -50,10 +50,10 @@ test_that("import measures CSV  works and fill descriptions", {
 test_that("import measures CSV works when importing different date formats", {
 
   # expected
-  expected <- as.data.frame(quiet_read_csv(
+  expected <- quiet_read_csv(
       file = "./csv/import_measures_csv/date/after.csv",
       col_types = readr::cols("hash" = "i")
-  )$result)
+  )$result
 
   # import ymd-HMS
   setup_new_env()

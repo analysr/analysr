@@ -76,7 +76,6 @@ model_state_equal <- function(after_path, model, query_expected) {
         result_csv <- quiet_read_csv(file = file_path,
                                      col_types = readr::cols("hash" = "i",
                                                              "stat_unit" = "c"))$result
-        result_csv <- as.data.frame(result_csv)
 
         assign(x, result_csv, envir = after_env)
       }

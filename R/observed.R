@@ -10,6 +10,21 @@ stat_unit_from_hash <- function(hashs) {
   result
 }
 
+hash_from_stat_unit <- function(model, stat_units) {
+  result <- c()
+  if (length(stat_units) != 0) {
+    for (i in rownames(model$stat_units)) {
+      for (j in stat_units) {
+        if (model$stat_units[i,]$stat_unit == j) {
+          result <- c(result, model$stat_units[i,]$hash)
+        }
+      }
+    }
+  }
+
+  result
+}
+
 check_integer <- function(n) {
     !grepl("[^[:digit:]]", format(n,  digits = 20, scientific = TRUE))
 }
@@ -30,8 +45,58 @@ convert_to_best_type <- function(vect) {
     }
 }
 
+get_entries_from_hash <- function (model, preselection) {
+    result <- tibble::tibble()
+
+    # Check on stat_unit table
+    temp <- dplyr::inner_join(model$stat_units, preselection, by = "hash")
+    if ((n <- nrow(temp)) != 0) {
+      stat_unit <- temp$stat_unit
+      date_obs <- rep(NA, n)
+      hash_stat_unit <- temp$hash
+      hash_obs <- rep(NA, n)
+      result <- rbind(result,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+    }
+
+    # Check on measures table
+    temp <- dplyr::inner_join(model$measures, preselection, by = "hash")
+    if (nrow(temp) != 0) {
+      stat_unit <- temp$stat_unit
+      date_obs <- temp$date
+      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+      hash_obs <- temp$hash
+      result <- rbind(result,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+    }
+
+    # Check on events table
+    temp <- dplyr::inner_join(model$events, preselection, by = "hash")
+    if (nrow(temp) != 0) {
+      stat_unit <- temp$stat_unit
+      date_obs <- temp$date
+      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+      hash_obs <- temp$hash
+      result <- rbind(result,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+    }
+
+    # Check on periods table
+    temp <- dplyr::inner_join(model$periods, preselection, by = "hash")
+    if (nrow(temp) != 0) {
+      stat_unit <- temp$stat_unit
+      date_obs <- temp$date
+      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+      date_obs_end <- temp$end
+      hash_obs <- temp$hash
+      result <- rbind(result,
+        data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
+    }
+    result
+}
+
 prepare_query <- function(model, condition) {
-  selection <- data.frame()
+  selection <- tibble::tibble()
   if (length(condition) > 2) {
     # Method with operator
     # Here we admit that a condition is like: tag operator value
@@ -50,16 +115,19 @@ prepare_query <- function(model, condition) {
       temp <- subset(model$measures, tag == tag_to_check)
       temp <- temp[eval(rlang::call2(operator, rvalue, temp$value)),]
       stat_unit <- temp$stat_unit
-      date <- temp$date
-      selection <- rbind(selection, data.frame(stat_unit, date))
+      date_obs <- temp$date
+      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+      hash_obs <- temp$hash
+      selection <- rbind(selection,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
       # Check on descriptions table
       temp <- subset(model$descriptions, type == tag_to_check)
       temp <- temp[eval(rlang::call2(operator, rvalue,
                                     convert_to_best_type(temp$value))),]
-      stat_unit <- stat_unit_from_hash(temp$hash)
-      date <- rep(NA, length(stat_unit))
-      selection <- rbind(selection, data.frame(stat_unit, date))
+      if (nrow(temp) != 0) {
+        selection <- rbind(selection, get_entries_from_hash(model, temp))
+      }
 
     } else {
 
@@ -73,8 +141,11 @@ prepare_query <- function(model, condition) {
       temp <- subset(model$measures, tag == tag_to_check)
       temp <- temp[eval(rlang::call2(operator, temp$value, rvalue)),]
       stat_unit <- temp$stat_unit
-      date <- temp$date
-      selection <- rbind(selection, data.frame(stat_unit, date))
+      date_obs <- temp$date
+      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+      hash_obs <- temp$hash
+      selection <- rbind(selection,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
 
       # Check on descriptions table
@@ -82,9 +153,9 @@ prepare_query <- function(model, condition) {
       temp <- temp[eval(rlang::call2(operator,
                         convert_to_best_type(temp$value), rvalue)),]
 
-      stat_unit <- stat_unit_from_hash(temp$hash)
-      date <- rep(NA, length(stat_unit))
-      selection <- rbind(selection, data.frame(stat_unit, date))
+      if (nrow(temp) != 0) {
+        selection <- rbind(selection, get_entries_from_hash(model, temp))
+      }
     }
 
   } else {
@@ -97,22 +168,27 @@ prepare_query <- function(model, condition) {
     # Check on events table
     temp <- subset(model$events, tag == tag_to_check)
     stat_unit <- temp$stat_unit
-    date <- temp$date
-    selection <- rbind(selection, data.frame(stat_unit, date))
+    date_obs <- temp$date
+    hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+    hash_obs <- temp$hash
+    selection <- rbind(selection,
+                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
     # Check on periods table
     temp <- subset(model$periods, tag == tag_to_check)
     stat_unit <- temp$stat_unit
-    date <- temp$begin
-    date_end <- temp$end
+    hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+    date_obs <- temp$begin
+    date_obs_end <- temp$end
+    hash_obs <- temp$hash
     selection <- rbind(selection,
-                             data.frame(stat_unit, date, date_end))
+        data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
 
     # Check on descriptions table
     temp <- subset(model$descriptions, type == tag_to_check)
-    stat_unit <- stat_unit_from_hash(temp$hash)
-    date <- rep(NA, length(stat_unit))
-    selection <- rbind(selection, data.frame(stat_unit, date))
+    if (nrow(temp) != 0) {
+        selection <- rbind(selection, get_entries_from_hash(model, temp))
+    }
 
   }
   selection

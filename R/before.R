@@ -7,8 +7,8 @@ is_before <- function(entry, duration, selection, type) {
   if (type == "at_most") {
     for (i in rownames(selection)) {
       date <- as.numeric(entry$date)
-      start <- as.numeric(selection[i,]$date - duration)
-      end <- as.numeric(selection[i,]$date)
+      start <- as.numeric(selection[i,]$date_obs - duration)
+      end <- as.numeric(selection[i,]$date_obs)
       # check if (entry date) =< (event date)
       #      and (entry date) >= (event date + duration)
       if ((date <= end) && (start <= date)) {
@@ -20,7 +20,7 @@ is_before <- function(entry, duration, selection, type) {
   if (type == "at_least") {
     for (i in rownames(selection)) {
       date <- as.numeric(entry$date)
-      max <- as.numeric(selection[i,]$date - duration)
+      max <- as.numeric(selection[i,]$date_obs - duration)
       # check if (entry date) =< (event date - duration)
       if (date <= max) {
         found <- TRUE
