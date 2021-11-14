@@ -43,10 +43,10 @@ test_that("import periods CSV works and fill descriptions", {
 test_that("import periods CSV works when importing different date formats", {
 
   # expected
-  expected <- as.data.frame(quiet_read_csv(
+  expected <- quiet_read_csv(
       file = "./csv/import_periods_csv/date/after.csv",
       col_types = readr::cols("hash" = "i")
-  )$result)
+  )$result
 
   # import ymd-HM
   setup_new_env()

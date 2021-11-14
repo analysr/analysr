@@ -1,18 +1,18 @@
 test_that("induce_period works", {
   setup_new_env()
 
-  expected_measures <- as.data.frame(quiet_read_csv(
+  expected_measures <- quiet_read_csv(
       file = "./csv/induce_events/after-measures.csv",
       col_types = readr::cols("hash" = "i")
-  )$result)
-  expected_events <- as.data.frame(quiet_read_csv(
+  )$result
+  expected_events <- quiet_read_csv(
       file = "./csv/induce_events/after-events.csv",
       col_types = readr::cols("hash" = "i")
-  )$result)
-  expected_stat_units <- as.data.frame(quiet_read_csv(
+  )$result
+  expected_stat_units <- quiet_read_csv(
     file = "./csv/induce_events/after-stat_units.csv",
     col_types = readr::cols("hash" = "i")
-  )$result)
+  )$result
 
   # import measures
   import_measures_csv("./csv/induce_events/before-measures.csv")
