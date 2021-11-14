@@ -33,7 +33,6 @@ import_periods_csv <-
     result <- quiet_read_csv(file = csv_path,
                              col_types = readr::cols(begin = "c", end = "c")
                              )$result
-    result <- as.data.frame(result)
 
     n <- nrow(result)
     hash <- get_hash(n)

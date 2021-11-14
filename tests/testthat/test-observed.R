@@ -15,6 +15,22 @@ test_that("observed works with simple condition", {
   # check here with before (as nothing should have changed on model)
   expect_equal(model_state_equal("./csv/observed/before1", model, query), TRUE)
 })
+test_that("observed works with simple condition (import)", {
+  setup_new_env()
+
+  # import measures
+  import_measures_csv("./csv/observed/before7/measures.csv")
+
+  # observed
+  model <- observed(analysr_env, Temperature > 38.5)
+
+  query <- list(condition = rlang::expr(Temperature > 38.5),
+                tag = "Temperature")
+
+  # check model
+  # check here with before (as nothing should have changed on model)
+  expect_equal(model_state_equal("./csv/observed/before7", model, query), TRUE)
+})
 test_that("observed works  with simple reverse condition", {
   setup_new_env()
 

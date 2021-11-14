@@ -30,7 +30,6 @@ import_events_csv <-
 
     result_csv <- quiet_read_csv(file = csv_path,
                                  col_types = readr::cols(date = "c"))$result
-    result_csv <- as.data.frame(result_csv)
 
     n <- nrow(result_csv) # get row number only one time
     hash <- get_hash(n)
