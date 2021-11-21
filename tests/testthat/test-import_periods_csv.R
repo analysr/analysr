@@ -84,5 +84,17 @@ test_that("import periods CSV works when importing different date formats", {
 
   expect_equal(
     dplyr::all_equal(expected,
+                     analysr_env$periods), TRUE)
+
+  # import dmy-HMS, force_date_format = TRUE
+  setup_new_env()
+  import_periods_csv(
+    "./csv/import_periods_csv/date/before-dmy-HMS.csv",
+    date_format_reg = "dmy-HMS",
+    force_date_format = TRUE
+  )
+
+  expect_equal(
+    dplyr::all_equal(expected,
       analysr_env$periods), TRUE)
 })
