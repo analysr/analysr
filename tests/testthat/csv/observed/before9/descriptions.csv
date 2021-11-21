@@ -1,0 +1,10 @@
+hash,type,value
+4,Covid_Positive,TRUE
+5,Covid_Positive,FALSE
+5,AIDS_Positive,TRUE
+4,Age,4
+4,Age,30
+8,Age,25
+11,Location,London
+12,Location,Paris
+13,Country,France

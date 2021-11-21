@@ -124,7 +124,8 @@ test_that("observed works on desciption with value", {
   # observed
   model <- observed(analysr_env, Covid_Positive == TRUE)
 
-  query <- list(condition = rlang::expr(Covid_Positive == TRUE), tag = "Covid_Positive")
+  query <- list(condition = rlang::expr(Covid_Positive == TRUE),
+                tag = "Covid_Positive")
 
 
   # check model
@@ -150,11 +151,11 @@ test_that("observed works on periods", {
   expect_equal(model_state_equal("./csv/observed/before6", model, query), TRUE)
 })
 test_that(
-  "observed works on measures described (request on description table)",{
+  "observed works on measures described (request on description table)", {
 
   setup_new_env()
 
-  # import measures
+  # load measures
   load_env_csv("./csv/observed/before8")
 
   # observed
@@ -166,4 +167,40 @@ test_that(
   # check model
   # check here with before (as nothing should have changed on model)
   expect_equal(model_state_equal("./csv/observed/before8", model, query), TRUE)
+})
+test_that(
+  "observed works on periods described (request on description table)", {
+
+  setup_new_env()
+
+  # load measures
+  load_env_csv("./csv/observed/before9")
+
+  # observed
+  model <- observed(analysr_env, Location == "Paris")
+
+  query <- list(condition = rlang::expr(Location == "Paris"),
+                tag = "Location")
+
+  # check model
+  # check here with before (as nothing should have changed on model)
+  expect_equal(model_state_equal("./csv/observed/before9", model, query), TRUE)
+})
+test_that(
+  "observed works on periods described (request on description table) 2", {
+
+  setup_new_env()
+
+  # load measures
+  load_env_csv("./csv/observed/before10")
+
+  # observed
+  model <- observed(analysr_env, Location)
+
+  query <- list(condition = rlang::expr(Location),
+                tag = "Location")
+
+  # check model
+  # check here with before (as nothing should have changed on model)
+  expect_equal(model_state_equal("./csv/observed/before10", model, query), TRUE)
 })
