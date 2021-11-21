@@ -27,7 +27,6 @@ test_that("import events CSV works when import twice", {
 
   expect_equal(model_state_equal("./csv/import_events_csv/after2"), TRUE)
 })
-
 test_that("import events CSV works and fill descriptions", {
   # reset env
   setup_new_env()
@@ -42,6 +41,24 @@ test_that("import events CSV works and fill descriptions", {
     date_format_reg = "ymd-HM"
   )
 
+  expect_equal(model_state_equal("./csv/import_events_csv/after3"), TRUE)
+})
+test_that("import events CSV works and fill descriptions with ';' separator", {
+  # reset env
+  setup_new_env()
+
+  # import
+  import_events_csv(
+    "./csv/import_events_csv/to_import_4.csv",
+    "stat_unit",
+    "date",
+    "tag",
+    c("context", "location"),
+    date_format_reg = "ymd-HM",
+    delim = ";"
+  )
+
+  # should be the same as the 3rd
   expect_equal(model_state_equal("./csv/import_events_csv/after3"), TRUE)
 })
 test_that("import events CSV works when importing different date formats", {

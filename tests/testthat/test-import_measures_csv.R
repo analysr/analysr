@@ -47,6 +47,22 @@ test_that("import measures CSV  works and fill descriptions", {
 
   expect_equal(model_state_equal("./csv/import_measures_csv/after3"), TRUE)
 })
+test_that("import measures CSV  works and fill descriptions with ';' separator", {
+  # reset env
+  setup_new_env()
+  import_measures_csv(
+    "./csv/import_measures_csv/to_import_4.csv",
+    "patient",
+    "date_prlvt",
+    "type_examen",
+    "valeur",
+    c("effectue_par"),
+    delim = ";"
+  )
+
+  # should be the same as the 3rd
+  expect_equal(model_state_equal("./csv/import_measures_csv/after3"), TRUE)
+})
 test_that("import measures CSV works when importing different date formats", {
 
   # expected

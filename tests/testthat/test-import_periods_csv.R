@@ -40,6 +40,22 @@ test_that("import periods CSV works and fill descriptions", {
                      c("LOCATION"))
   expect_equal(model_state_equal("./csv/import_periods_csv/after3"), TRUE)
 })
+test_that("import periods CSV works and fill descriptions  with ';' separator", {
+  # reset env
+  setup_new_env()
+
+  # import
+  import_periods_csv("./csv/import_periods_csv/to_import_4.csv",
+                     "PERSON",
+                     "BEGIN",
+                     "END",
+                     "DESCRIPTION",
+                     c("LOCATION"),
+                     delim = ";")
+
+  # should be the same as the 3rd
+  expect_equal(model_state_equal("./csv/import_periods_csv/after3"), TRUE)
+})
 test_that("import periods CSV works when importing different date formats", {
 
   # expected

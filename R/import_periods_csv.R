@@ -16,6 +16,8 @@
 #' Default: `lubridate::parse_date_time(x, date_format_reg)`
 #' @param date_format_reg A expression to format date with (not required).
 #' Default: `"ymd-HMS"`
+#' @param delim The separator to read csv (not required).
+#' Default: `,`
 #'
 #' @export
 import_periods_csv <-
@@ -27,12 +29,13 @@ import_periods_csv <-
             optional_data,
             date_format_func =
                   (function(x) lubridate::parse_date_time(x, date_format_reg)),
-            date_format_reg = "ymd-HMS") {
-    quiet_read_csv <- purrr::quietly(readr::read_csv)
+            date_format_reg = "ymd-HMS",
+            delim = ",") {
+    quiet_read_csv <- purrr::quietly(readr::read_delim)
 
     result <- quiet_read_csv(file = csv_path,
-                             col_types = readr::cols(begin = "c", end = "c")
-                             )$result
+                             col_types = readr::cols(begin = "c", end = "c"),
+                             delim = delim)$result
 
     n <- nrow(result)
     hash <- get_hash(n)
