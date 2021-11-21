@@ -85,7 +85,7 @@ get_entries_from_hash <- function (model, preselection) {
     temp <- dplyr::inner_join(model$periods, preselection, by = "hash")
     if (nrow(temp) != 0) {
       stat_unit <- temp$stat_unit
-      date_obs <- temp$date
+      date_obs <- temp$begin
       hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
       date_obs_end <- temp$end
       hash_obs <- temp$hash
