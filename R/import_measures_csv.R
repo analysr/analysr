@@ -19,6 +19,8 @@
 #' @param date_format_reg A expression to format date with (not required).
 #' Default: `"ymd-HMS"`
 #' For more details see [this documentation](https://bit.ly/3bp3FD0).
+#' @param force_date_format Boolean to force date format func (not required).
+#' Default: `FALSE`
 #' @param delim The separator to read csv (not required).
 #' Default: `,`
 #'
@@ -34,13 +36,20 @@ import_measures_csv <-
             date_format_func =
                   (function(x) lubridate::parse_date_time(x, date_format_reg)),
             date_format_reg = "ymd-HMS",
+            force_date_format = FALSE,
             delim = ",") {
 
     quiet_read_csv <- purrr::quietly(readr::read_delim)
 
-    result <- quiet_read_csv(file = csv_path,
-                             col_types = readr::cols(date = "c"),
-                             delim = delim)$result
+    if (force_date_format) {
+      result <- quiet_read_csv(file = csv_path,
+                               col_types = readr::cols(date = "c"),
+                               delim = delim)$result
+    } else {
+      result <- quiet_read_csv(file = csv_path,
+                               delim = delim)$result
+    }
+
 
     n <- nrow(result)
     hash <- get_hash(n)
@@ -60,7 +69,9 @@ import_measures_csv <-
     # we could use dplyr to extract colums https://bit.ly/32lGkNR
     colnames(result) <- c("stat_unit", "date", "tag", "value", "status")
 
-    result$date <- date_format_func(result$date)
+    if (!isDate(result$date) || force_date_format) {
+      result$date <- date_format_func(result$date)
+    }
 
     add_stat_units(result$stat_unit)
 

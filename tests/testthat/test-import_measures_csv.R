@@ -93,6 +93,19 @@ test_that("import measures CSV works when importing different date formats", {
       analysr_env$measures), TRUE)
 
 
+  # import dmy-HM, force_date_format = TRUE
+  setup_new_env()
+  import_measures_csv(
+    "./csv/import_measures_csv/date/before-dmy-HM.csv",
+    date_format_reg = "dmy-HM",
+    force_date_format = TRUE
+  )
+
+  expect_equal(
+    dplyr::all_equal(expected,
+                     analysr_env$measures), TRUE)
+
+
   # import ymd-HM
   setup_new_env()
   import_measures_csv(
