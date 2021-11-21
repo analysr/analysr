@@ -204,3 +204,21 @@ test_that(
   # check here with before (as nothing should have changed on model)
   expect_equal(model_state_equal("./csv/observed/before10", model, query), TRUE)
 })
+test_that(
+  "observed works on events described (request on description table)", {
+
+  setup_new_env()
+
+  # load measures
+  load_env_csv("./csv/observed/before11")
+
+  # observed
+  model <- observed(analysr_env, Location == "Paris")
+
+  query <- list(condition = rlang::expr(Location == "Paris"),
+                tag = "Location")
+
+  # check model
+  # check here with before (as nothing should have changed on model)
+  expect_equal(model_state_equal("./csv/observed/before11", model, query), TRUE)
+})
