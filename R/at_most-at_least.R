@@ -1,13 +1,5 @@
-#' at_most
-#'
-#' @param model An AnalysR model
-#' @param e A duration expression like: 1*days
-#'
-#' @export
-at_most <- function(model, e) {
-  model$query$duration_type <- "at_most"
-  e <- rlang::enexprs(e)
-  e <- toString(e)
+
+get_duration_from_str <- function(e) {
   e <- tolower(e)
 
   e <- stringr::str_replace_all(e, "years", "31557600")
@@ -32,7 +24,39 @@ at_most <- function(model, e) {
   e <-stringr::str_replace_all(e,  "second", "1")
 
   durationSeconds <- eval(str2expression(e))
-  model$query$duration <- lubridate::duration(durationSeconds, "seconds")
+  return(lubridate::duration(durationSeconds, "seconds"))
+}
+
+#' at_most
+#'
+#' @param model An AnalysR model
+#' @param e A duration expression like: 1*days
+#'
+#' @export
+at_most <- function(model, e) {
+  model$query$duration_type <- "at_most"
+  e <- rlang::enexprs(e)
+  e <- toString(e)
+
+  model$query$duration <- get_duration_from_str(e)
+
+  model
+}
+
+#' at_least
+#'
+#' @param model An AnalysR model
+#' @param e A duration expression like: 1*days
+#'
+#' @export
+at_least <- function (model, e) {
+
+  model$query$duration_type <- "at_least"
+
+  e <- rlang::enexprs(e)
+  e <- toString(e)
+
+  model$query$duration <- get_duration_from_str(e)
 
   model
 }
