@@ -8,7 +8,7 @@
 #' @export
 having <- function(model, condition) {
   condition <- rlang::enexpr(condition)
-  selection <- data.frame()
+  selection <- tibble::tibble()
   # check if the input is a vector or an AnalysR env
   if (is.vector(model)) {
     rmodel <- analysr_env
@@ -36,7 +36,7 @@ having <- function(model, condition) {
         convert_to_best_type(temp$value)
       )), ]
       stat_unit <- stat_unit_from_hash(temp$hash)
-      selection <- rbind(selection, data.frame(stat_unit))
+      selection <- rbind(selection, tibble::tibble(stat_unit))
     } else {
       tag_to_check <- condition[[2]]
       rvalue <- condition[[3]]
@@ -49,7 +49,7 @@ having <- function(model, condition) {
       )), ]
 
       stat_unit <- stat_unit_from_hash(temp$hash)
-      selection <- rbind(selection, data.frame(stat_unit))
+      selection <- rbind(selection, tibble::tibble(stat_unit))
     }
   } else {
     # Method without operator
@@ -59,7 +59,7 @@ having <- function(model, condition) {
     # Check on descriptions table
     temp <- subset(rmodel$descriptions, type == tag_to_check)
     stat_unit <- stat_unit_from_hash(temp$hash)
-    selection <- rbind(selection, data.frame(stat_unit))
+    selection <- rbind(selection, tibble::tibble(stat_unit))
   }
 
   # check if the input is a vector or an AnalysR env

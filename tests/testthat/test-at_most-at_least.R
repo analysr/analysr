@@ -56,6 +56,5 @@ test_that("at_least works", {
                 duration = lubridate::duration(15, "days"))
 
   # check model (model should not have changed, only query has)
-
   expect_equal(model_state_equal("./csv/at_most/model", model, query), TRUE)
 })

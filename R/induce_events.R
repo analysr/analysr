@@ -23,7 +23,7 @@ induce_events <- function(condition, event) {
 
   n <- nrow(data)
 
-  result <- data.frame(hash = get_hash(n), stat_unit=data$stat_unit,
+  result <- tibble::tibble(hash = get_hash(n), stat_unit=data$stat_unit,
                        date=data$date, tag=event)
 
   analysr_env$events <- rbind(analysr_env$events, result)

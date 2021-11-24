@@ -50,7 +50,7 @@ induce_period <- function(condition, tag_to_create, duration) {
   }
   n <- nrow(data)
 
-  result <- data.frame(hash = get_hash(n), stat_unit = data$stat_unit,
+  result <- tibble::tibble(hash = get_hash(n), stat_unit = data$stat_unit,
                        begin = data$date, end = data$date + duration,
                        tag = rep(tag_to_create, n))
 

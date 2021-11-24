@@ -85,7 +85,7 @@ fix_granularity_aux <-
     value <- 1:n
     status <- rep(NA, n)
 
-    result <- data.frame(hash, stat_unit, date,
+    result <- tibble::tibble(hash, stat_unit, date,
                          tag, value, status)
 
 # we now have to fill the value column
