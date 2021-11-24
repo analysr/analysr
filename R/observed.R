@@ -56,7 +56,7 @@ get_entries_from_hash <- function (model, preselection) {
       hash_stat_unit <- temp$hash
       hash_obs <- rep(NA, n)
       result <- rbind(result,
-                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+                  tibble::tibble(hash_stat_unit, stat_unit, hash_obs, date_obs))
     }
 
     # Check on measures table
@@ -67,7 +67,7 @@ get_entries_from_hash <- function (model, preselection) {
       hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
       hash_obs <- temp$hash
       result <- rbind(result,
-                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+                  tibble::tibble(hash_stat_unit, stat_unit, hash_obs, date_obs))
     }
 
     # Check on events table
@@ -78,7 +78,7 @@ get_entries_from_hash <- function (model, preselection) {
       hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
       hash_obs <- temp$hash
       result <- rbind(result,
-                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+                  tibble::tibble(hash_stat_unit, stat_unit, hash_obs, date_obs))
     }
 
     # Check on periods table
@@ -89,8 +89,8 @@ get_entries_from_hash <- function (model, preselection) {
       hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
       date_obs_end <- temp$end
       hash_obs <- temp$hash
-      result <- rbind(result,
-        data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
+      result <- rbind(result, tibble::tibble(hash_stat_unit, stat_unit,
+                                             hash_obs, date_obs, date_obs_end))
     }
     result
 }
@@ -119,7 +119,7 @@ prepare_query <- function(model, condition) {
       hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
       hash_obs <- temp$hash
       selection <- rbind(selection,
-                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+                  tibble::tibble(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
       # Check on descriptions table
       temp <- subset(model$descriptions, type == tag_to_check)
@@ -145,7 +145,7 @@ prepare_query <- function(model, condition) {
       hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
       hash_obs <- temp$hash
       selection <- rbind(selection,
-                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+                  tibble::tibble(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
 
       # Check on descriptions table
@@ -172,7 +172,7 @@ prepare_query <- function(model, condition) {
     hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
     hash_obs <- temp$hash
     selection <- rbind(selection,
-                      data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs))
+                  tibble::tibble(hash_stat_unit, stat_unit, hash_obs, date_obs))
 
     # Check on periods table
     temp <- subset(model$periods, tag == tag_to_check)
@@ -182,7 +182,7 @@ prepare_query <- function(model, condition) {
     date_obs_end <- temp$end
     hash_obs <- temp$hash
     selection <- rbind(selection,
-        data.frame(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
+    tibble::tibble(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
 
     # Check on descriptions table
     temp <- subset(model$descriptions, type == tag_to_check)

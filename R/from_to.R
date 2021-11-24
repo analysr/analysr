@@ -48,8 +48,9 @@ to <- function(model, date, date_format_func =
 
   to_keep = c()
   for (i in rownames(model$selection)) {
-    date = as.numeric(model$selection[i,]$date)
-    if (date >= as.numeric(model$query$from_date) && date <= as.numeric(model$query$to_date)) {
+    date = as.numeric(model$selection[i,]$date_obs)
+    if (date >= as.numeric(model$query$from_date) &&
+                                      date <= as.numeric(model$query$to_date)) {
       to_keep <- c(to_keep, TRUE)
     } else {
       to_keep <- c(to_keep, FALSE)
