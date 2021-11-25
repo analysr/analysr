@@ -75,8 +75,9 @@ described_by <- function(model, condition) {
 #Now let's intersect the data we just selected we the one OBSERVED gave us
   #aka intersection between hashs_to_keep and model$selection
 
-    print(hashs_to_keep)
+
   hashs_to_keep <- hashs_to_keep[,"hash"]
+
   sel <- merge(model$selection, hashs_to_keep,
                by.x = "hash_obs",
                by.y = "hash")
