@@ -13,7 +13,9 @@ import_measures_csv(
   optional_data,
   status = "status",
   date_format_func = (function(x) lubridate::parse_date_time(x, date_format_reg)),
-  date_format_reg = "ymd-HMS"
+  date_format_reg = "ymd-HMS",
+  force_date_format = FALSE,
+  delim = ","
 )
 }
 \arguments{
@@ -39,6 +41,12 @@ If you want to use milliseconds \href{https://bit.ly/33JGr6s}{look at this}.}
 \item{date_format_reg}{A expression to format date with (not required).
 Default: \code{"ymd-HMS"}
 For more details see \href{https://bit.ly/3bp3FD0}{this documentation}.}
+
+\item{force_date_format}{Boolean to force date format func (not required).
+Default: \code{FALSE}}
+
+\item{delim}{The separator to read csv (not required).
+Default: \verb{,}}
 }
 \value{
 The measures data frame resulted from the merge of imported data

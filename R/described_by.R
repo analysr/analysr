@@ -1,13 +1,12 @@
 
 
+#' described_by
 #' @name described_by
 #'
 #' @param model An AnalysR model
 #' @param condition A condition.
 #'
 #' @export
-
-
 described_by <- function(model, condition) {
 
   condition <- rlang::enexpr(condition)
