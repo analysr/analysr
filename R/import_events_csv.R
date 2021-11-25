@@ -65,8 +65,8 @@ import_events_csv <-
       result$date <- date_format_func(result$date)
     }
 
-    result <- cbind(
-      hash,
+    result <- dplyr::bind_cols(
+      hash = hash,
       result
     )
 

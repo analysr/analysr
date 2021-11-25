@@ -71,8 +71,8 @@ import_periods_csv <-
       result$end <- date_format_func(result$end)
     }
 
-    result <- cbind(
-      hash,
+    result <- dplyr::bind_cols(
+      hash = hash,
       result
     )
 

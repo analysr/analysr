@@ -75,8 +75,8 @@ import_measures_csv <-
 
     add_stat_units(result$stat_unit)
 
-    result <- cbind(
-      hash,
+    result <- dplyr::bind_cols(
+      hash = hash,
       result
     )
 
