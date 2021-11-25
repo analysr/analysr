@@ -1,0 +1,10 @@
+hash,type,value
+13,Covid_Positive,TRUE
+5,Covid_Positive,FALSE
+5,AIDS_Positive,TRUE
+13,Age,4
+5,Age,30
+22,Age,25
+4,Gender,Male
+12,Gender,Female
+8,Gender,Male
