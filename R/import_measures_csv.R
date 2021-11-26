@@ -55,7 +55,7 @@ import_measures_csv <-
     hash <- get_hash(n)
 
     if (!(status %in% colnames(result))) {
-      result <- cbind(
+      result <- dplyr::bind_cols(
         result,
         status = rep(NA, n)
       )

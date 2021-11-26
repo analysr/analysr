@@ -86,6 +86,11 @@ model_state_equal <- function(after_path, model, query_expected) {
     if (df != "selection" || selection_exists) {
       actual <- getElement(model, df)
       expected <- getElement(after_env, df)
+
+      if (!tibble::is_tibble(actual)) {
+        print(paste0("Warning: Table ", df, " is not a tibble"))
+      }
+
       # convert to same type (TODO: find a better solution)
       actual <- actual %>% mutate_all(as.character)
       expected <- expected %>% mutate_all(as.character)
