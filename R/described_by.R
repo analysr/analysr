@@ -1,5 +1,3 @@
-
-
 #' described_by
 #' @name described_by
 #'
@@ -71,19 +69,23 @@ described_by <- function(model, condition) {
   }
 
 
-#Now let's intersect the data we just selected we the one OBSERVED gave us
+  #Now let's intersect the data we just selected we the one OBSERVED gave us
   #aka intersection between hashs_to_keep and model$selection
 
 
   hashs_to_keep <- hashs_to_keep[,"hash"]
 
-  sel <- merge(model$selection, hashs_to_keep,
-               by.x = "hash_obs",
-               by.y = "hash")
 
-  model$selection <- rbind(sel, merge(model$selection, hashs_to_keep,
-                                      by.x = "hash_stat_unit",
-                                      by.y = "hash"))
+  colnames(hashs_to_keep) <- c("hash_obs")
+  sel <- dplyr::inner_join(model$selection, hashs_to_keep,
+               by = "hash_obs")
+  # use inner_join because of tibble
+
+  colnames(hashs_to_keep) <- c("hash_stat_unit")
+  sel <- rbind(sel, dplyr::inner_join(model$selection, hashs_to_keep,
+                           by = "hash_stat_unit"))
+
+  model$selection <- sel
 
 
 
