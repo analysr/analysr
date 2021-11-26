@@ -1,8 +1,8 @@
 is_before <- function(entry, duration, selection, type) {
-
+  # here selection refer to the selection done by condition on before
   found <- FALSE
   selection <- subset(selection, stat_unit == entry$stat_unit)
-
+  temporal_hash <- -1
 
   if (type == "at_most") {
     for (i in rownames(selection)) {
@@ -13,6 +13,7 @@ is_before <- function(entry, duration, selection, type) {
       #      and (entry date) >= (event date + duration)
       if ((date <= end) && (start <= date)) {
         found <- TRUE
+        temporal_hash <- selection[i,]$hash_obs
         break
       }
     }
@@ -24,27 +25,27 @@ is_before <- function(entry, duration, selection, type) {
       # check if (entry date) =< (event date - duration)
       if (date <= max) {
         found <- TRUE
+        temporal_hash <- selection[i,]$hash_obs
         break
       }
     }
   }
 
-  if (found == TRUE) {
-    entry$stat_unit
-  } else {
-    c()
-  }
-
+  return(list("found" = found, "temporal_hash" = temporal_hash))
 }
 
 is_before_list <- function(entries, duration, selection, type) {
-  stat_units <- c()
+  # here selection refer to the selection done by condition on before
+  res <- tibble::tibble()
   for (i in rownames(entries)) {
-    stat_unit <- is_before(entries[i,], duration, selection, type)
+    tmp <- is_before(entries[i,], duration, selection, type)
 
-    stat_units <- c(stat_units, stat_unit)
+    if (tmp$found) {
+      new_entry <- dplyr::bind_cols(entries[i,], temporal_hash = tmp$temporal_hash)
+      res <- dplyr::bind_rows(res, new_entry)
+    }
   }
-  unique(stat_units)
+  res
 }
 
 #' before
@@ -56,20 +57,17 @@ is_before_list <- function(entries, duration, selection, type) {
 before <- function(model, condition) {
 
 
-  res <- c()
-
   duration <- model$query$duration
   condition <- rlang::enexpr(condition)
   before_selection <- prepare_query(model, condition)
 
   # TODO: improve periods handeling (here only start date are take into account)
-  # TODO2: what to do with NA values when condition is on descriptions table ?
 
   res <- is_before_list(model$selection, duration,
                         before_selection, model$query$duration_type)
 
 
-
-  as.double(res)
+  model$selection <- res
+  model
 
 }
