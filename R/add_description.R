@@ -3,14 +3,22 @@
 
 #' add_description
 #'
-#' @param stat_units A vector of stats_units to be added
+#' @param input A vector of stats_units to be added or an AnalysR env
 #' @param label Label to write in description table
 #'
 #' @export
-add_description <- function (stat_units, label) {
+add_description <- function(input, label) {
+  model <- analysr_env
+  if (!is.vector(input)) {
+    model <- input
+    stat_units <- dplyr::pull(model$selection, stat_unit)
+  } else {
+    stat_units <- input
+  }
   label <- gsub(" ", "_", label) # maybe use global config
   n <- length(stat_units)
-  hash <- hash_from_stat_unit(analysr_env, stat_units)
+  hash <- hash_from_stat_unit(model, stat_units)
   result <- tibble::tibble(hash = hash, type = rep(label, n), value = TRUE)
-  analysr_env$descriptions <- rbind(analysr_env$descriptions, result)
+  model$descriptions <- rbind(model$descriptions, result)
+  model
 }
