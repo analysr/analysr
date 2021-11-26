@@ -47,16 +47,15 @@ test_that("from to works on a request", {
     %>% before("Surgery")
   )
 
-  #expected_result
-  exp_result <- c(7)
 
-
-  query <- list(condition = rlang::expr(Temperature > 38.5),
-                tag = "Temperature",
-                duration_type = "at_most",
-                duration = lubridate::duration(15, "days"),
-                from_date = lubridate::parse_date_time("2006/11/09 08:00:00", "ymd-HMS"),
-                to_date = lubridate::parse_date_time("2006/11/11 09:00:00", "ymd-HMS"))
+  query <- list(
+      condition = rlang::expr(Temperature > 38.5),
+      tag = "Temperature",
+      duration_type = "at_most",
+      duration = lubridate::duration(15, "days"),
+      from_date = lubridate::parse_date_time("2006/11/09 08:00:00", "ymd-HMS"),
+      to_date = lubridate::parse_date_time("2006/11/11 09:00:00", "ymd-HMS")
+  )
 
   # check model (model should not have changed)
   expect_equal(model_state_equal("./csv/from_to/test2", model, query), TRUE)

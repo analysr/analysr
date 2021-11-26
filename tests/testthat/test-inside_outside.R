@@ -43,6 +43,4 @@ test_that("outside works on a request", {
   expect_equal(model_state_equal("./csv/inside_outside/test2", model, query),
                TRUE)
 
-  #expected_result
-  exp_result <- c(1)
 })
