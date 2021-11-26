@@ -3,6 +3,20 @@
 #' @export
 analysr_env <- new.env(parent = emptyenv())
 
+attr(analysr_env, "name") <- "AnalysR env"
+
+#' show_env
+#' @param env An environment variable (not mandatory)
+#' @export
+show_env <- function(env) {
+  if (missing(env)) {
+    env <- analysr_env
+  }
+  print(paste("Showing env: ", environmentName(env)))
+  print(sapply(ls(env), function(x) get(x, envir = env)))
+}
+
+
 #' Setup new envirenment
 #'
 #' @examples

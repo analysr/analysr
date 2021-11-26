@@ -87,7 +87,5 @@ described_by <- function(model, condition) {
 
   model$selection <- sel
 
-
-
  model
 }
