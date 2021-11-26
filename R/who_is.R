@@ -1,12 +1,14 @@
 
 
-#' @name having
+#' who_is
 #'
-#' @param rmodel An AnalysR model or a list of stat_unit id
+#' @name who_is
+#'
+#' @param model An AnalysR model or a list of stat_unit id
 #' @param condition A condition.
 #'
 #' @export
-having <- function(model, condition) {
+who_is <- function(model, condition) {
   condition <- rlang::enexpr(condition)
   selection <- tibble::tibble()
   # check if the input is a vector or an AnalysR env

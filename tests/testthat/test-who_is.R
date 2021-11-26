@@ -1,13 +1,13 @@
-test_that("having works on a request", {
+test_that("who_is works on a request", {
   setup_new_env()
 
   # import model
-  load_env_csv("./csv/having/test")
+  load_env_csv("./csv/who_is/test")
   result <- (
     analysr_env
     %>% observed(Temperature > 38.5)
     %>% at_most(15 * days)
-    %>% having(Gender == "Male")
+    %>% who_is(Gender == "Male")
     %>% before("Surgery")
   )
 
@@ -17,17 +17,17 @@ test_that("having works on a request", {
   #check result
   expect_equal(result, exp_result)
 })
-test_that("having works on a request with a vector", {
+test_that("who_is works on a request with a vector", {
   setup_new_env()
 
   # import model
-  load_env_csv("./csv/having/test")
+  load_env_csv("./csv/who_is/test")
   result <- (
     analysr_env
     %>% observed(Temperature > 38.5)
     %>% at_most(15 * days)
     %>% before("Surgery")
-    %>% having(Gender == "Male")
+    %>% who_is(Gender == "Male")
   )
 
   #expected_result
