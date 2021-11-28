@@ -62,7 +62,7 @@ get_entries_from_hash <- function (model, preselection) {
 
     # Check on measures table
     temp <- dplyr::inner_join(model$measures, preselection, by = "hash")
-    if (nrow(temp) != 0) {
+    if ((n <- nrow(temp)) != 0) {
       stat_unit <- temp$stat_unit
       date_obs <- temp$date
       hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
@@ -74,7 +74,7 @@ get_entries_from_hash <- function (model, preselection) {
 
     # Check on events table
     temp <- dplyr::inner_join(model$events, preselection, by = "hash")
-    if (nrow(temp) != 0) {
+    if ((n <- nrow(temp)) != 0) {
       stat_unit <- temp$stat_unit
       date_obs <- temp$date
       hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
