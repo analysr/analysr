@@ -6,7 +6,9 @@ is_before <- function(entry, duration, selection, type) {
 
   if (type == "at_most") {
     for (i in rownames(selection)) {
-      date <- as.numeric(entry$date_obs)
+      if (is.na(entry$date_obs_end)){
+        date <- as.numeric(entry$date_obs)}
+      else {date <- as.numeric(entry$date_obs_end)}
       start <- as.numeric(selection[i,]$date_obs - duration)
       end <- as.numeric(selection[i,]$date_obs)
       # check if (entry date) =< (event date)
