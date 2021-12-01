@@ -1,9 +1,9 @@
-stat_unit_from_hash <- function(hashs) {
+stat_unit_from_hash <- function(model, hashs) {
   result <- c()
-  for (i in rownames(analysr_env$stat_units)) {
+  for (i in rownames(model$stat_units)) {
     for (j in hashs) {
-      if (analysr_env$stat_units[i,]$hash == j) {
-        result <- c(result, analysr_env$stat_units[i,]$stat_unit)
+      if (model$stat_units[i,]$hash == j) {
+        result <- c(result, model$stat_units[i,]$stat_unit)
       }
     }
   }

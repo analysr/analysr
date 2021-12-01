@@ -31,7 +31,7 @@ who_is <- function(model, condition) {
         operator, rvalue,
         convert_to_best_type(temp$value)
       )), ]
-      stat_unit <- stat_unit_from_hash(temp$hash)
+      stat_unit <- stat_unit_from_hash(model,temp$hash)
       selection <- rbind(selection, tibble::tibble(stat_unit))
     } else {
       tag_to_check <- condition[[2]]
@@ -44,7 +44,7 @@ who_is <- function(model, condition) {
         convert_to_best_type(temp$value), rvalue
       )), ]
 
-      stat_unit <- stat_unit_from_hash(temp$hash)
+      stat_unit <- stat_unit_from_hash(model,temp$hash)
       selection <- rbind(selection, tibble::tibble(stat_unit))
     }
   } else {
@@ -54,7 +54,7 @@ who_is <- function(model, condition) {
 
     # Check on descriptions table
     temp <- subset(model$descriptions, type == tag_to_check)
-    stat_unit <- stat_unit_from_hash(temp$hash)
+    stat_unit <- stat_unit_from_hash(model,temp$hash)
     selection <- rbind(selection, tibble::tibble(stat_unit))
   }
 
