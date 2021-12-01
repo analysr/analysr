@@ -15,10 +15,13 @@ fill_descriptions <- function(hash, types, data, n = length(hash)) {
                     .before = types[1])
 
 
+
     result <- tidyr::pivot_longer(prepare_data,
                                   cols = dplyr::all_of(types),
                                   names_to = "type",
                                   values_to = "value")
+
+    result <- na.omit(result)
     analysr_env$descriptions <- dplyr::bind_rows(analysr_env$descriptions,
                                 result)
 }

@@ -1,0 +1,5 @@
+hash,stat_unit,date,tag,value,status
+1,101929077,2006-10-23 12:00:00,Cholesterol,0.4,
+2,101929076,2006-11-10 11:00:00,Temperature,38.1,
+3,101929077,2006-11-10 12:00:00,Temperature,38.7,
+6,101929077,2006-11-15 12:00:00,Temperature,38.7,
