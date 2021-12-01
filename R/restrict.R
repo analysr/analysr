@@ -162,15 +162,15 @@ restrict <- function(env, condition){
                                          dplyr::filter(env$descriptions,
                                         hash %in% model$stat_units$hash))
 
-  print(model$descriptions)
+
   model$descriptions <- rbind(model$descriptions,
                                     dplyr::filter(env$descriptions,
                                     hash %in% model$measures$hash))
-  print(model$descriptions)
+
   model$descriptions <- rbind(model$descriptions,
                                     dplyr::filter(env$descriptions,
                                     hash %in% model$events$hash))
-  print(model$descriptions)
+
   model$descriptions <- rbind(model$descriptions,
                                   dplyr::filter(env$descriptions,
                                    hash %in% model$periods$hash))
