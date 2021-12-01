@@ -1,4 +1,7 @@
 
+
+
+
 #' restrict
 #'
 #' @param env An AnalysR model
@@ -64,6 +67,7 @@ restrict <- function(env, condition){
   #Now that we have an empty environment, let's add all the data we want
 
   #we'll start by getting all the hashs that match with the condition
+  # we suppose for now that the condition is a description about a stat_unit
 
   condition <- rlang::enexpr(condition)
   hashs_to_check <- c()
@@ -121,6 +125,67 @@ restrict <- function(env, condition){
   if ((n <- nrow(temp)) != 0) {
     model$stat_units <- rbind(model$stat_units, temp)
   }
+  #Check on measures table
+  temp <- dplyr::inner_join(env$measures, hashs_to_keep, by = "hash")
+  if ((n <- nrow(temp)) != 0) {
+    wanted_stat_units <- temp$stat_unit
+    wanted_hashs <- hash_from_stat_unit(env,wanted_stat_units)
+    add <- tibble::tibble(hash = wanted_hashs, stat_unit = wanted_stat_units)
+    model$stat_units <- rbind(model$stat_units, add)
+  }
+  #Check on events table
+  temp <- dplyr::inner_join(env$events, hashs_to_keep, by = "hash")
+  if ((n <- nrow(temp)) != 0) {
+    wanted_stat_units <- temp$stat_unit
+    wanted_hashs <- hash_from_stat_unit(env,wanted_stat_units)
+    add <- tibble::tibble(hash = wanted_hashs, stat_unit = wanted_stat_units)
+    model$stat_units <- rbind(model$stat_units, add)
+  }
+  #Check on periods table
+  temp <- dplyr::inner_join(env$periods, hashs_to_keep, by = "hash")
+  if ((n <- nrow(temp)) != 0) {
+    wanted_stat_units <- temp$stat_unit
+    wanted_hashs <- hash_from_stat_unit(env,wanted_stat_units)
+    add <- tibble::tibble(hash = wanted_hashs, stat_unit = wanted_stat_units)
+    model$stat_units <- rbind(model$stat_units, add)
+  }
+
+
+  # Let's now add all the entries that concern those stat_unit
+  model$measures <- rbind(model$measures, dplyr::filter(env$measures,
+                                  stat_unit %in% model$stat_units$stat_unit))
+  model$events <- rbind(model$events, dplyr::filter(env$events,
+                                  stat_unit %in% model$stat_units$stat_unit))
+  model$periods <- rbind(model$periods, dplyr::filter(env$periods,
+                                  stat_unit %in% model$stat_units$stat_unit))
+  model$descriptions <- rbind(model$description,
+                                         dplyr::filter(env$descriptions,
+                                        hash %in% model$stat_units$hash))
+
+  print(model$descriptions)
+  model$descriptions <- rbind(model$descriptions,
+                                    dplyr::filter(env$descriptions,
+                                    hash %in% model$measures$hash))
+  print(model$descriptions)
+  model$descriptions <- rbind(model$descriptions,
+                                    dplyr::filter(env$descriptions,
+                                    hash %in% model$events$hash))
+  print(model$descriptions)
+  model$descriptions <- rbind(model$descriptions,
+                                  dplyr::filter(env$descriptions,
+                                   hash %in% model$periods$hash))
+
+
+
+
+
+
+
+
+
+
+
+
 
   # Check on measures table
   temp <- dplyr::inner_join(env$measures, hashs_to_keep, by = "hash")

@@ -1,8 +1,6 @@
 hash,type,value
-6,Location,Paris
 7,Location,London
 5,Gender,Female
 8,Gender,Female
-4,Gender,Male
 2,Location,Berlin
-5,Birth,1987-12-10 06:00:00
+5,Birth,2006-12-10 12:00:00
