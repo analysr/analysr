@@ -10,10 +10,10 @@ get_hash(n)
 \item{n}{A number.}
 }
 \value{
-A number or verctor depending on \code{n} value
+A number or vector depending on \code{n} value
 }
 \description{
-Return a number or verctor depending on \code{n} value
+Return a number or vector depending on \code{n} value
 }
 \examples{
 get_hash(10)

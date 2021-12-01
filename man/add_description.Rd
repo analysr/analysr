@@ -4,10 +4,10 @@
 \alias{add_description}
 \title{add_description}
 \usage{
-add_description(stat_units, label)
+add_description(input, label)
 }
 \arguments{
-\item{stat_units}{A vector of stats_units to be added}
+\item{input}{A vector of stats_units to be added or an AnalysR env}
 
 \item{label}{Label to write in description table}
 }
