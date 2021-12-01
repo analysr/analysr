@@ -67,9 +67,9 @@ setup_new_env()
 
 #' Get a hash
 #'
-#' Return a number or verctor depending on `n` value
+#' Return a number or vector depending on `n` value
 #'
-#' @return A number or verctor depending on `n` value
+#' @return A number or vector depending on `n` value
 #'
 #' @param n A number.
 #' @examples
