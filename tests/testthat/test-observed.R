@@ -150,6 +150,8 @@ test_that("observed works on periods", {
   # check here with before (as nothing should have changed on model)
   expect_equal(model_state_equal("./csv/observed/before6", model, query), TRUE)
 })
+
+
 test_that(
   "observed works on measures described (request on description table)", {
 

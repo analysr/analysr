@@ -1,2 +1,2 @@
-hash_stat_unit,stat_unit,hash_obs,date_obs,temporal_hash
-28,7,21,2006-11-10 12:00:00,30
+hash_stat_unit,stat_unit,hash_obs,date_obs,date_obs_end,temporal_hash
+28,7,21,2006-11-10 12:00:00,,30
