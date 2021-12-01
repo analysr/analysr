@@ -10,8 +10,10 @@
 fill_descriptions <- function(hash, types, data, n = length(hash)) {
 
     prepare_data <- dplyr::select(data, dplyr::all_of(types))
+    prepare_data <- dplyr::mutate_all(prepare_data, as.character)
     prepare_data <- dplyr::mutate(prepare_data, hash = hash,
                     .before = types[1])
+
 
     result <- tidyr::pivot_longer(prepare_data,
                                   cols = dplyr::all_of(types),
