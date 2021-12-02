@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>add_description — add_description • analysr</title>
+<title>import_stat_units_csv — import_stat_units_csv • analysr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="add_description — add_description" />
-<meta property="og:description" content="add_description" />
+<meta property="og:title" content="import_stat_units_csv — import_stat_units_csv" />
+<meta property="og:description" content="Import stat_units from a CSV file" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -111,30 +111,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>add_description</h1>
+    <h1>import_stat_units_csv</h1>
     
-    <div class="hidden name"><code>add_description.Rd</code></div>
+    <div class="hidden name"><code>import_stat_units_csv.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>add_description</p>
+    <p>Import stat_units from a CSV file</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_description</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>label</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>import_stat_units_csv</span><span class='op'>(</span>
+  <span class='va'>csv_path</span>,
+  stat_unit <span class='op'>=</span> <span class='st'>"stat_unit"</span>,
+  <span class='va'>optional_data</span>,
+  delim <span class='op'>=</span> <span class='st'>","</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>input</th>
-      <td><p>A vector of stats_units to be added or an AnalysR env</p></td>
+      <th>csv_path</th>
+      <td><p>A path to the csv file.</p></td>
     </tr>
     <tr>
-      <th>label</th>
-      <td><p>Label to write in description table</p></td>
+      <th>stat_unit</th>
+      <td><p>A string containing the stat_unit label.</p></td>
+    </tr>
+    <tr>
+      <th>optional_data</th>
+      <td><p>A vector containing label to import in descriptions
+table.</p></td>
+    </tr>
+    <tr>
+      <th>delim</th>
+      <td><p>The separator to read csv (not required).
+Default: <code>,</code></p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>TRUE if success</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
