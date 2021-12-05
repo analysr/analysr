@@ -88,10 +88,17 @@ restrict <- function(env, condition, catch = TRUE) {
       tag_to_check <- condition[[3]]
       rvalue <- condition [[2]]
 
+      # Check on measures table
+      temp <- subset(env$measures, tag == tag_to_check)
+      temp <- temp[eval(rlang::call2(operator, rvalue, temp$value)), ]
+      if (nrow(temp) != 0) {
+        hashs_to_check <- c(hashs_to_check, temp$hash)
+      }
+
       # Check on descriptions table
       temp <- subset(env$descriptions, type == tag_to_check)
       temp <- temp[eval(rlang::call2(operator, rvalue,
-                                     convert_to_best_type(temp$value))),]
+                                     convert_to_best_type(temp$value))), ]
       if (nrow(temp) != 0) {
         hashs_to_check <- c(hashs_to_check, temp$hash)
       }
@@ -99,10 +106,18 @@ restrict <- function(env, condition, catch = TRUE) {
     } else {
       tag_to_check <- condition[[2]]
       rvalue <- condition [[3]]
-        # Check on descriptions table
+
+      # Check on measures table
+      temp <- subset(env$measures, tag == tag_to_check)
+      temp <- temp[eval(rlang::call2(operator, temp$value, rvalue)), ]
+      if (nrow(temp) != 0) {
+        hashs_to_check <- c(hashs_to_check, temp$hash)
+      }
+
+      # Check on descriptions table
       temp <- subset(env$descriptions, type == tag_to_check)
       temp <- temp[eval(rlang::call2(operator,
-                                    convert_to_best_type(temp$value), rvalue)),]
+                                  convert_to_best_type(temp$value), rvalue)), ]
 
       if (nrow(temp) != 0) {
         hashs_to_check <- c(hashs_to_check, temp$hash)
@@ -112,11 +127,29 @@ restrict <- function(env, condition, catch = TRUE) {
     # Method without operator
     tag_to_check <- condition
 
+    # Check on events table
+    temp <- subset(env$events, tag == tag_to_check)
+    if (nrow(temp) != 0) {
+      hashs_to_check <- c(hashs_to_check, temp$hash)
+    }
+
+    # Check on periods table
+    temp <- subset(env$periods, tag == tag_to_check)
+    if (nrow(temp) != 0) {
+      hashs_to_check <- c(hashs_to_check, temp$hash)
+    }
+
+    # Check on measures table
+    temp <- subset(env$measures, tag == tag_to_check)
+    if (nrow(temp) != 0) {
+      hashs_to_check <- c(hashs_to_check, temp$hash)
+    }
+
     # Check on descriptions table
     temp <- subset(env$descriptions, type == tag_to_check)
     if (nrow(temp) != 0) {
       hashs_to_check <- c(hashs_to_check, temp$hash)
-      }
+    }
   }
   hashs_to_keep <- tibble::tibble(hash = integer(0))
   hashs_to_keep <- rbind(hashs_to_keep, tibble::tibble(hash = hashs_to_check))
