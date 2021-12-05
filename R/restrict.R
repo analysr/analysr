@@ -102,7 +102,7 @@ restrict <- function(env, condition, catch = TRUE) {
         # Check on descriptions table
       temp <- subset(env$descriptions, type == tag_to_check)
       temp <- temp[eval(rlang::call2(operator,
-                                     convert_to_best_type(temp$value), rvalue)),]
+                                    convert_to_best_type(temp$value), rvalue)),]
 
       if (nrow(temp) != 0) {
         hashs_to_check <- c(hashs_to_check, temp$hash)
@@ -155,7 +155,7 @@ restrict <- function(env, condition, catch = TRUE) {
     add <- tibble::tibble(hash = wanted_hashs, stat_unit = wanted_stat_units)
     model$stat_units <- rbind(model$stat_units, add)
   }
-
+  # TODO : unique stat_unit
 
   # Let's now add all the entries that concern those stat_unit
   model$measures <- rbind(model$measures, dplyr::filter(env$measures,
