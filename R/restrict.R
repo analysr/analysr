@@ -6,9 +6,11 @@
 #'
 #' @param env An AnalysR model
 #' @param condition A condition
+#' @param catch Explicit if argument should be catch via `enexpr`
+#' (not mandotary)
 #'
 #' @export
-restrict <- function(env, condition){
+restrict <- function(env, condition, catch = TRUE) {
 
 #the goal is to restrict the model to patients that have a certain condition
 
@@ -69,7 +71,10 @@ restrict <- function(env, condition){
   #we'll start by getting all the hashs that match with the condition
   # we suppose for now that the condition is a description about a stat_unit
 
-  condition <- rlang::enexpr(condition)
+  if (catch == TRUE) {
+    condition <- rlang::enexpr(condition)
+  }
+
   hashs_to_check <- c()
 
   if (length(condition) > 2) {
@@ -114,7 +119,8 @@ restrict <- function(env, condition){
       hashs_to_check <- c(hashs_to_check, temp$hash)
       }
   }
-  hashs_to_keep <- tibble::tibble(hash = hashs_to_check)
+  hashs_to_keep <- tibble::tibble(hash = integer(0))
+  hashs_to_keep <- rbind(hashs_to_keep, tibble::tibble(hash = hashs_to_check))
 #------------------------------------------------------------------------------
   #Now we have all the hash we want in hashs_to_keep
   #let's see to what entries they lead and let's add these entries to the model
@@ -209,3 +215,13 @@ restrict <- function(env, condition){
 
   model
 }
+
+#' create_cohort
+#'
+#' @rdname restrict
+#' @param env An AnalysR model
+#' @param condition A condition
+#' @param catch Explicit if argument should be catch via `enexpr`
+#' (not mandotary)
+#'
+create_cohort <- restrict
