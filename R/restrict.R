@@ -102,13 +102,12 @@ restrict <- function(env, condition, catch = TRUE) {
         # Check on descriptions table
       temp <- subset(env$descriptions, type == tag_to_check)
       temp <- temp[eval(rlang::call2(operator,
-                                     convert_to_best_type(temp$value), rvalue)),]
+                                    convert_to_best_type(temp$value), rvalue)),]
 
       if (nrow(temp) != 0) {
         hashs_to_check <- c(hashs_to_check, temp$hash)
       }
     }
-
   } else {
     # Method without operator
     tag_to_check <- condition
@@ -139,6 +138,8 @@ restrict <- function(env, condition, catch = TRUE) {
     add <- tibble::tibble(hash = wanted_hashs, stat_unit = wanted_stat_units)
     model$stat_units <- rbind(model$stat_units, add)
   }
+
+
   #Check on events table
   temp <- dplyr::inner_join(env$events, hashs_to_keep, by = "hash")
   if ((n <- nrow(temp)) != 0) {
@@ -156,6 +157,10 @@ restrict <- function(env, condition, catch = TRUE) {
     model$stat_units <- rbind(model$stat_units, add)
   }
 
+  # Keep unique stat_units
+  model$stat_units <- rbind(env$stat_unit,
+                                  dplyr::filter(env$stat_units,
+                                   hash %in% model$stat_units$hash))
 
   # Let's now add all the entries that concern those stat_unit
   model$measures <- rbind(model$measures, dplyr::filter(env$measures,
@@ -164,52 +169,23 @@ restrict <- function(env, condition, catch = TRUE) {
                                   stat_unit %in% model$stat_units$stat_unit))
   model$periods <- rbind(model$periods, dplyr::filter(env$periods,
                                   stat_unit %in% model$stat_units$stat_unit))
+
+
+  # Now keep what conserns thoses entries in description table
   model$descriptions <- rbind(model$description,
                                          dplyr::filter(env$descriptions,
                                         hash %in% model$stat_units$hash))
-
-
   model$descriptions <- rbind(model$descriptions,
                                     dplyr::filter(env$descriptions,
                                     hash %in% model$measures$hash))
-
   model$descriptions <- rbind(model$descriptions,
                                     dplyr::filter(env$descriptions,
                                     hash %in% model$events$hash))
-
   model$descriptions <- rbind(model$descriptions,
                                   dplyr::filter(env$descriptions,
                                    hash %in% model$periods$hash))
 
 
-
-
-
-
-
-
-
-
-
-
-
-  # Check on measures table
-  temp <- dplyr::inner_join(env$measures, hashs_to_keep, by = "hash")
-  if ((n <- nrow(temp)) != 0) {
-    model$measures <- rbind(model$measures, temp)
-  }
-
-  # Check on events table
-  temp <- dplyr::inner_join(env$events, hashs_to_keep, by = "hash")
-  if ((n <- nrow(temp)) != 0) {
-    model$events <- rbind(model$events, temp)
-  }
-
-  # Check on periods table
-  temp <- dplyr::inner_join(env$periods, hashs_to_keep, by = "hash")
-  if ((n <- nrow(temp)) != 0) {
-    model$periods <- rbind(model$periods, temp)
-  }
 
   model$current_hash <- env$current_hash
 
