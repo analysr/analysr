@@ -156,7 +156,11 @@ restrict <- function(env, condition, catch = TRUE) {
     add <- tibble::tibble(hash = wanted_hashs, stat_unit = wanted_stat_units)
     model$stat_units <- rbind(model$stat_units, add)
   }
-  # TODO : unique stat_unit
+
+  # Keep unique stat_units
+  model$stat_units <- rbind(env$stat_unit,
+                                  dplyr::filter(env$stat_units,
+                                   hash %in% model$stat_units$hash))
 
   # Let's now add all the entries that concern those stat_unit
   model$measures <- rbind(model$measures, dplyr::filter(env$measures,
@@ -180,6 +184,8 @@ restrict <- function(env, condition, catch = TRUE) {
   model$descriptions <- rbind(model$descriptions,
                                   dplyr::filter(env$descriptions,
                                    hash %in% model$periods$hash))
+
+
 
   model$current_hash <- env$current_hash
 

@@ -21,4 +21,5 @@ test_that("restrict works on measures description", {
   # check model
   expect_equal(model_state_equal("./csv/restrict/after2", model), TRUE)
 
+  # this test also test that restrict do not duplicate stat_units
 })
