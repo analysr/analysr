@@ -23,3 +23,18 @@ test_that("restrict works on measures description", {
 
   # this test also test that restrict do not duplicate stat_units
 })
+test_that("restrict works on measures table", {
+  setup_new_env()
+
+  # import measures
+  load_env_csv("./csv/restrict/before3")
+
+  # restrict
+  model <- restrict(analysr_env, Temperature > 38)
+
+  # check model
+  save_env_csv("./csv/restrict/after3", model)
+  expect_equal(model_state_equal("./csv/restrict/after3", model), TRUE)
+
+  # this test also test that restrict do not duplicate stat_units
+})

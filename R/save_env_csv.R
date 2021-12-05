@@ -4,6 +4,7 @@
 #'
 #' @param save_path A path to save current environment
 #' (existence is not required)
+#' @param model a AnalysR Model (default : `analysr_env`)
 #' @examples
 #' save_env_csv("~/")
 #'
@@ -11,7 +12,7 @@
 #' @importFrom utils write.csv
 #'
 #' @export
-save_env_csv <- function(save_path) {
+save_env_csv <- function(save_path, model = analysr_env) {
 
   if (missing(save_path)) {
     # defines name (using a timestamp)
@@ -34,11 +35,11 @@ save_env_csv <- function(save_path) {
   df_to_save %>%
     purrr::map(function(x) {
       file_path <- file.path(save_path, paste0(x, ".csv"))
-      write.csv(getElement(analysr_env, x), file_path, row.names = FALSE)
+      write.csv(getElement(model, x), file_path, row.names = FALSE)
     })
 
   # save current_hash
-  write(analysr_env$current_hash, file.path(save_path, "current_hash.txt"))
+  write(model$current_hash, file.path(save_path, "current_hash.txt"))
 
   # maybe it will be good to add a better way to save variable
 }
