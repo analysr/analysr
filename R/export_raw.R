@@ -1,10 +1,10 @@
-extract_folder <- function(model, unit){
+extract_folder <- function(model, unit) {
   #The goal of this function is to get every single piece of information we have
   # on this patient and to put it into a big tibble
 
   folder <- tibble::tibble()
 
-  h <- dplyr::filter(model$stat_units, stat_unit = unit)$hash
+  h <- dplyr::filter(model$stat_units, stat_unit == unit)$hash
 
   #let's check the descriptions table
   temp <- subset(model$descriptions, hash == h)
@@ -67,7 +67,8 @@ extract_folder <- function(model, unit){
 
   #and let's recheck the descriptions table
   hashs_to_keep <- tibble::tibble(hash = hashs_to_check)
-  temp <- dplyr::inner_join(model$description, hashs_to_keep, by = "hash")
+
+  temp <- dplyr::inner_join(model$descriptions, hashs_to_keep, by = "hash")
   if ((n <- nrow(temp)) != 0) {
     n <- nrow(temp)
     hash <- temp$hash
@@ -86,23 +87,20 @@ extract_folder <- function(model, unit){
 
 
 
-#' create_cohort
+#' export_row
 #'
 #' @param model An AnalysR model
 #' @param tag A tag
 #'
 #' @export
-create_cohort <- function(model, tag) {
-
+export_row <- function(model, tag) {
   cohort <- c()
-  new_model <- restrict(model, tag)
-  for (s in model$stat_units){
+  tag <- rlang::enexpr(tag)
+  new_model <- restrict(model, tag, catch = FALSE)
 
-    for (i in rownames(model$stat_units)) {
-      if (model$stat_units[i,]$stat_unit == unit) {
-        h <- c(result, model$stat_units[i,]$hash)
-      }
-    }
+  for (s in new_model$stat_units$stat_unit) {
+
+    h <- dplyr::filter(new_model$stat_units, stat_unit == s)$hash
     folder <- extract_folder(new_model, s)
     cohort <- list(cohort, list(hash = h, stat_unit = s, folder = folder))
 
