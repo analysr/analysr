@@ -62,7 +62,10 @@ is_before_list <- function(entries, duration, selection, type) {
 #' @export
 before <- function(model, condition) {
 
-
+  if (!("duration_type" %in% names(model$query))){
+    model$query$duration_type <- "at_least"
+    model$query$duration <- lubridate::duration(0)
+  }
   duration <- model$query$duration
   condition <- rlang::enexpr(condition)
   before_selection <- prepare_query(model, condition)

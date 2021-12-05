@@ -69,7 +69,10 @@ is_after_list <- function(entries, duration, selection, type) {
 #' @export
 after <- function(model, condition) {
 
-
+  if (!("duration_type" %in% names(model$query))){
+    model$query$duration_type <- "at_least"
+    model$query$duration <- lubridate::duration(0)
+  }
   duration <- model$query$duration
   condition <- rlang::enexpr(condition)
   after_selection <- prepare_query(model, condition)
