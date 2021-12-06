@@ -21,22 +21,30 @@ import_stat_units_csv <-
     quiet_read_csv <- purrr::quietly(readr::read_delim)
 
 
-    result <- quiet_read_csv(file = csv_path, delim = delim)$result
+    temp <- quiet_read_csv(file = csv_path, delim = delim)$result
 
-    n <- nrow(result)
-    hash <- get_hash(n)
 
-    if (!missing(optional_data)) {
-      fill_descriptions(hash, optional_data, result, n)
-    }
 
-    result <- result[c(stat_unit)]
+    stat_units <- temp[c(stat_unit)]
     # we could use dplyr to extract colums https://bit.ly/32lGkNR
-    colnames(result) <- c("stat_unit")
+    colnames(stat_units) <- c("stat_unit")
 
 
+    to_add <- unique(stat_units$stat_unit
+                [!(stat_units$stat_unit %in% analysr_env$stat_units$stat_unit)])
+    n <- length(to_add)
+    if (n != 0) {
+        hashs <- get_hash(n)
+        result <- tibble::tibble(hashs, to_add)
+        # should define name https://bit.ly/2QvwrdM
+        colnames(result) <- c("hash", "stat_unit")
 
-    add_stat_units(result$stat_unit)
+
+        if (!missing(optional_data)) {
+          fill_descriptions(hashs, optional_data, temp, n)
+        }
+        analysr_env$stat_units <- rbind(analysr_env$stat_units, result)
+    }
 
 
 
