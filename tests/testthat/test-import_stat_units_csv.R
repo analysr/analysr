@@ -11,6 +11,7 @@ test_that("import stat_units CSV  works", {
 test_that("import stat_units works when a stat_unit already exists in table", {
   # reset env
   setup_new_env()
+  load_env_csv("./csv/import_stat_units_csv/before2")
   import_stat_units_csv(
     "./csv/import_stat_units_csv/to_import_1.csv",
     "UserId",

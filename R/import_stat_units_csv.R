@@ -30,23 +30,19 @@ import_stat_units_csv <-
     colnames(stat_units) <- c("stat_unit")
 
 
-    to_add <- unique(stat_units$stat_unit
-                [!(stat_units$stat_unit %in% analysr_env$stat_units$stat_unit)])
-    n <- length(to_add)
-    if (n != 0) {
-        hashs <- get_hash(n)
-        result <- tibble::tibble(hashs, to_add)
-        # should define name https://bit.ly/2QvwrdM
-        colnames(result) <- c("hash", "stat_unit")
+    add_stat_units(stat_units$stat_unit)
 
-
-        if (!missing(optional_data)) {
-          fill_descriptions(hashs, optional_data, temp, n)
-        }
-        analysr_env$stat_units <- rbind(analysr_env$stat_units, result)
+    hashs <- hash_from_stat_unit(analysr_env, stat_units$stat_unit)
+    if (!missing(optional_data)) {
+      fill_descriptions(hashs, optional_data, temp, n)
     }
 
-
+    # here I assume that I can have a description multiple times
+    # for example
+    # 1,FIRST,Jacinto644
+    # 1,BIRTHDATE,2017-07-27
+    # 1,FIRST,Jacinto644
+    # because a line has been already imported
 
     TRUE
 }
