@@ -4,7 +4,7 @@ test_that("add_description works", {
   # import model
   load_env_csv("./csv/add_description/before")
 
-  add_description(c(1, 6), "Fever")
+  add_description(c(1, 6, 6), "Fever")
 
 
   # check model
