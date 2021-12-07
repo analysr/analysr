@@ -16,8 +16,9 @@ add_description <- function(input, label) {
     stat_units <- input
   }
   label <- gsub(" ", "_", label) # maybe use global config
-  n <- length(stat_units)
   hash <- hash_from_stat_unit(model, stat_units)
+  hash <- unique(hash)
+  n <- length(hash)
   result <- tibble::tibble(hash = hash, type = rep(label, n), value = TRUE)
   model$descriptions <- rbind(model$descriptions, result)
   model
