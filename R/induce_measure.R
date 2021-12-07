@@ -25,6 +25,13 @@ get_tags <- function(calcul) {
 }
 
 
+replace_values <- function(string, tags_arr, values_arr) {
+  for (i in 1:length(tags_arr)) {
+    string <- stringr::str_replace_all(string, tags_arr[i], toString(values_arr[i]))
+  }
+  string
+}
+
 #' induce_measure
 #'
 #' @param model An AnalysR env

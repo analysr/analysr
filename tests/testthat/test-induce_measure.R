@@ -1,13 +1,18 @@
 test_that("induce_measure works", {
 
   setup_new_env()
-  #(lobstr::ast(Length*4+add(Weight*2,8)))
-  #print(induce_measure(analysr_env,"BMI",Length*4+add(Weight*2,8)))
-  #print(induce_measure(analysr_env,"BMI",Length+add(Weight*divide(7),8)))
-  #print(induce_measure(analysr_env,"BMI",Length+Vectsd))
-  #print(induce_measure(analysr_env,"BMI",add()))
-  #print(induce_measure(analysr_env,"BMI",add(7)))
-  #print(lobstr::ast(add(8,9,Vecrt)))
-  #print(induce_measure(analysr_env,"BMI",add(8,9,divid(Vecrt,d(ffd),15))))
-  #print(induce_measure(analysr_env,"BMI",add(8,9,Vectsd)))
+})
+test_that("replace_values works", {
+  expect_equal("80/(1.82*1.82)", replace_values("Weight/(Length*Length)", c("Weight", "Length"), c(80,1.82)))
+})
+test_that("replace_values works", {
+  test_func <- function(calcul) {
+    calcul <- rlang::enexpr(calcul)
+    calcul_as_string <- toString(calcul)
+    calcul <- get_AST(calcul)
+    tags <- get_tags(calcul)
+    tags
+  }
+  expect_equal("Weight",test_func(add(8,9,Weight)))
+  expect_equal(c("Length","Weight"),test_func(Length+add(Weight*divide(7),8)))
 })
