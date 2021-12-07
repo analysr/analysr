@@ -75,7 +75,7 @@ setup_new_env()
 #' @examples
 #' get_hash(10)
 #' @export
-get_hash <- function(n) {
+get_hash <- function(n = 1) {
     if (n == 1) {
         result <- analysr_env$current_hash + 1
         analysr_env$current_hash <- 1 + analysr_env$current_hash

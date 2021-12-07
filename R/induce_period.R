@@ -13,9 +13,10 @@
 induce_period <- function(condition, tag_to_create, duration) {
 
   condition <- rlang::enexpr(condition)
-  duration <- rlang::enexpr(duration)
+  duration <- rlang::enexprs(duration)
+  duration <- toString(duration)
 
-  duration <- duration[[2]]*eval(rlang::call2("::", "lubridate", duration[[3]]))()
+  duration <- get_duration_from_str(duration)
 
   if (length(condition) > 2){
       # Method with operator
