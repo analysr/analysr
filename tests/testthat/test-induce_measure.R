@@ -6,7 +6,6 @@ test_that("induce_measure works", {
 
   induce_measure(analysr_env, "BMI", Weight / (Size * Size))
 
-  save_env_csv("./csv/induce_measure/after1")
   expect_equal(model_state_equal("./csv/induce_measure/after1", analysr_env),
               TRUE)
 })
