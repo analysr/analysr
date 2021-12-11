@@ -9,7 +9,7 @@
 #' save_env_rdata("~/")
 #'
 #' @import dplyr
-#'
+#' @export
 save_env_rdata <- function(save_path, model = analysr_env) {
   if (missing(save_path)) {
     # defines save path
