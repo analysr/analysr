@@ -1,16 +1,20 @@
 #' induce_period
 #'
-#' Create period from measures table depending on a condition,
+#' Create period from measures table depending on a condition (on measures or
+#' events),
 #' and add them to periods table
 #'
-#' @return The part of  that have been created.
+#' @return A AnalysR model
 #'
 #' @param condition A condition (to be defined).
-#' @param tag_to_create A string for the tag to add.
+#' @param tag_to_create Label to write in periods table.
 #' @param duration A duration.
 #'
 #' @export
-induce_period <- function(condition, tag_to_create, duration) {
+induce_period <- function(model = analysr_env, condition, tag_to_create,
+                          duration) {
+
+  tag_to_create <- gsub(" ", "_", tag_to_create)
 
   condition <- rlang::enexpr(condition)
   duration <- rlang::enexprs(duration)
@@ -18,7 +22,7 @@ induce_period <- function(condition, tag_to_create, duration) {
 
   duration <- get_duration_from_str(duration)
 
-  if (length(condition) > 2){
+  if (length(condition) > 2) {
       # Method with operator
       # Here we admit that a condition is like: tag operator value
       # e.g. Temperature > 38.5
@@ -27,26 +31,23 @@ induce_period <- function(condition, tag_to_create, duration) {
       if (is.symbol(condition[[3]])) {
         tag_to_check <- rlang::as_string(condition[[3]])[1]
         wanted_value <- condition[[2]]
-        data <- subset(analysr_env$measures, tag == tag_to_check)
+        data <- subset(model$measures, tag == tag_to_check)
         data <- data[eval(rlang::call2(operator, wanted_value, data$value)),]
 
       } else {
         tag_to_check <- rlang::as_string(condition[[2]])[1]
         wanted_value <- condition[[3]]
-        data <- subset(analysr_env$measures, tag == tag_to_check)
-        data <- data[eval(rlang::call2(operator, data$value, wanted_value)),]
+        data <- subset(model$measures, tag == tag_to_check)
+        data <- data[eval(rlang::call2(operator, data$value, wanted_value)), ]
       }
 
   } else {
     # Method without operator
-    # When there is no operator, check events, measures with description (damn hard)
-
 
     tag_to_check <- rlang::as_string(condition)
 
-    data <- subset(analysr_env$events, tag == tag_to_check)
+    data <- subset(model$events, tag == tag_to_check)
 
-    # TODO: to check measures with description (check on description)
 
   }
   n <- nrow(data)
@@ -55,5 +56,7 @@ induce_period <- function(condition, tag_to_create, duration) {
                        begin = data$date, end = data$date + duration,
                        tag = rep(tag_to_create, n))
 
-  analysr_env$periods <- rbind(analysr_env$periods, result)
+  model$periods <- rbind(model$periods, result)
+
+  model
 }

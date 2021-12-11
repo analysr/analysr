@@ -5,7 +5,7 @@ test_that("induce_period works with simple condition", {
   load_env_csv("./csv/induce_period/before1")
 
   # induce period
-  induce_period(Temperature > 38.5, "Fever", 1*days)
+  induce_period(analysr_env, Temperature > 38.5, "Fever", 1 * days)
 
   # check model
   expect_equal(model_state_equal("./csv/induce_period/after1"), TRUE)
@@ -17,7 +17,7 @@ test_that("induce_period works with simple reverse condition", {
   load_env_csv("./csv/induce_period/before1")
 
   # induce period
-  induce_period(38.5 < Temperature, "Fever", 1*days)
+  induce_period(analysr_env, 38.5 < Temperature, "Fever", 1 * days)
 
   # check model
   expect_equal(model_state_equal("./csv/induce_period/after1"), TRUE)
