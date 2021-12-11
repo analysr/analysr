@@ -48,7 +48,9 @@ replace_values <- function(string, tags_arr, values_arr) {
 induce_measure <- function(model = analysr_env, tag_to_create, calcul,
                           tag_ref) {
 
-  tag_to_create <- gsub(" ", "_", tag_to_create)
+  if (model$space_to_underscore) {
+    tag_to_create <- gsub(" ", "_", tag_to_create)
+  }
 
   calcul <- rlang::enexpr(calcul)
   calcul_as_string <- deparse(calcul)

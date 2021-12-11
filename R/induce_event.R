@@ -13,7 +13,9 @@
 #' @export
 induce_event <- function(model = analysr_env, condition, tag_to_create) {
   condition <- rlang::enexpr(condition)
-  tag_to_create <- gsub(" ", "_", tag_to_create)
+  if (model$space_to_underscore) {
+    tag_to_create <- gsub(" ", "_", tag_to_create)
+  }
   # Here we admit that a condition is like: tag operator value
   # e.g. Temperature > 37.5
 

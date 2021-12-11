@@ -15,8 +15,9 @@
 #' @export
 induce_period <- function(model = analysr_env, condition, tag_to_create,
                           duration) {
-
-  tag_to_create <- gsub(" ", "_", tag_to_create)
+  if (model$space_to_underscore) {
+    tag_to_create <- gsub(" ", "_", tag_to_create)
+  }
 
   condition <- rlang::enexpr(condition)
   duration <- rlang::enexprs(duration)

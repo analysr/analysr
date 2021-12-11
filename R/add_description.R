@@ -15,7 +15,9 @@ add_description <- function(input, label) {
   } else {
     stat_units <- input
   }
-  label <- gsub(" ", "_", label) # maybe use global config
+  if (model$space_to_underscore) {
+      label <- gsub(" ", "_", label)
+  }
   hash <- hash_from_stat_unit(model, stat_units)
   hash <- unique(hash)
   n <- length(hash)

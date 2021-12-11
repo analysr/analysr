@@ -62,6 +62,9 @@ setup_new_env <- function() {
     analysr_env$selection <- tibble::tibble(stat_unit = character(0),
                                     date = as.POSIXct(NA))
 
+    # Params: how to convert space to underscore
+    analysr_env$space_to_underscore <- FALSE
+
 }
 setup_new_env()
 

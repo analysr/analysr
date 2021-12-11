@@ -37,6 +37,8 @@ test_that("add_description works with space", {
   # import model
   load_env_csv("./csv/add_description/before")
 
+  analysr_env$space_to_underscore <- TRUE
+
   add_description(c(2, 7), "Fever after surgery")
 
 
