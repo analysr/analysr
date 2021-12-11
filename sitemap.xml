@@ -40,10 +40,16 @@
     <loc>/reference/check_tables_integrity.html</loc>
   </url>
   <url>
-    <loc>/reference/create_cohort.html</loc>
+    <loc>/reference/create_feature.html</loc>
   </url>
   <url>
     <loc>/reference/described_by.html</loc>
+  </url>
+  <url>
+    <loc>/reference/export_row.html</loc>
+  </url>
+  <url>
+    <loc>/reference/extract_feature.html</loc>
   </url>
   <url>
     <loc>/reference/fill_descriptions.html</loc>
@@ -73,7 +79,10 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/induce_events.html</loc>
+    <loc>/reference/induce_event.html</loc>
+  </url>
+  <url>
+    <loc>/reference/induce_measure.html</loc>
   </url>
   <url>
     <loc>/reference/induce_period.html</loc>

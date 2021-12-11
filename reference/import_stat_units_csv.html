@@ -48,7 +48,8 @@
   <span class="va">csv_path</span>,
   stat_unit <span class="op">=</span> <span class="st">"stat_unit"</span>,
   <span class="va">optional_data</span>,
-  delim <span class="op">=</span> <span class="st">","</span>
+  delim <span class="op">=</span> <span class="st">","</span>,
+  model <span class="op">=</span> <span class="va">analysr_env</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -64,10 +65,13 @@ table.</p></dd>
 <dt>delim</dt>
 <dd><p>The separator to read csv (not required).
 Default: <code>,</code></p></dd>
+<dt>model</dt>
+<dd><p>An AnalysR env.
+Default: <code>analysr_env</code></p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>TRUE if success</p>
+    <p>A boolean (<code>TRUE</code> if no errors)</p>
     </div>
 
   </div>
