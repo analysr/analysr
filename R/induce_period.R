@@ -6,6 +6,8 @@
 #'
 #' @return A AnalysR model
 #'
+#' @param model An AnalysR env.
+#' Default: `analysr_env`
 #' @param condition A condition (to be defined).
 #' @param tag_to_create Label to write in periods table.
 #' @param duration A duration.

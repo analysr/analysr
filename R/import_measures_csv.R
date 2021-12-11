@@ -2,8 +2,7 @@
 #'
 #' Import measures from a CSV file
 #'
-#' @return The measures data frame resulted from the merge of imported data
-#' and already imported data
+#' @return A boolean (`TRUE` if no errors)
 #'
 #' @param csv_path A path to the csv file.
 #' @param stat_unit A string containing the stat_unit label.
@@ -23,6 +22,8 @@
 #' Default: `FALSE`
 #' @param delim The separator to read csv (not required).
 #' Default: `,`
+#' @param model An AnalysR env.
+#' Default: `analysr_env`
 #'
 #' @export
 import_measures_csv <-
@@ -37,7 +38,8 @@ import_measures_csv <-
                   (function(x) lubridate::parse_date_time(x, date_format_reg)),
             date_format_reg = "ymd-HMS",
             force_date_format = FALSE,
-            delim = ",") {
+            delim = ",",
+            model = analysr_env) {
 
     quiet_read_csv <- purrr::quietly(readr::read_delim)
 
@@ -62,7 +64,7 @@ import_measures_csv <-
     }
 
     if (!missing(optional_data)) {
-      fill_descriptions(hash, optional_data, result, n)
+      fill_descriptions(hash, optional_data, result, n, model)
     }
 
     result <- result[c(stat_unit, date, tag, value, status)]
@@ -73,13 +75,14 @@ import_measures_csv <-
       result$date <- date_format_func(result$date)
     }
 
-    add_stat_units(result$stat_unit)
+    add_stat_units(result$stat_unit, model)
 
     result <- dplyr::bind_cols(
       hash = hash,
       result
     )
 
-    analysr_env$measures <- rbind(analysr_env$measures, result)
-    result
+    model$measures <- rbind(model$measures, result)
+
+    TRUE
   }

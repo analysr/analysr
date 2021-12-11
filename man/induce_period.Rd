@@ -7,6 +7,9 @@
 induce_period(model = analysr_env, condition, tag_to_create, duration)
 }
 \arguments{
+\item{model}{An AnalysR env.
+Default: \code{analysr_env}}
+
 \item{condition}{A condition (to be defined).}
 
 \item{tag_to_create}{Label to write in periods table.}

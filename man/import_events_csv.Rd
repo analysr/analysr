@@ -13,7 +13,8 @@ import_events_csv(
   date_format_func = (function(x) lubridate::parse_date_time(x, date_format_reg)),
   date_format_reg = "ymd-HMS",
   force_date_format = FALSE,
-  delim = ","
+  delim = ",",
+  model = analysr_env
 )
 }
 \arguments{
@@ -41,10 +42,12 @@ Default: \code{FALSE}}
 
 \item{delim}{The separator to read csv (not required).
 Default: \verb{,}}
+
+\item{model}{An AnalysR env.
+Default: \code{analysr_env}}
 }
 \value{
-The events data frame resulted from the merge of imported data
-and already imported data
+A boolean (\code{TRUE} if no errors)
 }
 \description{
 Import events from a CSV file

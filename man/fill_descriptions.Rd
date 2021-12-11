@@ -4,7 +4,7 @@
 \alias{fill_descriptions}
 \title{Fill descriptions}
 \usage{
-fill_descriptions(hash, types, data, n = length(hash))
+fill_descriptions(hash, types, data, n = length(hash), model = analysr_env)
 }
 \arguments{
 \item{hash}{a vector containing hash to associate}
@@ -14,6 +14,9 @@ fill_descriptions(hash, types, data, n = length(hash))
 \item{data}{the data frame you want to extract data from}
 
 \item{n}{(optional) length of hash if already calculated}
+
+\item{model}{An AnalysR env.
+Default: \code{analysr_env}}
 }
 \description{
 A function to fill descriptions table when importing data

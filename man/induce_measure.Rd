@@ -7,7 +7,8 @@
 induce_measure(model = analysr_env, tag_to_create, calcul, tag_ref)
 }
 \arguments{
-\item{model}{An AnalysR env}
+\item{model}{An AnalysR env.
+Default: \code{analysr_env}}
 
 \item{tag_to_create}{Label to write in measures table}
 

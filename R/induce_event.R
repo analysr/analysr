@@ -5,7 +5,8 @@
 #'
 #' @return A AnalysR model
 #'
-#' @param model An AnalysR env
+#' @param model An AnalysR env.
+#' Default: `analysr_env`
 #' @param condition A condition.
 #' @param tag_to_create Label to write in events table.
 #'

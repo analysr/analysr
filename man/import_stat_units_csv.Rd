@@ -8,7 +8,8 @@ import_stat_units_csv(
   csv_path,
   stat_unit = "stat_unit",
   optional_data,
-  delim = ","
+  delim = ",",
+  model = analysr_env
 )
 }
 \arguments{
@@ -21,9 +22,12 @@ table.}
 
 \item{delim}{The separator to read csv (not required).
 Default: \verb{,}}
+
+\item{model}{An AnalysR env.
+Default: \code{analysr_env}}
 }
 \value{
-TRUE if success
+A boolean (\code{TRUE} if no errors)
 }
 \description{
 Import stat_units from a CSV file

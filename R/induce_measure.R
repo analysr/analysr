@@ -38,7 +38,8 @@ replace_values <- function(string, tags_arr, values_arr) {
 #'
 #' @return A AnalysR model
 #'
-#' @param model An AnalysR env
+#' @param model An AnalysR env.
+#' Default: `analysr_env`
 #' @param tag_to_create Label to write in measures table
 #' @param calcul A function containing at least a measures tag
 #' @param tag_ref A tag that is considered to iter on measures table

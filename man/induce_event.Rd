@@ -7,7 +7,8 @@
 induce_event(model = analysr_env, condition, tag_to_create)
 }
 \arguments{
-\item{model}{An AnalysR env}
+\item{model}{An AnalysR env.
+Default: \code{analysr_env}}
 
 \item{condition}{A condition.}
 

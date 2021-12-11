@@ -2,8 +2,7 @@
 #'
 #' Import periods from a CSV file
 #'
-#' @return The periods data frame resulted from the merge of imported data
-#' and already imported data
+#' @return A boolean (`TRUE` if no errors)
 #'
 #' @param csv_path A path to the csv file.
 #' @param stat_unit A string containing the stat_unit label.
@@ -22,7 +21,8 @@
 #' Default: `FALSE`
 #' @param delim The separator to read csv (not required).
 #' Default: `,`
-#'
+#' @param model An AnalysR env.
+#' Default: `analysr_env`
 #'
 #' @export
 import_periods_csv <-
@@ -36,7 +36,8 @@ import_periods_csv <-
                   (function(x) lubridate::parse_date_time(x, date_format_reg)),
             date_format_reg = "ymd-HMS",
             force_date_format = FALSE,
-            delim = ",") {
+            delim = ",",
+            model = analysr_env) {
     quiet_read_csv <- purrr::quietly(readr::read_delim)
 
     if (force_date_format) {
@@ -52,14 +53,14 @@ import_periods_csv <-
     hash <- get_hash(n)
 
     if (!missing(optional_data)) {
-      fill_descriptions(hash, optional_data, result, n)
+      fill_descriptions(hash, optional_data, result, n, model)
     }
 
     result <- result[c(stat_unit, begin, end, tag)]
     # we could use dplyr to extract colums https://bit.ly/32lGkNR
     colnames(result) <- c("stat_unit", "begin", "end", "tag")
 
-    add_stat_units(result$stat_unit)
+    add_stat_units(result$stat_unit, model)
 
 
 
@@ -76,6 +77,7 @@ import_periods_csv <-
       result
     )
 
-    analysr_env$periods <- rbind(analysr_env$periods, result)
-    result
+    model$periods <- rbind(model$periods, result)
+
+    TRUE
   }
