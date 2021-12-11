@@ -1,30 +1,3 @@
-stat_unit_from_hash <- function(model, hashs) {
-  result <- c()
-  for (i in rownames(model$stat_units)) {
-    for (j in hashs) {
-      if (model$stat_units[i,]$hash == j) {
-        result <- c(result, model$stat_units[i,]$stat_unit)
-      }
-    }
-  }
-  result
-}
-
-hash_from_stat_unit <- function(model, stat_units) {
-  result <- c()
-  if (length(stat_units) != 0) {
-    for (j in stat_units) {
-      for (i in rownames(model$stat_units)) {
-        if (model$stat_units[i,]$stat_unit == j) {
-          result <- c(result, model$stat_units[i,]$hash)
-        }
-      }
-    }
-  }
-
-  result
-}
-
 check_integer <- function(n) {
     !grepl("[^[:digit:]]", format(n,  digits = 20, scientific = TRUE))
 }

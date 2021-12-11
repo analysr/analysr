@@ -2,8 +2,7 @@
 #'
 #' Import events from a CSV file
 #'
-#' @return The events data frame resulted from the merge of imported data
-#' and already imported data
+#' @return A boolean (`TRUE` if no errors)
 #'
 #' @param csv_path A path to the csv file.
 #' @param stat_unit A string containing the stat_unit label.
@@ -21,6 +20,8 @@
 #' Default: `FALSE`
 #' @param delim The separator to read csv (not required).
 #' Default: `,`
+#' @param model An AnalysR env.
+#' Default: `analysr_env`
 #'
 #' @export
 import_events_csv <-
@@ -33,7 +34,8 @@ import_events_csv <-
                   (function(x) lubridate::parse_date_time(x, date_format_reg)),
             date_format_reg = "ymd-HMS",
             force_date_format = FALSE,
-            delim = ",") {
+            delim = ",",
+            model = analysr_env) {
     quiet_read_csv <- purrr::quietly(readr::read_delim)
 
     if (force_date_format) {
@@ -52,14 +54,14 @@ import_events_csv <-
 
     # using missing https://bit.ly/2QJJyb6
     if (!missing(optional_data)) {
-      fill_descriptions(hash, optional_data, result_csv, n)
+      fill_descriptions(hash, optional_data, result_csv, n, model)
     }
 
     result <- result_csv[c(stat_unit, date, tag)]
     # we could use dplyr to extract colums https://bit.ly/32lGkNR
     colnames(result) <- c("stat_unit", "date", "tag")
 
-    add_stat_units(result$stat_unit)
+    add_stat_units(result$stat_unit, model)
 
     if (!isDate(result$date) || force_date_format) {
       result$date <- date_format_func(result$date)
@@ -70,6 +72,7 @@ import_events_csv <-
       result
     )
 
-    analysr_env$events <- rbind(analysr_env$events, result)
-    result
+    model$events <- rbind(model$events, result)
+
+    TRUE
   }

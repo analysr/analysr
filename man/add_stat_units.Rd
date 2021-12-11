@@ -4,10 +4,13 @@
 \alias{add_stat_units}
 \title{Add stat units}
 \usage{
-add_stat_units(ids)
+add_stat_units(ids, model = analysr_env)
 }
 \arguments{
 \item{ids}{A vector containing ids of stat units to add.}
+
+\item{model}{An AnalysR env.
+Default: \code{analysr_env}}
 }
 \description{
 Add to stat_units table

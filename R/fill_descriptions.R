@@ -7,7 +7,10 @@
 #' @param types a vector of strings (the name of the columns to import)
 #' @param data the data frame you want to extract data from
 #' @param n (optional) length of hash if already calculated
-fill_descriptions <- function(hash, types, data, n = length(hash)) {
+#' @param model An AnalysR env.
+#' Default: `analysr_env`
+fill_descriptions <- function(hash, types, data, n = length(hash),
+                              model = analysr_env) {
 
     prepare_data <- dplyr::select(data, dplyr::all_of(types))
     prepare_data <- dplyr::mutate_all(prepare_data, as.character)
@@ -22,6 +25,7 @@ fill_descriptions <- function(hash, types, data, n = length(hash)) {
                                   values_to = "value")
 
     result <- na.omit(result)
-    analysr_env$descriptions <- dplyr::bind_rows(analysr_env$descriptions,
+    model$descriptions <- dplyr::bind_rows(model$descriptions,
                                 result)
+    model
 }

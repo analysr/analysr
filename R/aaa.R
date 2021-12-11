@@ -85,3 +85,60 @@ get_hash <- function(n = 1) {
     }
     as.integer(result)
 }
+
+#### Intermediate functions used in several functions
+
+stat_unit_from_hash <- function(model, hashs) {
+  result <- c()
+  for (i in rownames(model$stat_units)) {
+    for (j in hashs) {
+      if (model$stat_units[i,]$hash == j) {
+        result <- c(result, model$stat_units[i,]$stat_unit)
+      }
+    }
+  }
+  result
+}
+
+hash_from_stat_unit <- function(model, stat_units) {
+  result <- c()
+  if (length(stat_units) != 0) {
+    for (j in stat_units) {
+      for (i in rownames(model$stat_units)) {
+        if (model$stat_units[i,]$stat_unit == j) {
+          result <- c(result, model$stat_units[i,]$hash)
+        }
+      }
+    }
+  }
+
+  result
+}
+
+get_duration_from_str <- function(e) {
+  e <- tolower(e)
+
+  e <- stringr::str_replace_all(e, "years", "31557600")
+  e <- stringr::str_replace_all(e, "year", "31557600")
+
+  e <- stringr::str_replace_all(e, "months", "2678400")
+  e <- stringr::str_replace_all(e, "month", "2678400")
+
+  e <- stringr::str_replace_all(e, "weeks", "604800")
+  e <- stringr::str_replace_all(e, "week", "604800")
+
+  e <- stringr::str_replace_all(e, "days", "86400")
+  e <- stringr::str_replace_all(e, "day", "86400")
+
+  e <- stringr::str_replace_all(e,  "hours", "3600")
+  e <- stringr::str_replace_all(e,  "hour", "3600")
+
+  e <- stringr::str_replace_all(e,  "minutes", "60")
+  e <- stringr::str_replace_all(e,  "minute", "60")
+
+  e <- stringr::str_replace_all(e,  "seconds", "1")
+  e <- stringr::str_replace_all(e,  "second", "1")
+
+  duration_seconds <- eval(str2expression(e))
+  return(lubridate::duration(duration_seconds, "seconds"))
+}

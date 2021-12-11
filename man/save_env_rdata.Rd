@@ -4,11 +4,13 @@
 \alias{save_env_rdata}
 \title{Save env RData}
 \usage{
-save_env_rdata(save_path)
+save_env_rdata(save_path, model = analysr_env)
 }
 \arguments{
 \item{save_path}{A path to save current environment
 (existence is required)}
+
+\item{model}{a AnalysR Model (default : \code{analysr_env})}
 }
 \description{
 Save current environment in a Rdata file

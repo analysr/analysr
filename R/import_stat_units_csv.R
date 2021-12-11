@@ -2,7 +2,7 @@
 #'
 #' Import stat_units from a CSV file
 #'
-#' @return TRUE if success
+#' @return A boolean (`TRUE` if no errors)
 #'
 #' @param csv_path A path to the csv file.
 #' @param stat_unit A string containing the stat_unit label.
@@ -10,14 +10,16 @@
 #' table.
 #' @param delim The separator to read csv (not required).
 #' Default: `,`
-#'
+#' @param model An AnalysR env.
+#' Default: `analysr_env`
 #'
 #' @export
 import_stat_units_csv <-
   function(csv_path,
             stat_unit = "stat_unit",
             optional_data,
-            delim = ",") {
+            delim = ",",
+            model = analysr_env) {
     quiet_read_csv <- purrr::quietly(readr::read_delim)
 
 
@@ -30,11 +32,11 @@ import_stat_units_csv <-
     colnames(stat_units) <- c("stat_unit")
 
 
-    add_stat_units(stat_units$stat_unit)
+    add_stat_units(stat_units$stat_unit, model)
 
-    hashs <- hash_from_stat_unit(analysr_env, stat_units$stat_unit)
+    hashs <- hash_from_stat_unit(model, stat_units$stat_unit)
     if (!missing(optional_data)) {
-      fill_descriptions(hashs, optional_data, temp, n)
+      fill_descriptions(hashs, optional_data, temp, n, model)
     }
 
     # here I assume that I can have a description multiple times

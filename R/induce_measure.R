@@ -36,13 +36,20 @@ replace_values <- function(string, tags_arr, values_arr) {
 
 #' induce_measure
 #'
-#' @param model An AnalysR env
-#' @param tag_to_create Label to write in measure table
+#' @return A AnalysR model
+#'
+#' @param model An AnalysR env.
+#' Default: `analysr_env`
+#' @param tag_to_create Label to write in measures table
 #' @param calcul A function containing at least a measures tag
 #' @param tag_ref A tag that is considered to iter on measures table
 #'
 #' @export
-induce_measure <- function(model, tag_to_create, calcul, tag_ref) {
+induce_measure <- function(model = analysr_env, tag_to_create, calcul,
+                          tag_ref) {
+
+  tag_to_create <- gsub(" ", "_", tag_to_create)
+
   calcul <- rlang::enexpr(calcul)
   calcul_as_string <- deparse(calcul)
   calcul <- get_AST(calcul)
