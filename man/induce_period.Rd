@@ -4,19 +4,20 @@
 \alias{induce_period}
 \title{induce_period}
 \usage{
-induce_period(condition, tag_to_create, duration)
+induce_period(model = analysr_env, condition, tag_to_create, duration)
 }
 \arguments{
 \item{condition}{A condition (to be defined).}
 
-\item{tag_to_create}{A string for the tag to add.}
+\item{tag_to_create}{Label to write in periods table.}
 
 \item{duration}{A duration.}
 }
 \value{
-The part of  that have been created.
+A AnalysR model
 }
 \description{
-Create period from measures table depending on a condition,
+Create period from measures table depending on a condition (on measures or
+events),
 and add them to periods table
 }

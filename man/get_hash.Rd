@@ -4,7 +4,7 @@
 \alias{get_hash}
 \title{Get a hash}
 \usage{
-get_hash(n)
+get_hash(n = 1)
 }
 \arguments{
 \item{n}{A number.}

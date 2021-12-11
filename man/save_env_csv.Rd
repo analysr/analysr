@@ -4,11 +4,13 @@
 \alias{save_env_csv}
 \title{Save env csv}
 \usage{
-save_env_csv(save_path)
+save_env_csv(save_path, model = analysr_env)
 }
 \arguments{
 \item{save_path}{A path to save current environment
 (existence is not required)}
+
+\item{model}{a AnalysR Model (default : \code{analysr_env})}
 }
 \description{
 Save current environment in a folder containing CSV

@@ -2,15 +2,23 @@
 % Please edit documentation in R/restrict.R
 \name{restrict}
 \alias{restrict}
+\alias{create_cohort}
 \title{restrict}
 \usage{
-restrict(env, condition)
+restrict(env, condition, catch = TRUE)
+
+create_cohort(env, condition, catch = TRUE)
 }
 \arguments{
 \item{env}{An AnalysR model}
 
 \item{condition}{A condition}
+
+\item{catch}{Explicit if argument should be catch via \code{enexpr}
+(not mandotary)}
 }
 \description{
 restrict
+
+create_cohort
 }
