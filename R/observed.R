@@ -96,16 +96,18 @@ prepare_query <- function(model, condition) {
       hash_obs <- temp$hash
       date_obs_end <- NA
       selection <- rbind(selection,
-      tibble::tibble(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
+      tibble::tibble(hash_stat_unit, stat_unit, hash_obs,
+                     date_obs, date_obs_end))
 
-      # Check on descriptions table
-      temp <- subset(model$descriptions, type == tag_to_check)
-      temp <- temp[eval(rlang::call2(operator, rvalue,
-                                    convert_to_best_type(temp$value))),]
-      if (nrow(temp) != 0) {
-        selection <- rbind(selection, get_entries_from_hash(model, temp))
+      # Check on descriptions table if there is nothing
+      if (nrow(selection) == 0) {
+        temp <- subset(model$descriptions, type == tag_to_check)
+        temp <- temp[eval(rlang::call2(operator, rvalue,
+                                      convert_to_best_type(temp$value))),]
+        if (nrow(temp) != 0) {
+          selection <- rbind(selection, get_entries_from_hash(model, temp))
+        }
       }
-
     } else {
 
       # let's select the stat_units that have the query condition
@@ -123,16 +125,19 @@ prepare_query <- function(model, condition) {
       hash_obs <- temp$hash
       date_obs_end <- NA
       selection <- rbind(selection,
-      tibble::tibble(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
+      tibble::tibble(hash_stat_unit, stat_unit, hash_obs,
+                     date_obs, date_obs_end))
 
 
-      # Check on descriptions table
-      temp <- subset(model$descriptions, type == tag_to_check)
-      temp <- temp[eval(rlang::call2(operator,
+      # Check on descriptions table if there is nothing
+      if (nrow(selection) == 0) {
+        temp <- subset(model$descriptions, type == tag_to_check)
+        temp <- temp[eval(rlang::call2(operator,
                         convert_to_best_type(temp$value), rvalue)),]
 
-      if (nrow(temp) != 0) {
-        selection <- rbind(selection, get_entries_from_hash(model, temp))
+        if (nrow(temp) != 0) {
+          selection <- rbind(selection, get_entries_from_hash(model, temp))
+        }
       }
     }
 
@@ -164,11 +169,12 @@ prepare_query <- function(model, condition) {
     tibble::tibble(hash_stat_unit, stat_unit, hash_obs, date_obs, date_obs_end))
 
     # Check on descriptions table
-    temp <- subset(model$descriptions, type == tag_to_check)
-    if (nrow(temp) != 0) {
-        selection <- rbind(selection, get_entries_from_hash(model, temp))
+    if (nrow(selection) == 0) {
+      temp <- subset(model$descriptions, type == tag_to_check)
+      if (nrow(temp) != 0) {
+          selection <- rbind(selection, get_entries_from_hash(model, temp))
+      }
     }
-
   }
   selection
 }
