@@ -108,12 +108,12 @@ hash_from_stat_unit <- function(model, stat_units) {
   # using result <- dplyr::filter(model$stat_units, stat_unit %in% stat_units)$hash could be more simple
   result <- c()
   if (length(stat_units) != 0) {
+    temp <- dplyr::filter(model$stat_units, stat_unit %in% stat_units)
+    temp <- tidyr::pivot_wider(temp,
+                                  names_from  = "stat_unit",
+                                  values_from = "hash")
     for (j in stat_units) {
-      for (i in rownames(model$stat_units)) {
-        if (model$stat_units[i,]$stat_unit == j) {
-          result <- c(result, model$stat_units[i,]$hash)
-        }
-      }
+      result <- c(result, temp[j][[1]])
     }
   }
   tictoc::toc()
