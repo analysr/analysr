@@ -18,8 +18,7 @@ add_description <- function(input, label) {
   if (model$space_to_underscore) {
       label <- gsub(" ", "_", label)
   }
-  hash <- hash_from_stat_unit(model, stat_units)
-  hash <- unique(hash)
+  hash <- dplyr::filter(model$stat_units, stat_unit %in% stat_units)$hash
   n <- length(hash)
   result <- tibble::tibble(hash = hash, type = rep(label, n), value = TRUE)
   model$descriptions <- rbind(model$descriptions, result)
