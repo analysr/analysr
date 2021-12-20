@@ -104,6 +104,8 @@ stat_unit_from_hash <- function(model, hashs) {
 }
 
 hash_from_stat_unit <- function(model, stat_units) {
+  tictoc::tic("hash_from_stat_unit")
+  # using result <- dplyr::filter(model$stat_units, stat_unit %in% stat_units)$hash could be more simple
   result <- c()
   if (length(stat_units) != 0) {
     for (j in stat_units) {
@@ -114,7 +116,7 @@ hash_from_stat_unit <- function(model, stat_units) {
       }
     }
   }
-
+  tictoc::toc()
   result
 }
 
