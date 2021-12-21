@@ -1,7 +1,7 @@
 is_before <- function(entry, duration, selection, type) {
   # here selection refer to the selection done by condition on before
   found <- FALSE
-  selection <- dplyr::filter(selection, stat_unit == entry$stat_unit)
+
   temporal_hash <- -1
 
   if (is.na(entry$date_obs_end)){
@@ -43,12 +43,16 @@ is_before <- function(entry, duration, selection, type) {
 is_before_list <- function(entries, duration, selection, type) {
   # here selection refer to the selection done by condition on before
   res <- tibble::tibble()
-  for (i in rownames(entries)) {
-    tmp <- is_before(entries[i,], duration, selection, type)
+  splitted <- dplyr::group_split(entries, stat_unit)
+  for (tbl in splitted) {
+    selection_by_stat_units <- dplyr::filter(selection, stat_unit == tbl$stat_unit[1])
+    for (i in rownames(tbl)) {
+      tmp <- is_before(tbl[i,], duration, selection_by_stat_units, type)
 
-    if (tmp$found) {
-      new_entry <- dplyr::bind_cols(entries[i,], temporal_hash = tmp$temporal_hash)
-      res <- dplyr::bind_rows(res, new_entry)
+      if (tmp$found) {
+        new_entry <- dplyr::bind_cols(tbl[i,], temporal_hash = tmp$temporal_hash)
+        res <- dplyr::bind_rows(res, new_entry)
+      }
     }
   }
   res
