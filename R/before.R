@@ -70,11 +70,10 @@ before <- function(model, condition) {
   condition <- rlang::enexpr(condition)
   before_selection <- prepare_query(model, condition)
 
-  # TODO: improve periods handeling (here only start date are take into account)
-
+  tictoc::tic("is_before_list")
   res <- is_before_list(model$selection, duration,
                         before_selection, model$query$duration_type)
-
+  tictoc::toc()
 
   model$selection <- res
   model

@@ -1,4 +1,3 @@
-library(analysr)
 library(tidyverse)
 setup_new_env()
 
