@@ -1,24 +1,23 @@
 is_before <- function(entry, duration, selection, type) {
   # here selection refer to the selection done by condition on before
   found <- FALSE
-  selection <- subset(selection, stat_unit == entry$stat_unit)
+  selection <- dplyr::filter(selection, stat_unit == entry$stat_unit)
   temporal_hash <- -1
 
   if (is.na(entry$date_obs_end)){
-    # means it's not a period
+    #means it's not a period
     date <- as.numeric(entry$date_obs)
   } else {
-    # means it's a period, we take the date of the end
+    #means it's a period, we take the date of the end
     date <- as.numeric(entry$date_obs_end)
   }
 
-
   if (type == "at_most") {
     for (i in rownames(selection)) {
-        start <- as.numeric(selection[i,]$date_obs - duration)
-        end <- as.numeric(selection[i,]$date_obs)
-        # check if (entry date) =< (event date)
-        #      and (entry date) >= (event date + duration)
+      start <- as.numeric(selection[i,]$date_obs - duration)
+      end <- as.numeric(selection[i,]$date_obs)
+      # check if (entry date) =< (event date)
+      #      and (entry date) >= (event date + duration)
       if ((date <= end) && (start <= date)) {
         found <- TRUE
         temporal_hash <- selection[i,]$hash_obs
@@ -28,8 +27,8 @@ is_before <- function(entry, duration, selection, type) {
   }
   if (type == "at_least") {
     for (i in rownames(selection)) {
-        max <- as.numeric(selection[i,]$date_obs - duration)
-        # check if (entry date) =< (event date - duration)
+      max <- as.numeric(selection[i,]$date_obs - duration)
+      # check if (entry date) =< (event date - duration)
       if (date <= max) {
         found <- TRUE
         temporal_hash <- selection[i,]$hash_obs
