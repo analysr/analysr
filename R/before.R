@@ -1,15 +1,19 @@
-is_before <- function(entry, duration, selection, type) {
+is_before <- function(entry, duration, splitted, type) {
   # here selection refer to the selection done by condition on before
   found <- FALSE
-  selection <- subset(selection, stat_unit == entry$stat_unit)
+  selection <- splitted[[toString(entry$stat_unit)]]
   temporal_hash <- -1
+
+  if (is.na(entry$date_obs_end)){
+    #means it's not a period
+    date <- as.numeric(entry$date_obs)
+  } else {
+    #means it's a period, we take the date of the end
+    date <- as.numeric(entry$date_obs_end)
+  }
 
   if (type == "at_most") {
     for (i in rownames(selection)) {
-      if (is.na(entry$date_obs_end)){#means it's not a period
-        date <- as.numeric(entry$date_obs)}
-      else {#means it's a period, we take the date of the end
-        date <- as.numeric(entry$date_obs_end)}
       start <- as.numeric(selection[i,]$date_obs - duration)
       end <- as.numeric(selection[i,]$date_obs)
       # check if (entry date) =< (event date)
@@ -23,10 +27,6 @@ is_before <- function(entry, duration, selection, type) {
   }
   if (type == "at_least") {
     for (i in rownames(selection)) {
-      if (is.na(entry$date_obs_end)){#means it's not a period
-        date <- as.numeric(entry$date_obs)}
-      else {#means it's a period, we take the date of the end
-        date <- as.numeric(entry$date_obs_end)}
       max <- as.numeric(selection[i,]$date_obs - duration)
       # check if (entry date) =< (event date - duration)
       if (date <= max) {
@@ -43,13 +43,14 @@ is_before <- function(entry, duration, selection, type) {
 is_before_list <- function(entries, duration, selection, type) {
   # here selection refer to the selection done by condition on before
   res <- tibble::tibble()
+  splitted <- split(selection, selection$stat_unit)
   for (i in rownames(entries)) {
-    tmp <- is_before(entries[i,], duration, selection, type)
+      tmp <- is_before(entries[i,], duration, splitted, type)
 
-    if (tmp$found) {
-      new_entry <- dplyr::bind_cols(entries[i,], temporal_hash = tmp$temporal_hash)
-      res <- dplyr::bind_rows(res, new_entry)
-    }
+      if (tmp$found) {
+        new_entry <- dplyr::bind_cols(entries[i,], temporal_hash = tmp$temporal_hash)
+        res <- dplyr::bind_rows(res, new_entry)
+      }
   }
   res
 }
@@ -70,11 +71,8 @@ before <- function(model, condition) {
   condition <- rlang::enexpr(condition)
   before_selection <- prepare_query(model, condition)
 
-  # TODO: improve periods handeling (here only start date are take into account)
-
   res <- is_before_list(model$selection, duration,
                         before_selection, model$query$duration_type)
-
 
   model$selection <- res
   model
