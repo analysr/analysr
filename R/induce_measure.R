@@ -68,18 +68,49 @@ induce_measure <- function(model = analysr_env, tag_to_create, calcul,
   tmp <- dplyr::filter(model$measures, tag == tag_ref)
   for(i in 1:nrow(tmp)) {
     entry <- tmp[i, ]
-    # Search other data
-    other_data <- dplyr::filter(model$measures, tag %in% tags,
-                                          tag != tag_ref,
-                                          stat_unit == entry$stat_unit,
-                                          date < entry$date)
-    # Order data by time desc order
-    other_data <- other_data[rev(order(other_data$date)), ]
-    other_data <- dplyr::slice(dplyr::group_by(other_data, tag),
-                                which.max(date))
 
-    # TODO: add more flexibility (maybe other data can be better after the
-    # tag_ref)
+
+    filtred_data <- dplyr::filter(model$measures, tag %in% tags,
+                                          tag != tag_ref,
+                                          stat_unit == entry$stat_unit)
+
+    # Search other data (before tag)
+    other_data_before <- dplyr::filter(filtred_data, date <= entry$date)
+
+    # Order data by time desc order
+    other_data_before <-
+                        other_data_before[rev(order(other_data_before$date)), ]
+    other_data_before  <- dplyr::slice(dplyr::group_by(other_data_before, tag),
+                                which.max(date))
+    # -----------
+
+    # Search other data (after tag)
+    other_data_after <- dplyr::filter(filtred_data, date >= entry$date)
+
+    # Order data by time desc order
+    other_data_after <- other_data_after[order(other_data_after$date), ]
+    other_data_after <- dplyr::slice(dplyr::group_by(other_data_after, tag),
+                                which.min(date))
+    # -----------
+
+    # Select which data to take into account
+    other_data <- other_data_before
+    if (nrow(other_data_before) == 0) {
+      other_data <- other_data_after
+    }
+    if (nrow(other_data_before) != 0 && nrow(other_data_after) != 0) {
+      dist_before <- entry$date - other_data_before$date
+      dist_after <- other_data_after$date - entry$date
+      if (dist_after < dist_before) {
+          other_data <- other_data_after
+      }
+    }
+    if (nrow(other_data_after) == 0 && nrow(other_data_before) == 0) {
+      stop(paste(c(tags, "not found in measures"), collapse = ", "))
+    }
+    # -----------
+
+
 
     # Evaluate
     tags_arr <- c(entry$tag, other_data$tag)

@@ -9,6 +9,18 @@ test_that("induce_measure works", {
   expect_equal(model_state_equal("./csv/induce_measure/after1", analysr_env),
               TRUE)
 })
+test_that("induce_measure works with data before and after", {
+
+  setup_new_env()
+
+  load_env_csv("./csv/induce_measure/before2")
+
+  induce_measure(analysr_env, "BMI", Weight / (Size * Size))
+
+  expect_equal(model_state_equal("./csv/induce_measure/after2", analysr_env),
+               TRUE)
+
+})
 test_that("replace_values works", {
   expect_equal("80/(1.82*1.82)", replace_values("Weight/(Size*Size)",
                                             c("Weight", "Size"), c(80,1.82)))
