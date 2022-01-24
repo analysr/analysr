@@ -87,7 +87,208 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>Work in progress…</p>
+<div class="section level3">
+<h3 id="1-general-concepts">1. General concepts<a class="anchor" aria-label="anchor" href="#1-general-concepts"></a>
+</h3>
+<p>We use <code>magrittr</code> which is a forward-pipe operator for R. This provides a mechanism for chaining commands with a new forward-pipe operator: <strong>%&gt;%</strong>. This operator passes a value, or the result of an expression, into the next function call or expression. Note that this is not a pipe. For example :<br>
+- <strong>x %&gt;% f</strong> is equivalent to <strong>f(x)</strong><br>
+- <strong>x %&gt;% f(y)</strong> is equivalent to <strong>f(x, y)</strong><br>
+- <strong>x %&gt;% f %&gt;% g %&gt;% h</strong> is equivalent to <strong>h(g(f(x)))</strong></p>
+</div>
+<div class="section level3">
+<h3 id="2-general-operation-of-our-query-language">2. General operation of our query language<a class="anchor" aria-label="anchor" href="#2-general-operation-of-our-query-language"></a>
+</h3>
+<p>When we code our functions for our keywords, they are of type : function(model, params)</p>
+<p>For example, the following query:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/add_description.html">add_description</a></span><span class="op">(</span><span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="fu"><a href="reference/at_most.html">at_most</a></span><span class="op">(</span><span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">temperature</span> <span class="op">&gt;=</span> <span class="fl">40</span><span class="op">)</span>, <span class="fl">15</span><span class="op">*</span><span class="va">days</span><span class="op">)</span>, <span class="va">surgery</span><span class="op">)</span>, <span class="va">`fever post surgery`</span><span class="op">)</span></code></pre></div>
+<p>is broken down as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span>
+  <span class="va">analysr_env</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>  
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/at_most.html">at_most</a></span><span class="op">(</span><span class="fl">45</span><span class="op">*</span><span class="va">days</span><span class="op">)</span> 
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/add_description.html">add_description</a></span><span class="op">(</span><span class="va">`Hypertension after immunotherapy`</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>So <em>model</em> must contain the model 5 table, and then we give instructions to pass to the next function (so here <strong>at_most</strong> doesn’t make sense alone).</p>
+</div>
+<div class="section level3">
+<h3 id="3-keywords">3. Keywords<a class="anchor" aria-label="anchor" href="#3-keywords"></a>
+</h3>
+<div class="section level4">
+<h4 id="observed">Observed<a class="anchor" aria-label="anchor" href="#observed"></a>
+</h4>
+<p>A query always starts with observed, as follows: - <strong>observed</strong>(<em>model</em>, conditions) This function can be complemented by various keywords that do not work alone, see the secondary keywords below.</p>
+</div>
+<div class="section level4">
+<h4 id="secondary-keywords">Secondary keywords<a class="anchor" aria-label="anchor" href="#secondary-keywords"></a>
+</h4>
+<p>These keywords complement other keywords for specific information.</p>
+<div class="section level5">
+<h5 id="before">before<a class="anchor" aria-label="anchor" href="#before"></a>
+</h5>
+<p>The <strong>before</strong> function is used to return the set of events or measurements that verify a certain condition observed before an event / measurement.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span>
+  <span class="va">analysr_env</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Microalbumin Creatinine Ratio`</span> <span class="op">&gt;</span> <span class="fl">300</span><span class="op">)</span>  
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/before.html">before</a></span><span class="op">(</span><span class="va">`Renal dialysis (procedure)`</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>This query returns all patients with a microalbumin-creatinine ratio greater than 300 mg/g before dialysis.</p>
+</div>
+<div class="section level5">
+<h5 id="after">after<a class="anchor" aria-label="anchor" href="#after"></a>
+</h5>
+<p>The <strong>after</strong> function is used to return the set of events or measurements that verify a certain condition observed after an event / measurement.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span>
+  <span class="va">analysr_env</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>  
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>This query returns all patients with a diastolic blood pressure above mmHg after subcutaneous immunotherapy.</p>
+</div>
+<div class="section level5">
+<h5 id="at_most">at_most<a class="anchor" aria-label="anchor" href="#at_most"></a>
+</h5>
+<p>The <strong>at_most</strong> function returns the set of events or measurements that verify a certain condition observed at most (at_most) a certain amount of time after (after) or before (before) an event / measurement.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span>
+  <span class="va">analysr_env</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>  
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/at_most.html">at_most</a></span><span class="op">(</span><span class="fl">45</span><span class="op">*</span><span class="va">days</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>This query returns all measures with a diastolic blood pressure greater than mmHg at least 45 days after subcutaneous immunotherapy.</p>
+</div>
+<div class="section level5">
+<h5 id="at_least">at_least<a class="anchor" aria-label="anchor" href="#at_least"></a>
+</h5>
+<p>The <strong>at_least</strong> function returns the set of events or measurements that verify a certain condition observed at least (at_least) a certain amount of time after (after) or before (before) an event / measurement.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span>
+  <span class="va">analysr_env</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Hepatitis C antibody test`</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/at_least.html">at_least</a></span><span class="op">(</span><span class="fl">10</span><span class="op">*</span><span class="va">days</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Standard pregnancy test`</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>This query returns all measures where patients were tested positive for hepatitis C antibodies at least 10 days after a standard pregnancy test.</p>
+</div>
+<div class="section level5">
+<h5 id="add_description">add_description<a class="anchor" aria-label="anchor" href="#add_description"></a>
+</h5>
+<p>The <strong>add_description</strong> function adds a description to the description table.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span>
+  <span class="va">analysr_env</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>  
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/at_most.html">at_most</a></span><span class="op">(</span><span class="fl">45</span><span class="op">*</span><span class="va">days</span><span class="op">)</span> 
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/add_description.html">add_description</a></span><span class="op">(</span><span class="va">`Hypertension after immunotherapy`</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>This query adds <code>Hypertension after immunotherapy</code> to the table description for people with blood pressure &gt;125 mm Hg up to 45 days after subcutaneous immunotherapy.</p>
+</div>
+<div class="section level5">
+<h5 id="from--to">from / to<a class="anchor" aria-label="anchor" href="#from--to"></a>
+</h5>
+<p>The <strong>from/to</strong> functions are used to return all the events or measurements included in a period between two defined dates.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>(</span>
+<span id="cb9-2"><a href="#cb9-2"></a>  analysr_env</span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">observed</span>(<span class="st">`</span><span class="dt">Diastolic Blood Pressure</span><span class="st">`</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">125</span>)  </span>
+<span id="cb9-4"><a href="#cb9-4"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">from</span>(<span class="dv">2013-02</span><span class="op">-</span>06T19<span class="op">:</span><span class="dv">00</span><span class="op">:</span>00Z) </span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">to</span>(<span class="dv">2014-10</span><span class="op">-</span>08T20<span class="op">:</span><span class="dv">00</span><span class="op">:</span>00Z)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>)</span></code></pre></div>
+<p>This query returns people who had a blood pressure above 125 mmHg between 6 February 2013 at 7pm and 8 October 2014 at 8pm.</p>
+</div>
+<div class="section level5">
+<h5 id="inside">inside<a class="anchor" aria-label="anchor" href="#inside"></a>
+</h5>
+<p>The <strong>inside</strong> function is used to return the set of events or measurements that verify a certain condition observed during a certain period.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span>
+  <span class="va">analysr_env</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Respiratory rate`</span>  <span class="op">&gt;=</span> <span class="fl">12</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/inside.html">inside</a></span><span class="op">(</span><span class="va">`Respiratory therapy`</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>This query returns all patients with a respiratory rate greater than 12/min during respiration therapy.</p>
+</div>
+<div class="section level5">
+<h5 id="outside">outside<a class="anchor" aria-label="anchor" href="#outside"></a>
+</h5>
+<p>The <strong>outside</strong> function is used to return the set of events or measurements that verify a certain condition observed outside a certain period.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span>
+  <span class="va">analysr_env</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span>  <span class="op">&gt;=</span> <span class="fl">75</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/outside.html">outside</a></span><span class="op">(</span><span class="va">`Diabetes self management plan`</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>This query returns all measures with a diastolic blood pressure greater than 75 mmHg outside their diabetes self-management plan period.</p>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="4-import-functions">4. Import functions<a class="anchor" aria-label="anchor" href="#4-import-functions"></a>
+</h3>
+<div class="section level5">
+<h5 id="import_events_csv">import_events_csv<a class="anchor" aria-label="anchor" href="#import_events_csv"></a>
+</h5>
+<p>The <strong>import_events_csv</strong> function is used to import the events table from a CSV file.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/import_events_csv.html">import_events_csv</a></span><span class="op">(</span>
+    csv_path <span class="op">=</span> <span class="st">"csv_events_path"</span>,
+    stat_unit <span class="op">=</span> <span class="st">"PATIENT"</span>,
+    date <span class="op">=</span> <span class="st">"DATE"</span>,
+    tag <span class="op">=</span> <span class="st">"DESCRIPTION"</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="import_measures_csv">import_measures_csv<a class="anchor" aria-label="anchor" href="#import_measures_csv"></a>
+</h5>
+<p>The import_measures_csv function is used to import the measures table from a CSV file.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/import_measures_csv.html">import_measures_csv</a></span><span class="op">(</span>
+    csv_path <span class="op">=</span> <span class="st">"csv_measures_path"</span>,
+    stat_unit <span class="op">=</span> <span class="st">"PATIENT"</span>,
+    date <span class="op">=</span> <span class="st">"DATE"</span>,
+    tag <span class="op">=</span> <span class="st">"DESCRIPTION"</span>,
+    value <span class="op">=</span> <span class="st">"VALUE"</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="import_periods_csv">import_periods_csv<a class="anchor" aria-label="anchor" href="#import_periods_csv"></a>
+</h5>
+<p>The <strong>import_periods_csv</strong> function is used to import the periods table from a CSV file.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/import_periods_csv.html">import_periods_csv</a></span><span class="op">(</span>
+    csv_path <span class="op">=</span> <span class="st">"csv_periods_path"</span>,
+    stat_unit <span class="op">=</span> <span class="st">"PATIENT"</span>,
+    begin <span class="op">=</span> <span class="st">"START"</span>,
+    end <span class="op">=</span> <span class="st">"STOP"</span>,
+    tag <span class="op">=</span> <span class="st">"DESCRIPTION"</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="import_stat_units_csv">import_stat_units_csv<a class="anchor" aria-label="anchor" href="#import_stat_units_csv"></a>
+</h5>
+<p>The <strong>import_stat_units_csv</strong> function is used to import the periods table from a CSV file.</p>
+<p>Example :</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/import_stat_units_csv.html">import_stat_units_csv</a></span><span class="op">(</span>
+    csv_path <span class="op">=</span> <span class="st">"./benchmark/csv_100/patients_100.csv"</span>,
+    stat_unit <span class="op">=</span> <span class="st">"UserId"</span>,
+    optional_data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BIRTHDATE"</span>,<span class="st">"DEATHDATE"</span>,<span class="st">"FIRST"</span>,<span class="st">"LAST"</span>,<span class="st">"RACE"</span>,<span class="st">"ETHNICITY"</span>,<span class="st">"GENDER"</span>,<span class="st">"STATE"</span>,<span class="st">"HEALTHCARE_EXPENSES"</span>,<span class="st">"HEALTHCARE_COVERAGE"</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+</div>
+</div>
 </div>
 </div>
   </div>
