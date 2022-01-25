@@ -67,19 +67,147 @@ So *model* must contain the model 5 table, and then we give instructions
 to pass to the next function (so here **at\_most** doesn’t make sense
 alone).
 
-### 3\. Keywords
+Steps to use our library correctly: \* Import data thanks `import_[your
+table]_csv` (where table can be *periods*, *measures*, *events* or
+*stat\_units*) or import\_FHIR \* Write request with keywords \*
+`create_feature` or `add_description`
 
-#### Observed
+#### When to use `create_feature` or `add_description` ?
+
+`add_description` is use to add a description to the description table
+for a future use.
+
+`create_feature` will add a column in stat\_units table. The
+stats\_units table will contain all the features you want to extract
+(this is the features extraction part).
+
+Basically, **stats\_units table contains the final result**.
+
+#### How does the language work ?
+
+The request starts by the `observed` tag. This will create a `selection`
+table. This one will be used by other tag afterwards.
+
+The user can add time selection keywords (**cf. 4. keywords**) to select
+a range time or refine his request.
+
+The range period can be selected for each data, before or after a date
+to highlights a data. (**cf. 4. keywords, before or after**)
+
+On the contrary the `from [...] to` select an absolute time range
+between two weel-defined dates.
+
+`during` is used for selecting an element from the the selection table
+which take place during a period of time.
+
+#### What do you mean by `model` ?
+
+A `model` in this documentation is an Analysr Env.
+
+An Analysr Env (named `analysr_env`) is by default created in the
+package environment.
+
+This is why we use `analysr_env` at the beginning of a request, like
+this one:
+
+``` r
+(
+  analysr_env
+  %>% observed(`Diastolic Blood Pressure` > 125)  
+  %>% at_most(45*days)
+  %>% after(`Subcutaneous immunotherapy`)
+)
+```
+
+As most of the keywords return an updated model, you can also do
+something like that:
+
+``` r
+model <- (
+  analysr_env
+  %>% observed(`Diastolic Blood Pressure` > 125)  
+  %>% after(`Subcutaneous immunotherapy`)
+)
+
+(
+  model 
+  %>% observed(`Microalbumin Creatinine Ratio` > 300)  
+  %>% before(`Renal dialysis (procedure)`)
+)
+```
+
+The `restrict` function is usefull to get a restricted version of your
+model to some condition.
+
+If you want to create a new one use `setup_new_env` function.
+
+### 3\. Functions to edit data
+
+#### “Inducing” functions
+
+##### induce\_period
+
+This fucntion allows you to create period from measures table depending
+on a condition (on measures or events), and add them to periods table.
+
+``` r
+induce_event(model = analysr_env, condition, tag_to_create)
+```
+
+##### induce\_event
+
+This function allows you to create event from measures table depending
+on a condition, and add them to events table.
+
+``` r
+induce_event(model = analysr_env, condition, tag_to_create)
+```
+
+##### induce\_measure
+
+This function allows you to create a measure from using a certain
+function.
+
+``` r
+induce_measure(model = analysr_env, tag_to_create, calcul, tag_ref)
+```
+
+For exemple if you want to create a Body Mass Index (named BMI here)
+entry for each Weight entry you have to use this:
+
+``` r
+induce_measure(analysr_env, "BMI", Weight / (Size * Size))
+```
+
+This function operate only on measure table.
+
+#### fix\_granularity
+
+This function allow you to sets a given granularity to a set of data by
+aggregating or imputing them.
+
+``` r
+fix_granularity(
+  tag_wanted,
+  period_start,
+  period_end,
+  temporal_granularity,
+  stat_unit_wanted = NULL,
+  aggregation_method = mean_aggregate,
+  impute_method = linear_impute,
+  information_lost_after = 5 * temporal_granularity
+)
+```
+
+### 4\. Keywords
+
+#### A) **observed**
 
 A query always starts with observed, as follows: - **observed**(*model*,
 conditions) This function can be complemented by various keywords that
 do not work alone, see the secondary keywords below.
 
-#### Secondary keywords
-
-These keywords complement other keywords for specific information.
-
-##### before
+#### B) **before**
 
 The **before** function is used to return the set of events or
 measurements that verify a certain condition observed before an event /
@@ -98,7 +226,7 @@ Example :
 This query returns all patients with a microalbumin-creatinine ratio
 greater than 300 mg/g before dialysis.
 
-##### after
+#### C) **after**
 
 The **after** function is used to return the set of events or
 measurements that verify a certain condition observed after an event /
@@ -117,7 +245,7 @@ Example :
 This query returns all patients with a diastolic blood pressure above
 mmHg after subcutaneous immunotherapy.
 
-##### at\_most
+#### D) **at\_most**
 
 The **at\_most** function returns the set of events or measurements that
 verify a certain condition observed at most (at\_most) a certain amount
@@ -137,7 +265,7 @@ Example :
 This query returns all measures with a diastolic blood pressure greater
 than mmHg at least 45 days after subcutaneous immunotherapy.
 
-##### at\_least
+#### E) **at\_least**
 
 The **at\_least** function returns the set of events or measurements
 that verify a certain condition observed at least (at\_least) a certain
@@ -157,7 +285,7 @@ Example :
 This query returns all measures where patients were tested positive for
 hepatitis C antibodies at least 10 days after a standard pregnancy test.
 
-##### add\_description
+#### F) **add\_description**
 
 The **add\_description** function adds a description to the description
 table.
@@ -178,7 +306,7 @@ This query adds `Hypertension after immunotherapy` to the table
 description for people with blood pressure \>125 mm Hg up to 45 days
 after subcutaneous immunotherapy.
 
-##### from / to
+#### G) **from / to**
 
 The **from/to** functions are used to return all the events or
 measurements included in a period between two defined dates.
@@ -197,7 +325,7 @@ Example :
 This query returns people who had a blood pressure above 125 mmHg
 between 6 February 2013 at 7pm and 8 October 2014 at 8pm.
 
-##### inside
+#### H) **inside** or **during**
 
 The **inside** function is used to return the set of events or
 measurements that verify a certain condition observed during a certain
@@ -216,7 +344,7 @@ Example :
 This query returns all patients with a respiratory rate greater than
 12/min during respiration therapy.
 
-##### outside
+#### I) **outside**
 
 The **outside** function is used to return the set of events or
 measurements that verify a certain condition observed outside a certain
@@ -235,9 +363,38 @@ Example :
 This query returns all measures with a diastolic blood pressure greater
 than 75 mmHg outside their diabetes self-management plan period.
 
-### 4\. Import functions
+#### J) **restrict** or **create\_cohort**
 
-##### import\_events\_csv
+The **restrict** function allow you to restrict your model to a specific
+environment. Example :
+
+``` r
+model <- (
+  analysr_env
+  %>% restrict(`Diastolic Blood Pressure`  >= 75)
+)
+```
+
+or
+
+``` r
+model <- restrict(analysr_env, `Diastolic Blood Pressure`  >= 75)
+```
+
+to restrain your model only to the stat units who have a measure named
+*“Diastolic Blood Pressure”* which is over *75* (unit unknown there).
+
+#### K) **add\_description**
+
+#### L) **extract\_feature**
+
+#### M) **create\_feature**
+
+#### N) **export\_raw** (*no test*)
+
+### 5\. Import functions
+
+#### A) **import\_events\_csv**
 
 The **import\_events\_csv** function is used to import the events table
 from a CSV file.
@@ -252,7 +409,7 @@ import_events_csv(
     tag = "DESCRIPTION")
 ```
 
-##### import\_measures\_csv
+#### B) **import\_measures\_csv**
 
 The import\_measures\_csv function is used to import the measures table
 from a CSV file.
@@ -268,7 +425,7 @@ import_measures_csv(
     value = "VALUE")
 ```
 
-##### import\_periods\_csv
+#### C) **import\_periods\_csv**
 
 The **import\_periods\_csv** function is used to import the periods
 table from a CSV file.
@@ -284,7 +441,7 @@ import_periods_csv(
     tag = "DESCRIPTION")
 ```
 
-##### import\_stat\_units\_csv
+#### D) **import\_stat\_units\_csv**
 
 The **import\_stat\_units\_csv** function is used to import the periods
 table from a CSV file.
@@ -298,3 +455,19 @@ import_stat_units_csv(
     optional_data = c("BIRTHDATE","DEATHDATE","FIRST","LAST","RACE","ETHNICITY","GENDER","STATE","HEALTHCARE_EXPENSES","HEALTHCARE_COVERAGE")
 )
 ```
+
+#### E) **import\_FHIR**
+
+The **import\_FHIR** function is used to import data from a stat\_units
+(here *de facto* a patient) from a FHIR file.
+
+Example :
+
+``` r
+import_stat_units_csv(
+    folder_path = "./fhir_files/"
+)
+```
+
+This will import all the FHIR files which are in the `./fhir_files/`
+folder.
