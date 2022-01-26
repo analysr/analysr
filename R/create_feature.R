@@ -24,8 +24,8 @@ create_feature <-
            aggregation_method = mean_aggregate){
 
     data <- subset(model$measures, tag == wanted_tag)
-    data <- subset (data, date <= end)
-    data <- subset (data, date >= start)
+    data <- subset(data, date <= end)
+    data <- subset(data, date >= start)
 
     to_add <- tibble::tibble(stat_unit = integer(0), new = numeric(0))
 
@@ -40,8 +40,9 @@ create_feature <-
     }
 
   colnames(to_add) <- c("stat_unit", tag_to_create)
-  model$stat_units <- dplyr::left_join(model$stat_units, to_add, by = "stat_unit")
+  model$stat_units <- dplyr::left_join(model$stat_units, to_add,
+                                      by = "stat_unit")
 
   model
-  }
+}
 

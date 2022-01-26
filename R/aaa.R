@@ -61,6 +61,7 @@ setup_new_env <- function() {
     # create data frame for selection
     analysr_env$selection <- tibble::tibble(stat_unit = character(0),
                                     date = as.POSIXct(NA))
+    # TODO: change default columns of this df
 
     # Params: how to convert space to underscore
     analysr_env$space_to_underscore <- FALSE
