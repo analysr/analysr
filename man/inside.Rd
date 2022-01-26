@@ -15,7 +15,6 @@ during(model, period_wanted)
 \item{period_wanted}{A period from the period table.}
 }
 \description{
-inside
-
-during
+The inside function is used to return the set of events or measurements that
+verify a certain condition observed during a certain period.
 }

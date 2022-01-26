@@ -12,5 +12,6 @@ after(model, condition)
 \item{condition}{A condition}
 }
 \description{
-after
+The after function is used to return the set of events or measurements that
+verify a certain condition observed after an event / measurement.
 }

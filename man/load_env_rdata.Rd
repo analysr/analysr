@@ -10,5 +10,5 @@ load_env_rdata(save_path)
 \item{save_path}{A path to the save file}
 }
 \description{
-Load saved environment from a Rdata file
+Load saved environment from a Rdata file.
 }

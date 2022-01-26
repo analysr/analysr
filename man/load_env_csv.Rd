@@ -10,5 +10,5 @@ load_env_csv(save_path)
 \item{save_path}{A path to the save folder}
 }
 \description{
-Load saved environment from a folder containing
+Load saved environment from a folder containing.
 }

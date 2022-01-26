@@ -12,5 +12,6 @@ observed(model, condition)
 \item{condition}{A condition}
 }
 \description{
-observed
+This function can be complemented by various keywords that do not work alone,
+see the secondary keywords on the documentation.
 }

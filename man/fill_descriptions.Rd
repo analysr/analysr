@@ -20,5 +20,5 @@ Default: \code{analysr_env}}
 }
 \description{
 A function to fill descriptions table when importing data
-(typically those which are not in mandatory)
+(typically those which are not in mandatory).
 }

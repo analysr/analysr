@@ -13,7 +13,7 @@ save_env_rdata(save_path, model = analysr_env)
 \item{model}{a AnalysR Model (default : \code{analysr_env})}
 }
 \description{
-Save current environment in a Rdata file
+Save current environment in a Rdata file.
 }
 \examples{
 save_env_rdata("~/")

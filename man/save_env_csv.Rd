@@ -13,7 +13,7 @@ save_env_csv(save_path, model = analysr_env)
 \item{model}{a AnalysR Model (default : \code{analysr_env})}
 }
 \description{
-Save current environment in a folder containing CSV
+Save current environment in a folder containing CSV.
 }
 \examples{
 save_env_csv("~/")

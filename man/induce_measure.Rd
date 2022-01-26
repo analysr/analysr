@@ -20,5 +20,5 @@ Default: \code{analysr_env}}
 A AnalysR model
 }
 \description{
-induce_measure
+This function allows you to create a measure from using a certain function.
 }

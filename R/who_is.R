@@ -2,7 +2,6 @@
 
 #' who_is
 #'
-#' @name who_is
 #'
 #' A function which does the same as `described_by` function.
 #' The who_is function allows you to filter the selection table

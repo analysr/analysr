@@ -56,5 +56,5 @@ Default: \code{analysr_env}}
 A boolean (\code{TRUE} if no errors)
 }
 \description{
-Import measures from a CSV file
+Import measures from a CSV file.
 }

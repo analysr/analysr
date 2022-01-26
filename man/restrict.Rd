@@ -18,7 +18,6 @@ create_cohort(env, condition, catch = TRUE)
 (not mandotary)}
 }
 \description{
-restrict
-
-create_cohort
+The restrict function is usefull to get a restricted version of your model
+to some condition.
 }

@@ -30,5 +30,5 @@ Default: \code{analysr_env}}
 A boolean (\code{TRUE} if no errors)
 }
 \description{
-Import stat_units from a CSV file
+Import stat_units from a CSV file.
 }

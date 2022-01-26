@@ -12,5 +12,6 @@ before(model, condition)
 \item{condition}{A condition}
 }
 \description{
-before
+The before function is used to return the set of events or measurements that
+verify a certain condition observed before an event / measurement.
 }

@@ -12,5 +12,8 @@ extract_feature(model, tag)
 \item{tag}{A tag existing in the description table}
 }
 \description{
-extract_feature
+The extract_feature function is quite the same goal as create_feature.
+This function create a new coll named with the description tag in
+the stat_units table.
+The function will extract feature form the description table.
 }

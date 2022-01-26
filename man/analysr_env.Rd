@@ -5,7 +5,7 @@
 \alias{analysr_env}
 \title{analysr_env}
 \format{
-An object of class \code{environment} of length 8.
+An object of class \code{environment} of length 9.
 }
 \usage{
 analysr_env

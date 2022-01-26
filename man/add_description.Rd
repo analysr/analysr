@@ -12,5 +12,5 @@ add_description(input, label)
 \item{label}{Label to write in description table}
 }
 \description{
-add_description
+The add_description function adds a description to the description table.
 }

@@ -53,5 +53,5 @@ Default: \code{analysr_env}}
 A boolean (\code{TRUE} if no errors)
 }
 \description{
-Import periods from a CSV file
+Import periods from a CSV file.
 }

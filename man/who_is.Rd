@@ -12,5 +12,8 @@ who_is(model, condition)
 \item{condition}{A condition.}
 }
 \description{
-who_is
+A function which does the same as \code{described_by} function.
+The who_is function allows you to filter the selection table
+(or if you want this allows you to refine the request) only on description
+of the stat units which is mainly.
 }

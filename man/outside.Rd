@@ -12,5 +12,6 @@ outside(model, period_wanted)
 \item{period_wanted}{A period from the period table.}
 }
 \description{
-outside
+The outside function is used to return the set of events or measurements
+that verify a certain condition observed outside a certain period.
 }

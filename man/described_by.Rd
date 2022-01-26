@@ -12,5 +12,6 @@ described_by(model, condition)
 \item{condition}{A condition.}
 }
 \description{
-described_by
+The described_by function allows you to filter the selection table
+(or if you want this allows you to refine the request).
 }

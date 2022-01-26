@@ -89,6 +89,9 @@ extract_folder <- function(model, unit) {
 
 #' export_raw
 #'
+#' The export_raw function is an experimental feature.
+#' There is no unit test. This allows you to export data grouped by stat_units.
+#'
 #' @param model An AnalysR model
 #' @param tag A tag
 #'
