@@ -90,10 +90,7 @@
 <div class="section level3">
 <h3 id="1-general-concepts">1. General concepts<a class="anchor" aria-label="anchor" href="#1-general-concepts"></a>
 </h3>
-<p>We use <code>magrittr</code> which is a forward-pipe operator for R. This provides a mechanism for chaining commands with a new forward-pipe operator: <strong>%&gt;%</strong>. This operator passes a value, or the result of an expression, into the next function call or expression. Note that this is not a pipe. For example :<br>
-- <strong>x %&gt;% f</strong> is equivalent to <strong>f(x)</strong><br>
-- <strong>x %&gt;% f(y)</strong> is equivalent to <strong>f(x, y)</strong><br>
-- <strong>x %&gt;% f %&gt;% g %&gt;% h</strong> is equivalent to <strong>h(g(f(x)))</strong></p>
+<p>We use <code>magrittr</code> which is a forward-pipe operator for R. This provides a mechanism for chaining commands with a new forward-pipe operator: <strong>%&gt;%</strong>. This operator passes a value, or the result of an expression, into the next function call or expression. Note that this is not a pipe. For example : - <strong>x %&gt;% f</strong> is equivalent to <strong>f(x)</strong> - <strong>x %&gt;% f(y)</strong> is equivalent to <strong>f(x, y)</strong> - <strong>x %&gt;% f %&gt;% g %&gt;% h</strong> is equivalent to <strong>h(g(f(x)))</strong></p>
 </div>
 <div class="section level3">
 <h3 id="2-general-operation-of-our-query-language">2. General operation of our query language<a class="anchor" aria-label="anchor" href="#2-general-operation-of-our-query-language"></a>
@@ -106,8 +103,8 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span>
   <span class="va">analysr_env</span>
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>  
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/at_most.html">at_most</a></span><span class="op">(</span><span class="fl">45</span><span class="op">*</span><span class="va">days</span><span class="op">)</span> 
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/at_most.html">at_most</a></span><span class="op">(</span><span class="fl">45</span><span class="op">*</span><span class="va">days</span><span class="op">)</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/add_description.html">add_description</a></span><span class="op">(</span><span class="va">`Hypertension after immunotherapy`</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
@@ -138,7 +135,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span>
   <span class="va">analysr_env</span>
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>  
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/at_most.html">at_most</a></span><span class="op">(</span><span class="fl">45</span><span class="op">*</span><span class="va">days</span><span class="op">)</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
@@ -146,16 +143,16 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="op">(</span>
   <span class="va">analysr_env</span>
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>  
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
 <span class="op">)</span>
 
 <span class="op">(</span>
-  <span class="va">model</span> 
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Microalbumin Creatinine Ratio`</span> <span class="op">&gt;</span> <span class="fl">300</span><span class="op">)</span>  
+  <span class="va">model</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Microalbumin Creatinine Ratio`</span> <span class="op">&gt;</span> <span class="fl">300</span><span class="op">)</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/before.html">before</a></span><span class="op">(</span><span class="va">`Renal dialysis (procedure)`</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<p>The <code>restrict</code> function is usefull to get a restricted version of your model to some condition.</p>
+<p>The <code>restrict</code> function is useful to get a restricted version of your model to some condition.</p>
 <p>If you want to create a new one use <code>setup_new_env</code> function.</p>
 </div>
 </div>
@@ -226,7 +223,7 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span>
   <span class="va">analysr_env</span>
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Microalbumin Creatinine Ratio`</span> <span class="op">&gt;</span> <span class="fl">300</span><span class="op">)</span>  
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Microalbumin Creatinine Ratio`</span> <span class="op">&gt;</span> <span class="fl">300</span><span class="op">)</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/before.html">before</a></span><span class="op">(</span><span class="va">`Renal dialysis (procedure)`</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>This query returns all patients with a microalbumin-creatinine ratio greater than 300 mg/g before dialysis.</p>
@@ -240,7 +237,7 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span>
   <span class="va">analysr_env</span>
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>  
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>This query returns all patients with a diastolic blood pressure above mmHg after subcutaneous immunotherapy.</p>
@@ -254,7 +251,7 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span>
   <span class="va">analysr_env</span>
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>  
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/at_most.html">at_most</a></span><span class="op">(</span><span class="fl">45</span><span class="op">*</span><span class="va">days</span><span class="op">)</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
@@ -276,42 +273,26 @@
 <p>This query returns all measures where patients were tested positive for hepatitis C antibodies at least 10 days after a standard pregnancy test.</p>
 </div>
 <div class="section level4">
-<h4 id="f-add_description">F) <strong>add_description</strong>
-<a class="anchor" aria-label="anchor" href="#f-add_description"></a>
-</h4>
-<p>The <strong>add_description</strong> function adds a description to the description table.</p>
-<p>Example :</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span>
-  <span class="va">analysr_env</span>
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>  
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/at_most.html">at_most</a></span><span class="op">(</span><span class="fl">45</span><span class="op">*</span><span class="va">days</span><span class="op">)</span> 
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
-  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/add_description.html">add_description</a></span><span class="op">(</span><span class="va">`Hypertension after immunotherapy`</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
-<p>This query adds <code>Hypertension after immunotherapy</code> to the table description for people with blood pressure &gt;125 mm Hg up to 45 days after subcutaneous immunotherapy.</p>
-</div>
-<div class="section level4">
-<h4 id="g-from--to">G) <strong>from / to</strong>
-<a class="anchor" aria-label="anchor" href="#g-from--to"></a>
+<h4 id="f-from--to">F) <strong>from / to</strong>
+<a class="anchor" aria-label="anchor" href="#f-from--to"></a>
 </h4>
 <p>The <strong>from/to</strong> functions are used to return all the events or measurements included in a period between two defined dates.</p>
 <p>Example :</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>(</span>
-<span id="cb16-2"><a href="#cb16-2"></a>  analysr_env</span>
-<span id="cb16-3"><a href="#cb16-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">observed</span>(<span class="st">`</span><span class="dt">Diastolic Blood Pressure</span><span class="st">`</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">125</span>)  </span>
-<span id="cb16-4"><a href="#cb16-4"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">from</span>(<span class="dv">2013-02</span><span class="op">-</span>06T19<span class="op">:</span><span class="dv">00</span><span class="op">:</span>00Z) </span>
-<span id="cb16-5"><a href="#cb16-5"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">to</span>(<span class="dv">2014-10</span><span class="op">-</span>08T20<span class="op">:</span><span class="dv">00</span><span class="op">:</span>00Z)</span>
-<span id="cb16-6"><a href="#cb16-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>(</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  analysr_env</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">observed</span>(<span class="st">`</span><span class="dt">Diastolic Blood Pressure</span><span class="st">`</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">125</span>)</span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">from</span>(<span class="dv">2013-02</span><span class="op">-</span>06T19<span class="op">:</span><span class="dv">00</span><span class="op">:</span>00Z)</span>
+<span id="cb15-5"><a href="#cb15-5"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">to</span>(<span class="dv">2014-10</span><span class="op">-</span>08T20<span class="op">:</span><span class="dv">00</span><span class="op">:</span>00Z)</span>
+<span id="cb15-6"><a href="#cb15-6"></a>)</span></code></pre></div>
 <p>This query returns people who had a blood pressure above 125 mmHg between 6 February 2013 at 7pm and 8 October 2014 at 8pm.</p>
 </div>
 <div class="section level4">
-<h4 id="h-inside-or-during">H) <strong>inside</strong> or <strong>during</strong>
-<a class="anchor" aria-label="anchor" href="#h-inside-or-during"></a>
+<h4 id="g-inside-or-during">G) <strong>inside</strong> or <strong>during</strong>
+<a class="anchor" aria-label="anchor" href="#g-inside-or-during"></a>
 </h4>
 <p>The <strong>inside</strong> function is used to return the set of events or measurements that verify a certain condition observed during a certain period.</p>
 <p>Example :</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span>
   <span class="va">analysr_env</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Respiratory rate`</span>  <span class="op">&gt;=</span> <span class="fl">12</span><span class="op">)</span>
@@ -320,12 +301,12 @@
 <p>This query returns all patients with a respiratory rate greater than 12/min during respiration therapy.</p>
 </div>
 <div class="section level4">
-<h4 id="i-outside">I) <strong>outside</strong>
-<a class="anchor" aria-label="anchor" href="#i-outside"></a>
+<h4 id="h-outside">H) <strong>outside</strong>
+<a class="anchor" aria-label="anchor" href="#h-outside"></a>
 </h4>
 <p>The <strong>outside</strong> function is used to return the set of events or measurements that verify a certain condition observed outside a certain period.</p>
 <p>Example :</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span>
   <span class="va">analysr_env</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span>  <span class="op">&gt;=</span> <span class="fl">75</span><span class="op">)</span>
@@ -334,38 +315,93 @@
 <p>This query returns all measures with a diastolic blood pressure greater than 75 mmHg outside their diabetes self-management plan period.</p>
 </div>
 <div class="section level4">
-<h4 id="j-restrict-or-create_cohort">J) <strong>restrict</strong> or <strong>create_cohort</strong>
-<a class="anchor" aria-label="anchor" href="#j-restrict-or-create_cohort"></a>
+<h4 id="i-restrict-or-create_cohort">I) <strong>restrict</strong> or <strong>create_cohort</strong>
+<a class="anchor" aria-label="anchor" href="#i-restrict-or-create_cohort"></a>
 </h4>
 <p>The <strong>restrict</strong> function allow you to restrict your model to a specific environment. Example :</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="op">(</span>
   <span class="va">analysr_env</span>
   <span class="op">%&gt;%</span> <span class="fu"><a href="reference/restrict.html">restrict</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span>  <span class="op">&gt;=</span> <span class="fl">75</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>or</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/restrict.html">restrict</a></span><span class="op">(</span><span class="va">analysr_env</span>, <span class="va">`Diastolic Blood Pressure`</span>  <span class="op">&gt;=</span> <span class="fl">75</span><span class="op">)</span></code></pre></div>
 <p>to restrain your model only to the stat units who have a measure named <em>“Diastolic Blood Pressure”</em> which is over <em>75</em> (unit unknown there).</p>
 </div>
 <div class="section level4">
-<h4 id="k-add_description">K) <strong>add_description</strong>
-<a class="anchor" aria-label="anchor" href="#k-add_description"></a>
+<h4 id="j-add_description">J) <strong>add_description</strong>
+<a class="anchor" aria-label="anchor" href="#j-add_description"></a>
 </h4>
+<p>The <strong>add_description</strong> function adds a description to the description table. The stat units described by the tag passed in argument:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/add_description.html">add_description</a></span><span class="op">(</span><span class="va">input</span>, <span class="va">label</span><span class="op">)</span></code></pre></div>
+<p>The <code>input</code> can be a vector of stat units or an AnalysR env.</p>
+<p>Example 1:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span>
+  <span class="va">analysr_env</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">`Diastolic Blood Pressure`</span> <span class="op">&gt;</span> <span class="fl">125</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/at_most.html">at_most</a></span><span class="op">(</span><span class="fl">45</span><span class="op">*</span><span class="va">days</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/after.html">after</a></span><span class="op">(</span><span class="va">`Subcutaneous immunotherapy`</span><span class="op">)</span>
+  <span class="op">%&gt;%</span> <span class="fu"><a href="reference/add_description.html">add_description</a></span><span class="op">(</span><span class="va">`Hypertension after immunotherapy`</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>This query adds <code>Hypertension after immunotherapy</code> to the table description for people with blood pressure &gt;125 mm Hg up to 45 days after subcutaneous immunotherapy.</p>
+<p>Exemple 2:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/add_description.html">add_description</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>, <span class="st">"Fever"</span><span class="op">)</span></code></pre></div>
+<p>Example 2:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/add_description.html">add_description</a></span><span class="op">(</span><span class="va">analysr_env</span>, <span class="st">"Fever"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="l-extract_feature">L) <strong>extract_feature</strong>
-<a class="anchor" aria-label="anchor" href="#l-extract_feature"></a>
+<h4 id="l-create_feature">L) <strong>create_feature</strong>
+<a class="anchor" aria-label="anchor" href="#l-create_feature"></a>
 </h4>
+<p>This function create a new coll named with the description tag in the stat_units table. <strong>The function will extract feature form the measure table.</strong> You need to specify which tag you want, in which period you want to execute the aggregation method and which col name you want in the stat_units table.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/create_feature.html">create_feature</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  <span class="va">tag_to_create</span>,
+  <span class="va">wanted_tag</span>,
+  <span class="va">start</span>,
+  <span class="va">end</span>,
+  aggregation_method <span class="op">=</span> <span class="va">mean_aggregate</span>
+<span class="op">)</span></code></pre></div>
+<p>Example:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a> model &lt;-<span class="st"> </span><span class="kw">create_feature</span>(analysr_env,</span>
+<span id="cb25-2"><a href="#cb25-2"></a>                          <span class="st">"Temp_average_2006"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3"></a>                          <span class="st">"Temperature"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4"></a>                          lubridate<span class="op">::</span><span class="kw">parse_date_time</span>(<span class="st">"2006/01/01 01:00:00"</span>, <span class="st">"ymd-HMS"</span>),</span>
+<span id="cb25-5"><a href="#cb25-5"></a>                          lubridate<span class="op">::</span><span class="kw">parse_date_time</span>(<span class="st">"2006/12/31 23:59:00"</span>, <span class="st">"ymd-HMS"</span>))</span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="m-create_feature">M) <strong>create_feature</strong>
-<a class="anchor" aria-label="anchor" href="#m-create_feature"></a>
+<h4 id="m-extract_feature">M) <strong>extract_feature</strong>
+<a class="anchor" aria-label="anchor" href="#m-extract_feature"></a>
 </h4>
+<p>The <strong>extract_feature</strong> function is quite the same goal as <strong>create_feature</strong>. This function create a new coll named with the description tag in the stat_units table. <strong>The function will extract feature form the description table.</strong></p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/extract_feature.html">extract_feature</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">tag</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="n-export_raw-no-test">N) <strong>export_raw</strong> (<em>no test</em>)<a class="anchor" aria-label="anchor" href="#n-export_raw-no-test"></a>
+<h4 id="n-described_by">N) <strong>described_by</strong>
+<a class="anchor" aria-label="anchor" href="#n-described_by"></a>
 </h4>
+<p>The <strong>described_by</strong> function allows you to filter the selection table (or if you want this allows you to refine the request).</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/described_by.html">described_by</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">condition</span><span class="op">)</span></code></pre></div>
+<p>Exemple:</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span>
+    <span class="va">analysr_env</span>
+    <span class="op">%&gt;%</span> <span class="fu"><a href="reference/observed.html">observed</a></span><span class="op">(</span><span class="va">Temperature</span> <span class="op">&gt;</span> <span class="fl">38</span><span class="op">)</span>
+    <span class="op">%&gt;%</span> <span class="fu"><a href="reference/described_by.html">described_by</a></span><span class="op">(</span><span class="va">Gender</span> <span class="op">==</span> <span class="st">"Male"</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="o-export_raw-no-test">O) <strong>export_raw</strong> (<em>no test</em>)<a class="anchor" aria-label="anchor" href="#o-export_raw-no-test"></a>
+</h4>
+<p>The <strong>export_raw</strong> function is an experimental feature. There is no unit test. This allows you to export data grouped by stat_units.</p>
 </div>
 </div>
 <div class="section level3">
@@ -377,7 +413,7 @@
 </h4>
 <p>The <strong>import_events_csv</strong> function is used to import the events table from a CSV file.</p>
 <p>Example :</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/import_events_csv.html">import_events_csv</a></span><span class="op">(</span>
     csv_path <span class="op">=</span> <span class="st">"csv_events_path"</span>,
     stat_unit <span class="op">=</span> <span class="st">"PATIENT"</span>,
@@ -390,7 +426,7 @@
 </h4>
 <p>The import_measures_csv function is used to import the measures table from a CSV file.</p>
 <p>Example :</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/import_measures_csv.html">import_measures_csv</a></span><span class="op">(</span>
     csv_path <span class="op">=</span> <span class="st">"csv_measures_path"</span>,
     stat_unit <span class="op">=</span> <span class="st">"PATIENT"</span>,
@@ -404,7 +440,7 @@
 </h4>
 <p>The <strong>import_periods_csv</strong> function is used to import the periods table from a CSV file.</p>
 <p>Example :</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/import_periods_csv.html">import_periods_csv</a></span><span class="op">(</span>
     csv_path <span class="op">=</span> <span class="st">"csv_periods_path"</span>,
     stat_unit <span class="op">=</span> <span class="st">"PATIENT"</span>,
@@ -418,7 +454,7 @@
 </h4>
 <p>The <strong>import_stat_units_csv</strong> function is used to import the periods table from a CSV file.</p>
 <p>Example :</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/import_stat_units_csv.html">import_stat_units_csv</a></span><span class="op">(</span>
     csv_path <span class="op">=</span> <span class="st">"./benchmark/csv_100/patients_100.csv"</span>,
     stat_unit <span class="op">=</span> <span class="st">"UserId"</span>,
@@ -431,7 +467,7 @@
 </h4>
 <p>The <strong>import_FHIR</strong> function is used to import data from a stat_units (here <em>de facto</em> a patient) from a FHIR file.</p>
 <p>Example :</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/import_stat_units_csv.html">import_stat_units_csv</a></span><span class="op">(</span>
     folder_path <span class="op">=</span> <span class="st">"./fhir_files/"</span>
 <span class="op">)</span></code></pre></div>
