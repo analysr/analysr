@@ -16,8 +16,8 @@ Status](https://travis-ci.com/analysr/analysr.svg?branch=main)](https://travis-c
 
 A query language for time-dependent data analysis.
 
-  - [Package Documentation](https://analysr.github.io/analysr/)
-  - [Learning R](https://analysr.github.io/learning/)
+-   [Package Documentation](https://analysr.github.io/analysr/)
+-   [Learning R](https://analysr.github.io/learning/)
 
 ## Installation
 
@@ -29,18 +29,17 @@ devtools::install_github("analysr/analysr")
 
 ## Usage
 
-### 1\. General concepts
+### 1. General concepts
 
 We use `magrittr` which is a forward-pipe operator for R. This provides
 a mechanism for chaining commands with a new forward-pipe operator:
-**%\>%**. This operator passes a value, or the result of an expression,
+**%>%**. This operator passes a value, or the result of an expression,
 into the next function call or expression. Note that this is not a pipe.
-For example :  
-\- **x %\>% f** is equivalent to **f(x)**  
-\- **x %\>% f(y)** is equivalent to **f(x, y)**  
-\- **x %\>% f %\>% g %\>% h** is equivalent to **h(g(f(x)))**
+For example : - **x %>% f** is equivalent to **f(x)** - **x %>% f(y)**
+is equivalent to **f(x, y)** - **x %>% f %>% g %>% h** is equivalent to
+**h(g(f(x)))**
 
-### 2\. General operation of our query language
+### 2. General operation of our query language
 
 When we code our functions for our keywords, they are of type :
 function(model, params)
@@ -56,32 +55,32 @@ is broken down as follows:
 ``` r
 (
   analysr_env
-  %>% observed(`Diastolic Blood Pressure` > 125)  
-  %>% at_most(45*days) 
+  %>% observed(`Diastolic Blood Pressure` > 125)
+  %>% at_most(45*days)
   %>% after(`Subcutaneous immunotherapy`)
   %>% add_description(`Hypertension after immunotherapy`)
 )
 ```
 
 So *model* must contain the model 5 table, and then we give instructions
-to pass to the next function (so here **at\_most** doesn’t make sense
+to pass to the next function (so here **at_most** doesn’t make sense
 alone).
 
-Steps to use our library correctly: \* Import data thanks `import_[your
-table]_csv` (where table can be *periods*, *measures*, *events* or
-*stat\_units*) or import\_FHIR \* Write request with keywords \*
-`create_feature` or `add_description`
+Steps to use our library correctly: \* Import data thanks
+`import_[your table]_csv` (where table can be *periods*, *measures*,
+*events* or *stat_units*) or import_FHIR \* Write request with keywords
+\* `create_feature` or `add_description`
 
 #### When to use `create_feature` or `add_description` ?
 
 `add_description` is use to add a description to the description table
 for a future use.
 
-`create_feature` will add a column in stat\_units table. The
-stats\_units table will contain all the features you want to extract
-(this is the features extraction part).
+`create_feature` will add a column in stat_units table. The stats_units
+table will contain all the features you want to extract (this is the
+features extraction part).
 
-Basically, **stats\_units table contains the final result**.
+Basically, **stats_units table contains the final result**.
 
 #### How does the language work ?
 
@@ -113,7 +112,7 @@ this one:
 ``` r
 (
   analysr_env
-  %>% observed(`Diastolic Blood Pressure` > 125)  
+  %>% observed(`Diastolic Blood Pressure` > 125)
   %>% at_most(45*days)
   %>% after(`Subcutaneous immunotherapy`)
 )
@@ -125,27 +124,27 @@ something like that:
 ``` r
 model <- (
   analysr_env
-  %>% observed(`Diastolic Blood Pressure` > 125)  
+  %>% observed(`Diastolic Blood Pressure` > 125)
   %>% after(`Subcutaneous immunotherapy`)
 )
 
 (
-  model 
-  %>% observed(`Microalbumin Creatinine Ratio` > 300)  
+  model
+  %>% observed(`Microalbumin Creatinine Ratio` > 300)
   %>% before(`Renal dialysis (procedure)`)
 )
 ```
 
-The `restrict` function is usefull to get a restricted version of your
+The `restrict` function is useful to get a restricted version of your
 model to some condition.
 
 If you want to create a new one use `setup_new_env` function.
 
-### 3\. Functions to edit data
+### 3. Functions to edit data
 
 #### “Inducing” functions
 
-##### induce\_period
+##### induce_period
 
 This fucntion allows you to create period from measures table depending
 on a condition (on measures or events), and add them to periods table.
@@ -154,7 +153,7 @@ on a condition (on measures or events), and add them to periods table.
 induce_event(model = analysr_env, condition, tag_to_create)
 ```
 
-##### induce\_event
+##### induce_event
 
 This function allows you to create event from measures table depending
 on a condition, and add them to events table.
@@ -163,7 +162,7 @@ on a condition, and add them to events table.
 induce_event(model = analysr_env, condition, tag_to_create)
 ```
 
-##### induce\_measure
+##### induce_measure
 
 This function allows you to create a measure from using a certain
 function.
@@ -181,7 +180,7 @@ induce_measure(analysr_env, "BMI", Weight / (Size * Size))
 
 This function operate only on measure table.
 
-#### fix\_granularity
+#### fix_granularity
 
 This function allow you to sets a given granularity to a set of data by
 aggregating or imputing them.
@@ -199,7 +198,7 @@ fix_granularity(
 )
 ```
 
-### 4\. Keywords
+### 4. Keywords
 
 #### A) **observed**
 
@@ -218,7 +217,7 @@ Example :
 ``` r
 (
   analysr_env
-  %>% observed(`Microalbumin Creatinine Ratio` > 300)  
+  %>% observed(`Microalbumin Creatinine Ratio` > 300)
   %>% before(`Renal dialysis (procedure)`)
 )
 ```
@@ -237,7 +236,7 @@ Example :
 ``` r
 (
   analysr_env
-  %>% observed(`Diastolic Blood Pressure` > 125)  
+  %>% observed(`Diastolic Blood Pressure` > 125)
   %>% after(`Subcutaneous immunotherapy`)
 )
 ```
@@ -245,10 +244,10 @@ Example :
 This query returns all patients with a diastolic blood pressure above
 mmHg after subcutaneous immunotherapy.
 
-#### D) **at\_most**
+#### D) **at_most**
 
-The **at\_most** function returns the set of events or measurements that
-verify a certain condition observed at most (at\_most) a certain amount
+The **at_most** function returns the set of events or measurements that
+verify a certain condition observed at most (at_most) a certain amount
 of time after (after) or before (before) an event / measurement.
 
 Example :
@@ -256,7 +255,7 @@ Example :
 ``` r
 (
   analysr_env
-  %>% observed(`Diastolic Blood Pressure` > 125)  
+  %>% observed(`Diastolic Blood Pressure` > 125)
   %>% at_most(45*days)
   %>% after(`Subcutaneous immunotherapy`)
 )
@@ -265,11 +264,11 @@ Example :
 This query returns all measures with a diastolic blood pressure greater
 than mmHg at least 45 days after subcutaneous immunotherapy.
 
-#### E) **at\_least**
+#### E) **at_least**
 
-The **at\_least** function returns the set of events or measurements
-that verify a certain condition observed at least (at\_least) a certain
-amount of time after (after) or before (before) an event / measurement.
+The **at_least** function returns the set of events or measurements that
+verify a certain condition observed at least (at_least) a certain amount
+of time after (after) or before (before) an event / measurement.
 
 Example :
 
@@ -285,28 +284,7 @@ Example :
 This query returns all measures where patients were tested positive for
 hepatitis C antibodies at least 10 days after a standard pregnancy test.
 
-#### F) **add\_description**
-
-The **add\_description** function adds a description to the description
-table.
-
-Example :
-
-``` r
-(
-  analysr_env
-  %>% observed(`Diastolic Blood Pressure` > 125)  
-  %>% at_most(45*days) 
-  %>% after(`Subcutaneous immunotherapy`)
-  %>% add_description(`Hypertension after immunotherapy`)
-)
-```
-
-This query adds `Hypertension after immunotherapy` to the table
-description for people with blood pressure \>125 mm Hg up to 45 days
-after subcutaneous immunotherapy.
-
-#### G) **from / to**
+#### F) **from / to**
 
 The **from/to** functions are used to return all the events or
 measurements included in a period between two defined dates.
@@ -316,8 +294,8 @@ Example :
 ``` r
 (
   analysr_env
-  %>% observed(`Diastolic Blood Pressure` > 125)  
-  %>% from(2013-02-06T19:00:00Z) 
+  %>% observed(`Diastolic Blood Pressure` > 125)
+  %>% from(2013-02-06T19:00:00Z)
   %>% to(2014-10-08T20:00:00Z)
 )
 ```
@@ -325,7 +303,7 @@ Example :
 This query returns people who had a blood pressure above 125 mmHg
 between 6 February 2013 at 7pm and 8 October 2014 at 8pm.
 
-#### H) **inside** or **during**
+#### G) **inside** or **during**
 
 The **inside** function is used to return the set of events or
 measurements that verify a certain condition observed during a certain
@@ -344,7 +322,7 @@ Example :
 This query returns all patients with a respiratory rate greater than
 12/min during respiration therapy.
 
-#### I) **outside**
+#### H) **outside**
 
 The **outside** function is used to return the set of events or
 measurements that verify a certain condition observed outside a certain
@@ -363,7 +341,7 @@ Example :
 This query returns all measures with a diastolic blood pressure greater
 than 75 mmHg outside their diabetes self-management plan period.
 
-#### J) **restrict** or **create\_cohort**
+#### I) **restrict** or **create_cohort**
 
 The **restrict** function allow you to restrict your model to a specific
 environment. Example :
@@ -384,19 +362,112 @@ model <- restrict(analysr_env, `Diastolic Blood Pressure`  >= 75)
 to restrain your model only to the stat units who have a measure named
 *“Diastolic Blood Pressure”* which is over *75* (unit unknown there).
 
-#### K) **add\_description**
+#### J) **add_description**
 
-#### L) **extract\_feature**
+The **add_description** function adds a description to the description
+table. The stat units described by the tag passed in argument:
 
-#### M) **create\_feature**
+``` r
+add_description(input, label)
+```
 
-#### N) **export\_raw** (*no test*)
+The `input` can be a vector of stat units or an AnalysR env.
 
-### 5\. Import functions
+Example 1:
 
-#### A) **import\_events\_csv**
+``` r
+(
+  analysr_env
+  %>% observed(`Diastolic Blood Pressure` > 125)
+  %>% at_most(45*days)
+  %>% after(`Subcutaneous immunotherapy`)
+  %>% add_description(`Hypertension after immunotherapy`)
+)
+```
 
-The **import\_events\_csv** function is used to import the events table
+This query adds `Hypertension after immunotherapy` to the table
+description for people with blood pressure \>125 mm Hg up to 45 days
+after subcutaneous immunotherapy.
+
+Exemple 2:
+
+``` r
+add_description(c(1, 6, 6), "Fever")
+```
+
+Example 2:
+
+``` r
+add_description(analysr_env, "Fever")
+```
+
+#### L) **create_feature**
+
+This function create a new coll named with the description tag in the
+stat_units table. **The function will extract feature form the measure
+table.** You need to specify which tag you want, in which period you
+want to execute the aggregation method and which col name you want in
+the stat_units table.
+
+``` r
+create_feature(
+  model,
+  tag_to_create,
+  wanted_tag,
+  start,
+  end,
+  aggregation_method = mean_aggregate
+)
+```
+
+Example:
+
+     model <- create_feature(analysr_env,
+                              "Temp_average_2006",
+                              "Temperature",
+                              lubridate::parse_date_time("2006/01/01 01:00:00", "ymd-HMS"),
+                              lubridate::parse_date_time("2006/12/31 23:59:00", "ymd-HMS"))
+
+#### M) **extract_feature**
+
+The **extract_feature** function is quite the same goal as
+**create_feature**. This function create a new coll named with the
+description tag in the stat_units table. **The function will extract
+feature form the description table.**
+
+``` r
+extract_feature(model, tag)
+```
+
+#### N) **described_by**
+
+The **described_by** function allows you to filter the selection table
+(or if you want this allows you to refine the request).
+
+``` r
+described_by(model, condition)
+```
+
+Exemple:
+
+``` r
+(
+    analysr_env
+    %>% observed(Temperature > 38)
+    %>% described_by(Gender == "Male")
+)
+```
+
+#### O) **export_raw** (*no test*)
+
+The **export_raw** function is an experimental feature. There is no unit
+test. This allows you to export data grouped by stat_units.
+
+### 5. Import functions
+
+#### A) **import_events_csv**
+
+The **import_events_csv** function is used to import the events table
 from a CSV file.
 
 Example :
@@ -409,9 +480,9 @@ import_events_csv(
     tag = "DESCRIPTION")
 ```
 
-#### B) **import\_measures\_csv**
+#### B) **import_measures_csv**
 
-The import\_measures\_csv function is used to import the measures table
+The import_measures_csv function is used to import the measures table
 from a CSV file.
 
 Example :
@@ -425,10 +496,10 @@ import_measures_csv(
     value = "VALUE")
 ```
 
-#### C) **import\_periods\_csv**
+#### C) **import_periods_csv**
 
-The **import\_periods\_csv** function is used to import the periods
-table from a CSV file.
+The **import_periods_csv** function is used to import the periods table
+from a CSV file.
 
 Example :
 
@@ -441,9 +512,9 @@ import_periods_csv(
     tag = "DESCRIPTION")
 ```
 
-#### D) **import\_stat\_units\_csv**
+#### D) **import_stat_units_csv**
 
-The **import\_stat\_units\_csv** function is used to import the periods
+The **import_stat_units_csv** function is used to import the periods
 table from a CSV file.
 
 Example :
@@ -456,9 +527,9 @@ import_stat_units_csv(
 )
 ```
 
-#### E) **import\_FHIR**
+#### E) **import_FHIR**
 
-The **import\_FHIR** function is used to import data from a stat\_units
+The **import_FHIR** function is used to import data from a stat_units
 (here *de facto* a patient) from a FHIR file.
 
 Example :
