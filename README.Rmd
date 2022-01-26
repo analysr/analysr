@@ -330,15 +330,63 @@ to restrain your model only to the stat units who have a measure named *"Diastol
 
 #### K) **add_description**
 
-#### L) **extract_feature**
+The **add_description** function create entry to the description table. The stat units described by the tag passed in argument:
+```r
+add_description(input, label)
+```
 
-#### M) **create_feature**
+The `input` can be a vector of stat units or an AnalysR env.
+
+Exemple 1:
+```r
+add_description(c(1, 6, 6), "Fever")
+```
+
+Example 2:
+```r
+add_description(analysr_env, "Fever")
+```
+
+#### L) **create_feature** 
+
+This function create a new coll named with the description tag in the stat_units table. **The function will extract feature form the measure table.** You need to specify which tag you want, in which period you want to execute the aggregation method and which col name you want in the stat_units table.
+
+```r
+create_feature(
+  model,
+  tag_to_create,
+  wanted_tag,
+  start,
+  end,
+  aggregation_method = mean_aggregate
+)
+```
+
+Example:
+```
+ model <- create_feature(analysr_env,
+                          "Temp_average_2006",
+                          "Temperature",
+                          lubridate::parse_date_time("2006/01/01 01:00:00", "ymd-HMS"),
+                          lubridate::parse_date_time("2006/12/31 23:59:00", "ymd-HMS"))
+```
+
+
+#### M) **extract_feature**
+
+The **extract_feature** function is quite the same goal as **create_feature**. This function create a new coll named with the description tag in the stat_units table. **The function will extract feature form the description table.**
+
+```r 
+extract_feature(model, tag)
+```
 
 #### N) **export_raw** (*no test*)
 
+The **export_raw** function is an experimental feature. There is no unit test. This allows you to export data grouped by stat_units.
+
 ### 5. Import functions
 
-####    A)    **import_events_csv**
+#### A) **import_events_csv**
 
 The **import_events_csv** function is used to import the events table from a CSV file.
 
@@ -351,7 +399,7 @@ import_events_csv(
     tag = "DESCRIPTION")
 ```
 
-#### B)    **import_measures_csv**
+#### B) **import_measures_csv**
 
 The import_measures_csv function is used to import the measures table from a CSV file.
 
@@ -365,7 +413,7 @@ import_measures_csv(
     value = "VALUE")
 ```
 
-#### C)    **import_periods_csv**
+#### C) **import_periods_csv**
 
 The **import_periods_csv** function is used to import the periods table from a CSV file.
 
@@ -379,7 +427,7 @@ import_periods_csv(
     tag = "DESCRIPTION")
 ```
 
-#### D)    **import_stat_units_csv**
+#### D) **import_stat_units_csv**
 
 The **import_stat_units_csv** function is used to import the periods table from a CSV file.
 
@@ -392,7 +440,7 @@ import_stat_units_csv(
     optional_data = c("BIRTHDATE","DEATHDATE","FIRST","LAST","RACE","ETHNICITY","GENDER","STATE","HEALTHCARE_EXPENSES","HEALTHCARE_COVERAGE")
 )
 ```
-#### E)    **import_FHIR**
+#### E) **import_FHIR**
 
 The **import_FHIR** function is used to import data from a stat_units (here *de facto* a patient) from a FHIR file.
 
