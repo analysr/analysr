@@ -181,6 +181,9 @@ prepare_query <- function(model, condition) {
 
 #' observed
 #'
+#' This function can be complemented by various keywords that do not work alone,
+#' see the secondary keywords on the documentation.
+#'
 #' @param model An AnalysR model
 #' @param condition A condition
 #'

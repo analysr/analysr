@@ -1,8 +1,7 @@
 #' induce_period
 #'
 #' Create period from measures table depending on a condition (on measures or
-#' events),
-#' and add them to periods table
+#' events), and add them to periods table.
 #'
 #' @return A AnalysR model
 #'

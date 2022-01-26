@@ -1,6 +1,6 @@
 #' import_measures_csv
 #'
-#' Import measures from a CSV file
+#' Import measures from a CSV file.
 #'
 #' @return A boolean (`TRUE` if no errors)
 #'

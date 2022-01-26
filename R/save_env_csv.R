@@ -1,6 +1,6 @@
 #' Save env csv
 #'
-#' Save current environment in a folder containing CSV
+#' Save current environment in a folder containing CSV.
 #'
 #' @param save_path A path to save current environment
 #' (existence is not required)

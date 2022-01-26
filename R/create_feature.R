@@ -1,5 +1,10 @@
 #' create_feature
 #'
+#' This function create a new coll named with the description tag in the
+#' stat_units table. The function will extract feature form the measure table.
+#' You need to specify which tag you want, in which period you want to execute
+#' the aggregation method and which col name you want in the stat_units table.
+#'
 #' @param model An AnalysR model
 #' @param tag_to_create Label to write in description table
 #' @param wanted_tag The name of the measures we want to work on

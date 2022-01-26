@@ -3,6 +3,8 @@
 
 #' add_description
 #'
+#' The add_description function adds a description to the description table.
+#'
 #' @param input A vector of stats_units to be added or an AnalysR env
 #' @param label Label to write in description table
 #'

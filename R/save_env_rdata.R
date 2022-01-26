@@ -1,6 +1,6 @@
 #' Save env RData
 #'
-#' Save current environment in a Rdata file
+#' Save current environment in a Rdata file.
 #'
 #' @param save_path A path to save current environment
 #' (existence is required)

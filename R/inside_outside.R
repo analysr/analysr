@@ -1,6 +1,9 @@
 
 #' inside
 #'
+#' The inside function is used to return the set of events or measurements that
+#' verify a certain condition observed during a certain period.
+#'
 #' @param model An AnalysR model.
 #' @param period_wanted A period from the period table.
 #'
@@ -51,6 +54,9 @@ inside <- function (model, period_wanted) {
 during <- inside
 
 #' outside
+#'
+#' The outside function is used to return the set of events or measurements
+#' that verify a certain condition observed outside a certain period.
 #'
 #' @param model An AnalysR model.
 #' @param period_wanted A period from the period table.

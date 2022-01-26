@@ -1,7 +1,7 @@
 #' Fill descriptions
 #'
 #' A function to fill descriptions table when importing data
-#' (typically those which are not in mandatory)
+#' (typically those which are not in mandatory).
 #'
 #' @param hash a vector containing hash to associate
 #' @param types a vector of strings (the name of the columns to import)

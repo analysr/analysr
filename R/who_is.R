@@ -4,6 +4,11 @@
 #'
 #' @name who_is
 #'
+#' A function which does the same as `described_by` function.
+#' The who_is function allows you to filter the selection table
+#' (or if you want this allows you to refine the request) only on description
+#' of the stat units which is mainly.
+#'
 #' @param model An AnalysR model or a list of stat_unit id
 #' @param condition A condition.
 #'

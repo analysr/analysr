@@ -1,6 +1,6 @@
 #' Load env RData
 #'
-#' Load saved environment from a Rdata file
+#' Load saved environment from a Rdata file.
 #'
 #' @param save_path A path to the save file
 #'

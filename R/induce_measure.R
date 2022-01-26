@@ -36,6 +36,8 @@ replace_values <- function(string, tags_arr, values_arr) {
 
 #' induce_measure
 #'
+#' This function allows you to create a measure from using a certain function.
+#'
 #' @return A AnalysR model
 #'
 #' @param model An AnalysR env.

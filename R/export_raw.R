@@ -87,13 +87,13 @@ extract_folder <- function(model, unit) {
 
 
 
-#' export_row
+#' export_raw
 #'
 #' @param model An AnalysR model
 #' @param tag A tag
 #'
 #' @export
-export_row <- function(model, tag) {
+export_raw <- function(model, tag) {
   cohort <- c()
   tag <- rlang::enexpr(tag)
   new_model <- restrict(model, tag, catch = FALSE)

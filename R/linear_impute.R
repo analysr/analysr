@@ -24,4 +24,4 @@ linear_impute <- function(data, first_line, last_line) {
     data$value[n] <- value_end
 
     data
-  }
+}

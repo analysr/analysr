@@ -13,6 +13,6 @@ test_that("described_by works", {
 
 
     # check model (model should have changed, query also)
-    expect_equal(model_state_equal("./csv/described_by/test1", analysr_env, query),
-                 TRUE)
+    expect_equal(model_state_equal("./csv/described_by/test1", analysr_env,
+    query),TRUE)
 })

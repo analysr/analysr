@@ -4,6 +4,9 @@
 
 #' restrict
 #'
+#' The restrict function is usefull to get a restricted version of your model
+#' to some condition.
+#'
 #' @param env An AnalysR model
 #' @param condition A condition
 #' @param catch Explicit if argument should be catch via `enexpr`

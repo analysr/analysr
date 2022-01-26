@@ -1,7 +1,6 @@
 #' Load env csv
 #'
-#'
-#' Load saved environment from a folder containing
+#' Load saved environment from a folder containing.
 #'
 #' @param save_path A path to the save folder
 #' @import dplyr

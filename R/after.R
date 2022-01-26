@@ -66,6 +66,9 @@ is_after_list <- function(entries, duration, selection, type) {
 
 #' after
 #'
+#' The after function is used to return the set of events or measurements that
+#' verify a certain condition observed after an event / measurement.
+#'
 #' @param model An AnalysR model
 #' @param condition A condition
 #'

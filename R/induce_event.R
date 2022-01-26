@@ -1,7 +1,7 @@
 #' induce_event
 #'
 #' Create event from measures table depending on a condition,
-#' and add them to events table
+#' and add them to events table.
 #'
 #' @return A AnalysR model
 #'

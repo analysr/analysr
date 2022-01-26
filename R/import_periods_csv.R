@@ -1,6 +1,6 @@
 #' import_periods_csv
 #'
-#' Import periods from a CSV file
+#' Import periods from a CSV file.
 #'
 #' @return A boolean (`TRUE` if no errors)
 #'

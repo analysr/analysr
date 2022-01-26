@@ -57,6 +57,9 @@ is_before_list <- function(entries, duration, selection, type) {
 
 #' before
 #'
+#' The before function is used to return the set of events or measurements that
+#' verify a certain condition observed before an event / measurement.
+#'
 #' @param model An AnalysR model
 #' @param condition A condition
 #'

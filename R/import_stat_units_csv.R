@@ -1,6 +1,6 @@
 #' import_stat_units_csv
 #'
-#' Import stat_units from a CSV file
+#' Import stat_units from a CSV file.
 #'
 #' @return A boolean (`TRUE` if no errors)
 #'
