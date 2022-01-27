@@ -109,7 +109,6 @@ prepare_query <- function(model, condition) {
         }
       }
     } else {
-
       # let's select the stat_units that have the query condition
       # the list will be in stocked in query$stat_units_selected
       tag_to_check <- condition[[2]]
@@ -121,12 +120,14 @@ prepare_query <- function(model, condition) {
       temp <- temp[eval(rlang::call2(operator, temp$value, rvalue)),]
       stat_unit <- temp$stat_unit
       date_obs <- temp$date
-      hash_stat_unit <- hash_from_stat_unit(model, temp$stat_unit)
+      hash_stat_unit <- hash_from_stat_unit(model, stat_unit)
       hash_obs <- temp$hash
       date_obs_end <- NA
+
       selection <- rbind(selection,
       tibble::tibble(hash_stat_unit, stat_unit, hash_obs,
                      date_obs, date_obs_end))
+
 
 
       # Check on descriptions table if there is nothing
@@ -176,6 +177,7 @@ prepare_query <- function(model, condition) {
       }
     }
   }
+
   selection
 }
 

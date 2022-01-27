@@ -109,10 +109,10 @@ hash_from_stat_unit <- function(model, stat_units) {
   if (length(stat_units) != 0) {
     temp <- dplyr::filter(model$stat_units, stat_unit %in% stat_units)
 
-    temp <- tidyr::pivot_wider(temp,
+    temp <- tidyr::pivot_wider(temp[,c("hash", "stat_unit")],
                                   names_from  = "stat_unit",
                                   values_from = "hash")
-
+    # can be optimized by saving stat_units in transposed way
     # this function should repeat multiple time
     for (j in stat_units) {
       result <- c(result, temp[toString(j)][[1]])
