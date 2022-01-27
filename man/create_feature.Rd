@@ -16,7 +16,7 @@ create_feature(
 \arguments{
 \item{model}{An AnalysR model}
 
-\item{tag_to_create}{Label to write in description table}
+\item{tag_to_create}{Label to write in the stat unit table}
 
 \item{wanted_tag}{The name of the measures we want to work on}
 
