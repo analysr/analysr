@@ -6,7 +6,7 @@
 #' the aggregation method and which col name you want in the stat_units table.
 #'
 #' @param model An AnalysR model
-#' @param tag_to_create Label to write in description table
+#' @param tag_to_create Label to write in the stat unit table
 #' @param wanted_tag The name of the measures we want to work on
 #' @param start A date marking the beginning of the studied time period.
 #' @param end A date marking the end of the studied time period.

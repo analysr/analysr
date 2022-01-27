@@ -12,5 +12,6 @@ export_raw(model, tag)
 \item{tag}{A tag}
 }
 \description{
-export_raw
+The export_raw function is an experimental feature.
+There is no unit test. This allows you to export data grouped by stat_units.
 }
