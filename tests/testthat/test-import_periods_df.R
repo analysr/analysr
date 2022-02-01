@@ -1,4 +1,4 @@
-test_that("import periods CSV  works", {
+test_that("import periods data frame works", {
   # reset env
   setup_new_env()
 
