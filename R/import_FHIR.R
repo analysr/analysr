@@ -1,7 +1,4 @@
-library(jsonlite)
-library(tibble)
-library(tidyr)
-library(analysr)
+
 #' import_fhir
 #'
 #' Import data from a FHIR folder
@@ -27,16 +24,18 @@ import_fhir <-
            value = c("value"),
            optional_data){
 
+    home_dir <- getwd()
     setwd(folder_path) # set working directory in the FHIR folder
+
     l <- list.files(pattern = ".json") # make a list of the names of FHIR files
 
     for (i in l){
       t <- strsplit(i,split="_")
       name <- paste(t[[1]][[1]],t[[1]][[2]]) # keep the name of the patient
 
-      result <- fromJSON(i) # import data from JSON
-      data_raw <- enframe(unlist(result)) # store data in two columns
-      result <- data_raw %>% separate(name, into = c(paste0("x", 1:10)),
+      result <- jsonlite::fromJSON(i) # import data from JSON
+      data_raw <- tibble::enframe(unlist(result)) # store data in two columns
+      result <-  tidyr::separate(data_raw, name, into = c(paste0("x", 1:10)),
                                       fill = "right") # store data in 11 columns
       n <- nrow(data_raw) # get row number
       cev=0 # number of events added
@@ -134,7 +133,6 @@ import_fhir <-
 
 
       }
-      print(c(cpe, cme, cev))
       if (cpe != 0) {
         hash <- get_hash(cpe)
         result <- cbind(
@@ -167,11 +165,8 @@ import_fhir <-
         analysr_env$events <- rbind(analysr_env$events, events)
 
       }
+      show_env()
     }
+    setwd(home_dir)
   }
-import_fhir("./",
-            c("onsetDateTime"),
-            c("beginDate"),
-            c("endDate"),
-            c("Condition"),
-            c("value"))
+
