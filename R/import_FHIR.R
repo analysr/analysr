@@ -140,7 +140,7 @@ import_fhir <-
           periods
         ) # adding the hash to periods
         analysr_env$periods <- rbind(analysr_env$periods, periods)
-        print(analysr_env$periods)
+        add_stat_units(periods$stat_unit, analysr_env)
       }
 
       if (cme != 0) {
@@ -152,6 +152,7 @@ import_fhir <-
         ) # adding the hash to measures
 
         analysr_env$measures <- rbind(analysr_env$measures, measures)
+        add_stat_units(measures$stat_unit, analysr_env)
       }
 
       if (cev != 0) {
@@ -163,10 +164,10 @@ import_fhir <-
         ) # adding the hash to events
 
         analysr_env$events <- rbind(analysr_env$events, events)
-
+        add_stat_units(events$stat_unit, analysr_env)
       }
       show_env()
     }
     setwd(home_dir)
   }
-
+#import_fhir("./tests/testthat/fhir/import_FHIR/",c("onsetDateTime"),c("beginDate"),c("endDate"),c("Condition"),c("value"))
