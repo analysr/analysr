@@ -1,50 +1,41 @@
-#' import_measures_df
+#' import_periods_df
 #'
-#' Import measures from a data frame.
+#' Import periods from a data frame.
 #'
 #' @return A boolean (`TRUE` if no errors)
 #'
 #' @param input A data frame.
 #' @param stat_unit A string containing the stat_unit label.
-#' @param date A string containing the date label.
+#' @param begin A string containing the begin date label.
+#' @param end A string containing the end date label.
 #' @param tag A string containing the tag label.
-#' @param value A string containing the value label.
 #' @param optional_data A vector containing label to import in descriptions
-#' table (not required).
-#' @param status A string containing the status label.
+#' table.
 #' @param model An AnalysR env.
 #' Default: `analysr_env`
 #'
 #' @export
-import_measures_df <-
+import_periods_df <-
   function(input,
             stat_unit = "stat_unit",
-            date = "date",
+            begin = "begin",
+            end = "end",
             tag = "tag",
-            value = "value",
             optional_data,
-            status = "status",
             model = analysr_env) {
 
-
     result <- tibble::tibble(input)
+
     n <- nrow(result)
     hash <- get_hash(n)
-
-    if (!(status %in% colnames(result))) {
-      result <- dplyr::bind_cols(
-        result,
-        status = rep(NA, n)
-      )
-    }
 
     if (!missing(optional_data)) {
       fill_descriptions(hash, optional_data, result, n, model)
     }
 
-    result <- result[c(stat_unit, date, tag, value, status)]
+    result <- result[c(stat_unit, begin, end, tag)]
     # we could use dplyr to extract colums https://bit.ly/32lGkNR
-    colnames(result) <- c("stat_unit", "date", "tag", "value", "status")
+    colnames(result) <- c("stat_unit", "begin", "end", "tag")
 
     add_stat_units(result$stat_unit, model)
 
@@ -53,7 +44,7 @@ import_measures_df <-
       result
     )
 
-    model$measures <- rbind(model$measures, result)
+    model$periods <- rbind(model$periods, result)
 
     TRUE
   }

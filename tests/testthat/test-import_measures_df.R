@@ -1,4 +1,4 @@
-test_that("import measures CSV  works", {
+test_that("import measures data frame  works", {
   # reset env
   setup_new_env()
 
