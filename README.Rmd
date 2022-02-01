@@ -76,9 +76,9 @@ Steps to use our library correctly:
 * `create_feature` or `add_description`
 
 #### When to use `create_feature` or `add_description` ?
-`add_description` is use to add a description to the description table for a future use.
+`add_description` is used to add a description to the description table for a future use.
 
-`create_feature` will add a column in stat_units table.
+`create_feature` will add a column in the stat_units table.
 The stats_units table will contain all the features you want to extract (this is the features extraction part).
 
 Basically, **stats_units table contains the final result**.
@@ -89,11 +89,11 @@ The request starts by the `observed` tag. This will create a `selection` table. 
 
 The user can add  time selection keywords (**cf. 4. keywords**) to select a range time or refine his request.
 
-The range period can be selected for each data, before or after a date to highlights a data. (**cf. 4. keywords, before or after**)
+The range period can be selected for each data, before or after a date to highlight a data. (**cf. 4. keywords, before or after**)
 
-On the contrary the `from [...] to` select an absolute time range between two weel-defined dates.
+On the contrary the `from [...] to` selects an absolute time range between two weel-defined dates.
 
-`during` is used for selecting an element from the the selection table which take place during a period of time.
+`during` is used for selecting an element from the the selection table which takes place during a period of time.
 
 #### What do you mean by `model` ?
 
@@ -128,7 +128,7 @@ model <- (
 
 The `restrict` function is useful to get a restricted version of your model to some condition.
 
-If you want to create a new one use `setup_new_env` function.
+If you want to create a new one use the `setup_new_env` function.
 
 ### 3. Functions to edit data
 
@@ -136,14 +136,14 @@ If you want to create a new one use `setup_new_env` function.
 
 ##### induce_period
 
-This fucntion allows you to create period from measures table depending on a condition (on measures or events), and add them to periods table.
+This fucntion allows you to create a period from the measures table depending on a condition (on measures or events), and add them to the periods table.
 ```r
 induce_event(model = analysr_env, condition, tag_to_create)
 ```
 
 ##### induce_event
 
-This function allows you to create event from measures table depending on a condition, and add them to events table.
+This function allows you to create an event from the measures table depending on a condition, and add them to the events table.
 
 ```r
 induce_event(model = analysr_env, condition, tag_to_create)
@@ -157,17 +157,17 @@ This function allows you to create a measure from using a certain function.
 induce_measure(model = analysr_env, tag_to_create, calcul, tag_ref)
 ```
 
-For exemple if you want to create a Body Mass Index (named BMI here) entry for each Weight entry you have to use this:
+For example if you want to create a Body Mass Index (named BMI here) entry for each Weight entry you have to use this:
 ```r
 induce_measure(analysr_env, "BMI", Weight / (Size * Size))
 ```
 
-This function operate only on measure table.
+This function operates only on the measure table.
 
 
 #### fix_granularity
 
-This function allow you to sets a given granularity to a set of data by aggregating or imputing them.
+This function allows you to set a given granularity to a set of data by aggregating or imputing them.
 ```r
 fix_granularity(
   tag_wanted,
@@ -333,12 +333,12 @@ Example 1:
 
 This query adds `Hypertension after immunotherapy` to the table description for people with blood pressure >125 mm Hg up to 45 days after subcutaneous immunotherapy.
 
-Exemple 2:
+Example 2:
 ```r
 add_description(c(1, 6, 6), "Fever")
 ```
 
-Example 2:
+Example 3:
 ```r
 add_description(analysr_env, "Fever")
 ```
