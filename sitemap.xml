@@ -67,13 +67,25 @@
     <loc>/reference/import_events_csv.html</loc>
   </url>
   <url>
+    <loc>/reference/import_events_df.html</loc>
+  </url>
+  <url>
     <loc>/reference/import_measures_csv.html</loc>
+  </url>
+  <url>
+    <loc>/reference/import_measures_df.html</loc>
   </url>
   <url>
     <loc>/reference/import_periods_csv.html</loc>
   </url>
   <url>
+    <loc>/reference/import_periods_df.html</loc>
+  </url>
+  <url>
     <loc>/reference/import_stat_units_csv.html</loc>
+  </url>
+  <url>
+    <loc>/reference/import_stat_units_df.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
