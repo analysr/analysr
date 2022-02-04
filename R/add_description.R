@@ -13,9 +13,9 @@ add_description <- function(input, label) {
   model <- analysr_env
   if (!is.vector(input)) {
     model <- input
-    stat_units <- dplyr::pull(model$selection, stat_unit)
+    stat_units <- unique(dplyr::pull(model$selection, stat_unit))
   } else {
-    stat_units <- input
+    stat_units <- unique(input)
   }
   if (model$space_to_underscore) {
       label <- gsub(" ", "_", label)
