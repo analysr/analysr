@@ -52,6 +52,9 @@
   value <span class="op">=</span> <span class="st">"value"</span>,
   <span class="va">optional_data</span>,
   status <span class="op">=</span> <span class="st">"status"</span>,
+  date_format_func <span class="op">=</span> <span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/parse_date_time.html" class="external-link">parse_date_time</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">date_format_reg</span><span class="op">)</span><span class="op">)</span>,
+  date_format_reg <span class="op">=</span> <span class="st">"ymd-HMS"</span>,
+  force_date_format <span class="op">=</span> <span class="cn">FALSE</span>,
   model <span class="op">=</span> <span class="va">analysr_env</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -73,6 +76,17 @@
 table (not required).</p></dd>
 <dt>status</dt>
 <dd><p>A string containing the status label.</p></dd>
+<dt>date_format_func</dt>
+<dd><p>A function to format date with (not required).
+Default: <code>lubridate::parse_date_time(x, date_format_reg)</code>
+If you want to use milliseconds <a href="https://bit.ly/33JGr6s" class="external-link">look at this</a>.</p></dd>
+<dt>date_format_reg</dt>
+<dd><p>A expression to format date with (not required).
+Default: <code>"ymd-HMS"</code>
+For more details see <a href="https://bit.ly/3bp3FD0" class="external-link">this documentation</a>.</p></dd>
+<dt>force_date_format</dt>
+<dd><p>Boolean to force date format func (not required).
+Default: <code>FALSE</code></p></dd>
 <dt>model</dt>
 <dd><p>An AnalysR env.
 Default: <code>analysr_env</code></p></dd>
