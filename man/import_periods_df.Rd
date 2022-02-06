@@ -11,6 +11,9 @@ import_periods_df(
   end = "end",
   tag = "tag",
   optional_data,
+  date_format_func = (function(x) lubridate::parse_date_time(x, date_format_reg)),
+  date_format_reg = "ymd-HMS",
+  force_date_format = FALSE,
   model = analysr_env
 )
 }
@@ -27,6 +30,17 @@ import_periods_df(
 
 \item{optional_data}{A vector containing label to import in descriptions
 table.}
+
+\item{date_format_func}{A function to format date with (not required).
+Default: \code{lubridate::parse_date_time(x, date_format_reg)}
+If you want to use milliseconds \href{https://bit.ly/33JGr6s}{look at this}.}
+
+\item{date_format_reg}{A expression to format date with (not required).
+Default: \code{"ymd-HMS"}
+For more details see \href{https://bit.ly/3bp3FD0}{this documentation}.}
+
+\item{force_date_format}{Boolean to force date format func (not required).
+Default: \code{FALSE}}
 
 \item{model}{An AnalysR env.
 Default: \code{analysr_env}}
