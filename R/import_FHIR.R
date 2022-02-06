@@ -34,13 +34,13 @@ import_fhir <-
       result <- tidyr::separate(data_raw, name, into = c(paste0("x", 1:10)),
                                       fill = "right") # store data in 11 columns
       n <- nrow(data_raw) # get row number
-      cev=0 # number of events added
-      cme=0 # number of measures added
-      cpe=0 # number of periods added
-      events <- data.frame(stat_unit = NULL, date = NULL, tag = NULL)
-      periods <- data.frame(stat_unit = NULL, begin = NULL,
+      cev <- 0 # number of events added
+      cme <- 0 # number of measures added
+      cpe <- 0 # number of periods added
+      events <- tibble::tibble(stat_unit = NULL, date = NULL, tag = NULL)
+      periods <- tibble::tibble(stat_unit = NULL, begin = NULL,
                             end = NULL, tag = NULL)
-      measures <- data.frame(stat_unit = NULL, date = NULL,
+      measures <- tibble::tibble(stat_unit = NULL, date = NULL,
                             tag = NULL, value = NULL, status = NULL)
       for (j in 1:n){
           for (t in tag) {
@@ -141,37 +141,21 @@ import_fhir <-
 
       }
       if (cpe != 0) {
-        hash <- get_hash(cpe)
-        periods <- cbind(
-          hash,
-          periods
-        ) # adding the hash to periods
-        colnames(periods) <- c("hash", "stat_unit", "begin", "end", "tag")
-        analysr_env$periods <- rbind(analysr_env$periods, periods)
-        add_stat_units(analysr_env$periods$stat_unit, analysr_env)
+        colnames(periods) <- c("stat_unit", "begin", "end", "tag")
+        import_periods_df(periods, date_format_func = lubridate::ymd_hms,
+                                  force_date_format = TRUE, model = analysr_env)
       }
 
       if (cme != 0) {
-        hash <- get_hash(cme)
-        measures <- cbind(
-          hash,
-          measures
-        ) # adding the hash to measures
-        colnames(measures) <- c("hash", "stat_unit",
-                                "date", "tag", "value", "statue")
-        analysr_env$measures <- rbind(analysr_env$measures, measures)
-        add_stat_units(analysr_env$measures$stat_unit, analysr_env)
+        colnames(measures) <- c("stat_unit","date", "tag", "value", "status")
+        import_measures_df(measures, date_format_func = lubridate::ymd_hms,
+                                  force_date_format = TRUE, model = analysr_env)
       }
 
       if (cev != 0) {
-        hash <- get_hash(cev)
-        events <- cbind(
-          hash,
-          events
-        ) # adding the hash to events
-        colnames(events) <- c("hash", "stat_unit", "date", "tag")
-        analysr_env$events <- rbind(analysr_env$events, events)
-        add_stat_units(analysr_env$events$stat_unit, analysr_env)
+        colnames(events) <- c("stat_unit", "date", "tag")
+        import_events_df(events, date_format_func = lubridate::ymd_hms,
+                                  force_date_format = TRUE, model = analysr_env)
       }
     }
     setwd(home_dir)
