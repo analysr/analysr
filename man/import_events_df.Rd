@@ -10,6 +10,9 @@ import_events_df(
   date = "date",
   tag = "tag",
   optional_data,
+  date_format_func = (function(x) lubridate::parse_date_time(x, date_format_reg)),
+  date_format_reg = "ymd-HMS",
+  force_date_format = FALSE,
   model = analysr_env
 )
 }
@@ -25,9 +28,6 @@ import_events_df(
 \item{optional_data}{A vector containing label to import in descriptions
 table.}
 
-\item{model}{An AnalysR env.
-Default: \code{analysr_env}}
-
 \item{date_format_func}{A function to format date with (not required).
 Default: \code{lubridate::parse_date_time(x, date_format_reg)}
 If you want to use milliseconds \href{https://bit.ly/33JGr6s}{look at this}.}
@@ -39,8 +39,8 @@ For more details see \href{https://bit.ly/3bp3FD0}{this documentation}.}
 \item{force_date_format}{Boolean to force date format func (not required).
 Default: \code{FALSE}}
 
-\item{delim}{The separator to read csv (not required).
-Default: \verb{,}}
+\item{model}{An AnalysR env.
+Default: \code{analysr_env}}
 }
 \value{
 A boolean (\code{TRUE} if no errors)
